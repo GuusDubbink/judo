@@ -36,6 +36,8 @@ class Domain(str, Enum):
 class Technique(BaseModel):
     id: str
     name: str
+    aliases: list[str] = Field(default_factory=list)
+    kodokan_ref: Optional[str] = None
     category: str
     domain: Domain
     belt: Optional[Belt] = None
@@ -80,6 +82,7 @@ class Combination(BaseModel):
 class GlossaryEntry(BaseModel):
     term: str
     nl: str
+    nl_aliases: list[str] = Field(default_factory=list)
 
 
 class CompetitionTerm(BaseModel):

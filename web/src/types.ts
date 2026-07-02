@@ -7,6 +7,10 @@ export const BELT_ORDER: BeltCode[] = ['ge', 'or', 'gr', 'bl', 'br', 'zw']
 export interface Technique {
   id: string
   name: string
+  /** Alternate spellings or transliterations for the same syllabus entry. */
+  aliases?: string[]
+  /** Kodokan / IJF standard name (informational; not used for quiz scoring). */
+  kodokan_ref?: string
   category: string
   domain: Domain
   belt?: BeltCode | null
@@ -41,6 +45,8 @@ export interface Combination {
 export interface GlossaryEntry {
   term: string
   nl: string
+  /** Alternate Dutch translations accepted as correct in glossary questions. */
+  nl_aliases?: string[]
 }
 
 export interface JudoData {

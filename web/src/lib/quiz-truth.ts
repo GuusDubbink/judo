@@ -1,7 +1,12 @@
 import { db, getTechnique, techniqueById } from '../data/db'
-import type { BeltCode, JudoData, QuizFilters, QuizQuestion, Technique } from '../types'
+import type { BeltCode, GlossaryEntry, JudoData, QuizFilters, QuizQuestion, Technique } from '../types'
 import { BELT_ORDER } from '../types'
 import { DOMAIN_LABELS } from './constants'
+import {
+  glossaryMatchesMeaning,
+  techniqueAllNames,
+  techniqueMatchesName,
+} from './names'
 import { glossarySlug } from './quiz-options'
 
 export { db }
@@ -32,15 +37,19 @@ export function filterTechniques(data: JudoData, filters: QuizFilters): Techniqu
 export function counterNamesForAttack(data: JudoData, attackId: string): string[] {
   return data.counters
     .filter((counter) => counter.attack_id === attackId && counter.counter_id)
-    .map((counter) => getTechnique(counter.counter_id!)?.name)
-    .filter((name): name is string => Boolean(name))
+    .flatMap((counter) => {
+      const technique = getTechnique(counter.counter_id!)
+      return technique ? techniqueAllNames(technique) : []
+    })
 }
 
 export function combinationNamesForFirst(data: JudoData, firstId: string): string[] {
   return data.combinations
     .filter((combo) => combo.first_id === firstId && combo.then_id)
-    .map((combo) => getTechnique(combo.then_id!)?.name)
-    .filter((name): name is string => Boolean(name))
+    .flatMap((combo) => {
+      const technique = getTechnique(combo.then_id!)
+      return technique ? techniqueAllNames(technique) : []
+    })
 }
 
 function techniqueIdFromQuestionId(questionId: string, suffix: string): string | null {
@@ -77,7 +86,7 @@ function parseCombinationQuestionId(
 function glossaryEntryForQuestion(
   data: JudoData,
   question: QuizQuestion,
-): { term: string; nl: string } | null {
+): GlossaryEntry | null {
   const slug = question.id.replace(/^glossary-/, '')
   return (
     data.glossary.find((entry) => glossarySlug(entry.term) === slug) ?? null
@@ -112,7 +121,7 @@ export function getValidOptionIndices(
       const techniqueId = techniqueIdFromQuestionId(question.id, suffix)
       const technique = techniqueId ? techniqueById.get(techniqueId) : undefined
       if (!technique) break
-      markMatching((option) => option === technique.name)
+      markMatching((option) => techniqueMatchesName(technique, option))
       break
     }
     case 'domain': {
@@ -140,7 +149,7 @@ export function getValidOptionIndices(
     case 'glossary': {
       const entry = glossaryEntryForQuestion(data, question)
       if (!entry) break
-      markMatching((option) => option === entry.nl)
+      markMatching((option) => glossaryMatchesMeaning(entry, option))
       break
     }
   }

@@ -14,6 +14,7 @@ import {
   counterNamesForAttack,
   filterTechniques,
 } from './quiz-truth'
+import { glossaryAllMeanings, techniqueMatchesName, techniqueOverlapsNames } from './names'
 import { shuffle } from './shuffle'
 
 function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
@@ -95,11 +96,13 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
   if (!attack || !counterTechnique) return null
 
   const otherValidNames = new Set(
-    counterNamesForAttack(db, counter.attack_id).filter((name) => name !== counterTechnique.name),
+    counterNamesForAttack(db, counter.attack_id).filter(
+      (name) => !techniqueMatchesName(counterTechnique, name),
+    ),
   )
   const optionPool = pool.filter(
     (technique) =>
-      technique.id !== counter.counter_id && !otherValidNames.has(technique.name),
+      technique.id !== counter.counter_id && !techniqueOverlapsNames(technique, otherValidNames),
   )
   const built = buildUniqueNameOptions(counterTechnique, optionPool)
   if (!built) return null
@@ -128,12 +131,12 @@ function buildCombinationQuestion(
 
   const otherValidNames = new Set(
     combinationNamesForFirst(db, combination.first_id).filter(
-      (name) => name !== thenTechnique.name,
+      (name) => !techniqueMatchesName(thenTechnique, name),
     ),
   )
   const optionPool = pool.filter(
     (technique) =>
-      technique.id !== combination.then_id && !otherValidNames.has(technique.name),
+      technique.id !== combination.then_id && !techniqueOverlapsNames(technique, otherValidNames),
   )
   const built = buildUniqueNameOptions(thenTechnique, optionPool)
   if (!built) return null
@@ -151,7 +154,11 @@ function buildCombinationQuestion(
 }
 
 function buildGlossaryQuestion(entry: GlossaryEntry, pool: GlossaryEntry[]): QuizQuestion | null {
-  const options = buildUniqueMeaningOptions(entry, pool)
+  const meanings = glossaryAllMeanings(entry)
+  const correctMeaning = shuffle(meanings)[0]
+  if (!correctMeaning) return null
+
+  const options = buildUniqueMeaningOptions(entry, pool, undefined, correctMeaning)
   if (!options) return null
 
   return {
@@ -159,7 +166,7 @@ function buildGlossaryQuestion(entry: GlossaryEntry, pool: GlossaryEntry[]): Qui
     type: 'glossary',
     prompt: `Wat betekent ${glossaryTermLabel(entry.term)}?`,
     options,
-    correctIndex: options.indexOf(entry.nl),
+    correctIndex: options.indexOf(correctMeaning),
   }
 }
 

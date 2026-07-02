@@ -912,13 +912,14 @@
     },
     {
       "id": "udi-hishigi-juji-katame",
-      "name": "Udi Hishigi Juji Katame",
+      "name": "Ude Hishigi Juji Katame",
+      "aliases": ["Udi Hishigi Juji Katame"],
       "category": "kansetsu_waza",
       "domain": "ne_waza",
       "belt": "ge",
       "number": 1,
       "series": "1e serie",
-      "needs_review": true,
+      "needs_review": false,
       "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
       "youtube": "https://youtu.be/OWgSOlCuMXw"
     },
@@ -961,6 +962,7 @@
     {
       "id": "kami-ude-juji-gatame",
       "name": "Kami Ude Juji Gatame",
+      "kodokan_ref": "Ude-hishigi-juji-gatame",
       "category": "kansetsu_waza",
       "domain": "ne_waza",
       "belt": "or",
@@ -1074,13 +1076,14 @@
     },
     {
       "id": "othen-karami",
-      "name": "Othen Karami",
+      "name": "Oten Karami",
+      "aliases": ["Othen Karami"],
       "category": "kansetsu_waza",
       "domain": "ne_waza",
       "belt": "bl",
       "number": 4,
       "series": "4e serie",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "id": "keza-garami",
@@ -1370,13 +1373,14 @@
     },
     {
       "id": "othen-jime",
-      "name": "Othen Jime",
+      "name": "Oten Jime",
+      "aliases": ["Othen Jime"],
       "category": "jime_waza",
       "domain": "ne_waza",
       "belt": "bl",
       "number": 18,
       "series": "1e serie",
-      "needs_review": true
+      "needs_review": false
     },
     {
       "id": "narabi-juji-jime",
@@ -2036,7 +2040,8 @@
     },
     {
       "term": "Hishigi",
-      "nl": "klemmen, ontwrichten"
+      "nl": "klemmen, ontwrichten",
+      "nl_aliases": ["gestrekte klem", "verpletteren"]
     },
     {
       "term": "Hon",
