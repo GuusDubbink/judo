@@ -13,6 +13,7 @@ interface QuizQuestionViewProps {
   onPrevious: () => void
   onNext: () => void
   onHome: () => void
+  validIndices: Set<number>
 }
 
 export function QuizQuestionView({
@@ -28,6 +29,7 @@ export function QuizQuestionView({
   onPrevious,
   onNext,
   onHome,
+  validIndices,
 }: QuizQuestionViewProps) {
   const progress = (questionNumber / total) * 100
 
@@ -68,7 +70,7 @@ export function QuizQuestionView({
       <div className="grid gap-2.5 sm:gap-3">
         {question.options.map((option, optionIndex) => {
           const isSelected = selectedIndex === optionIndex
-          const isCorrect = optionIndex === question.correctIndex
+          const isValid = validIndices.has(optionIndex)
           let classes =
             'min-h-12 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
 
@@ -76,7 +78,7 @@ export function QuizQuestionView({
             classes += isSelected
               ? ' border-club-blue bg-club-blue-light text-ink'
               : ' border-border bg-surface text-ink active:bg-club-blue-soft hover:border-club-blue hover:bg-club-blue-soft'
-          } else if (isCorrect) {
+          } else if (isValid) {
             classes += ' border-correct bg-green-50 text-ink'
           } else if (isSelected) {
             classes += ' border-wrong bg-red-50 text-ink'

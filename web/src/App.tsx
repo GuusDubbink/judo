@@ -1,11 +1,15 @@
 import { useCallback, useMemo, useState } from 'react'
-import type { QuizFilters, QuizQuestion } from './types'
+import data from '@data'
+import type { JudoData, QuizFilters, QuizQuestion } from './types'
 import { createQuiz } from './lib/quiz'
+import { filterTechniques, getValidOptionIndices, isAnswerCorrect } from './lib/quiz-truth'
 import { QuizQuestionView } from './components/QuizQuestionView'
 import { QuizResults } from './components/QuizResults'
 import { QuizSetup } from './components/QuizSetup'
 
 type Screen = 'setup' | 'quiz' | 'results'
+
+const db = data as JudoData
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('setup')
@@ -36,15 +40,25 @@ export default function App() {
   const selectedIndex = answers[index] ?? null
   const showFeedback = selectedIndex !== null
 
+  const techniquePool = useMemo(
+    () => (filters ? filterTechniques(db, filters) : []),
+    [filters],
+  )
+
   const score = useMemo(
     () =>
-      questions.reduce(
-        (total, question, questionIndex) =>
-          answers[questionIndex] === question.correctIndex ? total + 1 : total,
-        0,
-      ),
-    [answers, questions],
+      questions.reduce((total, question, questionIndex) => {
+        const answer = answers[questionIndex]
+        if (answer === undefined) return total
+        return isAnswerCorrect(question, answer, db, techniquePool) ? total + 1 : total
+      }, 0),
+    [answers, questions, techniquePool],
   )
+
+  const currentValidIndices = useMemo(() => {
+    if (!currentQuestion) return new Set<number>()
+    return getValidOptionIndices(currentQuestion, db, techniquePool)
+  }, [currentQuestion, techniquePool])
 
   const handleSelect = (optionIndex: number) => {
     if (!currentQuestion || showFeedback) return
@@ -86,6 +100,7 @@ export default function App() {
           onPrevious={goToPrevious}
           onNext={goToNext}
           onHome={goHome}
+          validIndices={currentValidIndices}
         />
       ) : null}
 

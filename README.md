@@ -6,4 +6,5 @@ Oefenwebapp voor judotechnieken van de Eerste Utrechtse Judo en Ju Jutsu School.
 - **Frontend:** React + Vite + TypeScript + Tailwind in `web/`
 - **Python:** `models.py` valideert de JSON (uv)
 - **Lokaal:** `cd web && npm install && npm run dev` → http://localhost:5174
+- **Testen:** `cd web && npm test` — valideert elke quizvraag tegen `judotechnieken.json`
 - **Deploy:** DigitalOcean App Platform via `.do/app.yaml`
