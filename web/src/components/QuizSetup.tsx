@@ -1,13 +1,12 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import type { BeltCode, Domain, QuizFilters } from '../types'
 import { BELT_ORDER } from '../types'
+import { QUESTION_COUNTS } from '../lib/constants'
 import { availableQuestionCount, getBelts, getMeta, techniqueCount } from '../lib/quiz'
 
 interface QuizSetupProps {
   onStart: (filters: QuizFilters) => void
 }
-
-const QUESTION_COUNTS = [10, 15, 20] as const
 
 export function QuizSetup({ onStart }: QuizSetupProps) {
   const meta = getMeta()

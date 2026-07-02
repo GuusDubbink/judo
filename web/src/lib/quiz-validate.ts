@@ -1,5 +1,6 @@
-import type { JudoData, QuizFilters, QuizQuestion, Technique } from '../types'
-import { filterTechniques, getValidOptionIndices } from './quiz-truth'
+import type { JudoData, QuizFilters, QuizQuestion } from '../types'
+import { OPTION_COUNT } from './constants'
+import { getValidOptionIndices } from './quiz-truth'
 
 export interface QuestionValidation {
   questionId: string
@@ -19,7 +20,6 @@ export interface ValidationReport {
 function validateQuestion(
   question: QuizQuestion,
   db: JudoData,
-  techniquePool: Technique[],
 ): QuestionValidation {
   const result: QuestionValidation = {
     questionId: question.id,
@@ -29,8 +29,8 @@ function validateQuestion(
     ambiguities: [],
   }
 
-  if (question.options.length !== 4) {
-    result.errors.push(`expected 4 options, got ${question.options.length}`)
+  if (question.options.length !== OPTION_COUNT) {
+    result.errors.push(`expected ${OPTION_COUNT} options, got ${question.options.length}`)
   }
 
   const uniqueOptions = new Set(question.options)
@@ -42,7 +42,7 @@ function validateQuestion(
     result.errors.push(`correctIndex ${question.correctIndex} out of range`)
   }
 
-  const validIndices = getValidOptionIndices(question, db, techniquePool)
+  const validIndices = getValidOptionIndices(question, db)
 
   if (validIndices.size === 0) {
     result.errors.push('no option matches JSON ground truth')
@@ -77,12 +77,11 @@ export function validateQuestionPool(
   db: JudoData,
   filters: QuizFilters,
 ): ValidationReport {
-  const techniquePool = filterTechniques(db, filters)
   const errors: QuestionValidation[] = []
   const ambiguities: QuestionValidation[] = []
 
   for (const question of questions) {
-    const result = validateQuestion(question, db, techniquePool)
+    const result = validateQuestion(question, db)
     if (result.errors.length > 0) errors.push(result)
     if (result.ambiguities.length > 0) ambiguities.push(result)
   }

@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'vitest'
+import { db } from '../data/db'
 import type { QuizFilters } from '../types'
 import { BELT_ORDER } from '../types'
-import { buildQuestionPool, getDb } from './quiz'
+import { buildQuestionPool } from './quiz'
 import { counterNamesForAttack, combinationNamesForFirst } from './quiz-truth'
 import { validateQuestionPool } from './quiz-validate'
-
-const db = getDb()
 
 const FILTER_SCENARIOS: QuizFilters[] = [
   { belt: 'all', domain: 'all', count: 9999 },

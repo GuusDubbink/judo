@@ -1,4 +1,5 @@
 import type { QuizQuestion } from '../types'
+import { QUESTION_TYPE_LABELS } from '../lib/constants'
 
 interface QuizQuestionViewProps {
   question: QuizQuestion
@@ -13,7 +14,7 @@ interface QuizQuestionViewProps {
   onPrevious: () => void
   onNext: () => void
   onHome: () => void
-  validIndices: Set<number>
+  validIndices: readonly number[]
 }
 
 export function QuizQuestionView({
@@ -43,7 +44,9 @@ export function QuizQuestionView({
         >
           ← Start
         </button>
-        <span className="text-sm text-muted capitalize">{questionTypeLabel(question.type)}</span>
+        <span className="text-sm text-muted capitalize">
+          {QUESTION_TYPE_LABELS[question.type]}
+        </span>
       </div>
 
       <div className="space-y-2">
@@ -70,7 +73,7 @@ export function QuizQuestionView({
       <div className="grid gap-2.5 sm:gap-3">
         {question.options.map((option, optionIndex) => {
           const isSelected = selectedIndex === optionIndex
-          const isValid = validIndices.has(optionIndex)
+          const isValid = validIndices.includes(optionIndex)
           let classes =
             'min-h-12 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
 
@@ -120,25 +123,4 @@ export function QuizQuestionView({
       </div>
     </div>
   )
-}
-
-function questionTypeLabel(type: QuizQuestion['type']): string {
-  switch (type) {
-    case 'category':
-      return 'categorie'
-    case 'technique':
-      return 'techniek'
-    case 'counter':
-      return 'counter'
-    case 'combination':
-      return 'combinatie'
-    case 'domain':
-      return 'domein'
-    case 'number':
-      return 'nummer'
-    case 'glossary':
-      return 'woordenlijst'
-    default:
-      return type
-  }
 }

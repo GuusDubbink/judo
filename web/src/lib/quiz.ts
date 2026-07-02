@@ -1,63 +1,20 @@
-import data from '@data'
-import type {
-  Combination,
-  Counter,
-  GlossaryEntry,
-  JudoData,
-  QuizFilters,
-  QuizQuestion,
-  Technique,
-} from '../types'
+import { db } from '../data/db'
+import type { Combination, Counter, GlossaryEntry, QuizFilters, QuizQuestion, Technique } from '../types'
+import { DISTRACTOR_COUNT, DOMAIN_LABELS } from './constants'
+import {
+  buildUniqueMeaningOptions,
+  buildUniqueNameOptions,
+  glossarySlug,
+  glossaryTermLabel,
+  pickDistractors,
+} from './quiz-options'
 import {
   categoryLabel,
   combinationNamesForFirst,
   counterNamesForAttack,
   filterTechniques,
 } from './quiz-truth'
-import { sample, shuffle } from './shuffle'
-
-const db = data as JudoData
-
-const DOMAIN_LABELS: Record<string, string> = {
-  nage_waza: 'Staande techniek (nage waza)',
-  ne_waza: 'Grondtechniek (ne waza)',
-}
-
-function pickDistractors<T>(
-  pool: T[],
-  correct: T,
-  count: number,
-  key: (item: T) => string,
-): T[] | null {
-  const unique = pool.filter((item) => key(item) !== key(correct))
-  if (unique.length < count) return null
-  const picks = sample(unique, count)
-  return shuffle([correct, ...picks])
-}
-
-function buildTechniqueNameOptions(
-  correct: Technique,
-  pool: Technique[],
-  distractorCount: number,
-): string[] | null {
-  const usedNames = new Set([correct.name])
-  const distractors: Technique[] = []
-  const candidates = shuffle(pool.filter((item) => item.id !== correct.id))
-
-  for (const candidate of candidates) {
-    if (usedNames.has(candidate.name)) continue
-    usedNames.add(candidate.name)
-    distractors.push(candidate)
-    if (distractors.length === distractorCount) break
-  }
-
-  if (distractors.length < distractorCount) return null
-  return shuffle([correct.name, ...distractors.map((item) => item.name)])
-}
-
-function glossaryTermLabel(term: string): string {
-  return term.split('(')[0].trim()
-}
+import { shuffle } from './shuffle'
 
 function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
   const correctLabel = categoryLabel(db, technique.category)
@@ -65,7 +22,7 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
     .filter((id) => db.categories[id].domain === technique.domain)
     .map((id) => categoryLabel(db, id))
 
-  const options = pickDistractors(pool, correctLabel, 3, (label) => label)
+  const options = pickDistractors(pool, correctLabel, DISTRACTOR_COUNT, (label) => label)
   if (!options) return null
 
   return {
@@ -80,7 +37,7 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
 
 function buildTechniqueQuestion(technique: Technique): QuizQuestion | null {
   const otherCategories = db.techniques.filter((item) => item.category !== technique.category)
-  const options = buildTechniqueNameOptions(technique, otherCategories, 3)
+  const options = buildUniqueNameOptions(technique, otherCategories)
   if (!options) return null
 
   return {
@@ -101,8 +58,7 @@ function buildDomainQuestion(technique: Technique): QuizQuestion | null {
     .map((category) => category.nl)
 
   const pool = [correctLabel, DOMAIN_LABELS[wrongDomain], ...decoys]
-  const uniquePool = [...new Set(pool)]
-  const options = pickDistractors(uniquePool, correctLabel, 3, (label) => label)
+  const options = pickDistractors([...new Set(pool)], correctLabel, DISTRACTOR_COUNT, (label) => label)
   if (!options) return null
 
   return {
@@ -121,7 +77,7 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
   const sameCategory = pool.filter(
     (item) => item.category === technique.category && item.id !== technique.id,
   )
-  const options = buildTechniqueNameOptions(technique, sameCategory, 3)
+  const options = buildUniqueNameOptions(technique, sameCategory)
   if (!options) return null
 
   const category = db.categories[technique.category]
@@ -150,7 +106,7 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
     (technique) =>
       technique.id !== counter.counter_id && !otherValidNames.has(technique.name),
   )
-  const options = buildTechniqueNameOptions(counterTechnique, optionPool, 3)
+  const options = buildUniqueNameOptions(counterTechnique, optionPool)
   if (!options) return null
 
   return {
@@ -182,7 +138,7 @@ function buildCombinationQuestion(
     (technique) =>
       technique.id !== combination.then_id && !otherValidNames.has(technique.name),
   )
-  const options = buildTechniqueNameOptions(thenTechnique, optionPool, 3)
+  const options = buildUniqueNameOptions(thenTechnique, optionPool)
   if (!options) return null
 
   return {
@@ -196,28 +152,13 @@ function buildCombinationQuestion(
 }
 
 function buildGlossaryQuestion(entry: GlossaryEntry, pool: GlossaryEntry[]): QuizQuestion | null {
-  const usedMeanings = new Set([entry.nl])
-  const distractors: GlossaryEntry[] = []
-  const candidates = shuffle(pool.filter((item) => item.term !== entry.term))
-
-  for (const candidate of candidates) {
-    if (usedMeanings.has(candidate.nl)) continue
-    usedMeanings.add(candidate.nl)
-    distractors.push(candidate)
-    if (distractors.length === 3) break
-  }
-
-  if (distractors.length < 3) return null
-
-  const options = shuffle([entry.nl, ...distractors.map((item) => item.nl)])
-  if (new Set(options).size !== options.length) return null
-
-  const label = glossaryTermLabel(entry.term)
+  const options = buildUniqueMeaningOptions(entry, pool)
+  if (!options) return null
 
   return {
-    id: `glossary-${entry.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    id: `glossary-${glossarySlug(entry.term)}`,
     type: 'glossary',
-    prompt: `Wat betekent ${label}?`,
+    prompt: `Wat betekent ${glossaryTermLabel(entry.term)}?`,
     options,
     correctIndex: options.indexOf(entry.nl),
   }
@@ -281,8 +222,4 @@ export function availableQuestionCount(filters: QuizFilters): number {
 
 export function techniqueCount(filters: QuizFilters): number {
   return filterTechniques(db, filters).length
-}
-
-export function getDb(): JudoData {
-  return db
 }
