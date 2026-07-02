@@ -12,6 +12,8 @@ export interface Technique {
   number?: number | null
   series?: string | null
   needs_review?: boolean
+  description?: string
+  youtube?: string
 }
 
 export interface Category {

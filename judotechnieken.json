@@ -11,7 +11,10 @@
       "sw": "schouderworp",
       "aw": "armworp",
       "sut": "sutemi/offerworp"
-    }
+    },
+    "kodokan_source": "https://kdkjd.org/names-of-judo-techniques/",
+    "kodokan_matched": 80,
+    "kodokan_unmatched": 46
   },
   "belts": {
     "ge": "geel",
@@ -80,7 +83,9 @@
       "belt": "ge",
       "number": 1,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to reap the opponent’s right leg from the outside with the right leg and throw him down by breaking his balance backward.",
+      "youtube": "https://youtu.be/c-A_nP7mKAc"
     },
     {
       "id": "de-ashi-barai",
@@ -90,7 +95,9 @@
       "belt": "ge",
       "number": 2,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to sweep the opponent’s right foot with the left foot and throw him down immediately when he takes a step forward and loads his weight onto it.",
+      "youtube": "https://youtu.be/4BUUvqxi_Kk"
     },
     {
       "id": "hiza-guruma",
@@ -100,7 +107,9 @@
       "belt": "ge",
       "number": 3,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance forward and hold his right knee with the left foot to rotate him around it.",
+      "youtube": "https://youtu.be/JPJx9-oAVns"
     },
     {
       "id": "ko-soto-gake",
@@ -110,7 +119,9 @@
       "belt": "ge",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance backward, hooking the left foot or leg from the outside on his right leg and uplifting his body.",
+      "youtube": "https://youtu.be/8b6kY4s4zH4"
     },
     {
       "id": "o-uchi-gari",
@@ -120,7 +131,9 @@
       "belt": "or",
       "number": 5,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to reap the opponent’s left leg from the inside with the right leg and throw him down by breaking his balance backward.",
+      "youtube": "https://youtu.be/0itJFhV9pDQ"
     },
     {
       "id": "ko-uchi-gari",
@@ -130,7 +143,9 @@
       "belt": "or",
       "number": 6,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to reap the opponent’s right foot from the inside with the right foot and throw him down by breaking his balance backward.",
+      "youtube": "https://youtu.be/3Jb3tZvr9Ng"
     },
     {
       "id": "okuri-ashi-barai",
@@ -140,7 +155,9 @@
       "belt": "gr",
       "number": 7,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by driving him leftward and sweep his right foot with the left foot so that both of his feet are put together.",
+      "youtube": "https://youtu.be/nw1ZdRjrdRI"
     },
     {
       "id": "o-soto-guruma",
@@ -150,7 +167,9 @@
       "belt": "zw",
       "number": 8,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance backward and putting the right leg behind both of his legs to rotate him on its axis.",
+      "youtube": "https://youtu.be/92KbCm6pQeI"
     },
     {
       "id": "o-soto-otoshi",
@@ -160,7 +179,9 @@
       "belt": "zw",
       "number": 9,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent vertically by breaking his balance backward and sliding down the right leg on the back of his right thigh.",
+      "youtube": "https://youtu.be/2DsVvDw7b8g"
     },
     {
       "id": "ko-soto-gari",
@@ -170,7 +191,9 @@
       "belt": "zw",
       "number": 10,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to reap the opponent’s right foot from the outside with the left foot and throw him down by breaking his balance backward.",
+      "youtube": "https://youtu.be/jeQ541ScLB4"
     },
     {
       "id": "sasae-tsuri-komi-ashi",
@@ -180,7 +203,8 @@
       "belt": "zw",
       "number": 11,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold the opponent’s right ankle with the left foot and throw him down by breaking his balance while lifting him up forward."
     },
     {
       "id": "harai-tsuri-komi-ashi",
@@ -190,7 +214,9 @@
       "belt": "zw",
       "number": 12,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to sweep up the opponent’s ankle with the left foot from the front and throw him down by breaking his balance while lifting him up forward.",
+      "youtube": "https://youtu.be/gGPXvWL8VbE"
     },
     {
       "id": "soto-gake",
@@ -210,7 +236,9 @@
       "belt": null,
       "number": 14,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to wrap the opponent round and throw him down by breaking his balance backward and hooking the right leg on his right leg from the inside while laying down the body forward.",
+      "youtube": "https://youtu.be/_1eygIXLD_w"
     },
     {
       "id": "ashi-guruma",
@@ -220,7 +248,9 @@
       "belt": null,
       "number": 15,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance forward, putting the right leg on his right knee and rotating him on its axis.",
+      "youtube": "https://youtu.be/ROeayhvom9U"
     },
     {
       "id": "uki-goshi",
@@ -230,7 +260,9 @@
       "belt": "ge",
       "number": 1,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance forward and inserting the right arm through his left armpit while loading him slightly onto the hip and twisting the body.",
+      "youtube": "https://youtu.be/bPKwtB4lyOQ"
     },
     {
       "id": "kubi-nage",
@@ -250,7 +282,9 @@
       "belt": "ge",
       "number": 3,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to load the opponent onto the back of the hip and throw him down by breaking his balance forward and grabbing the back of his belt to lift it up.",
+      "youtube": "https://youtu.be/51Htlp7xEvE"
     },
     {
       "id": "koshi-guruma",
@@ -260,7 +294,9 @@
       "belt": "ge",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to rotate the opponent on the axis of the hip and throw him down by breaking his balance forward and holding his neck in the right arm while thrusting the hip deeply.",
+      "youtube": "https://youtu.be/SU7Id6uVJ44"
     },
     {
       "id": "harai-goshi",
@@ -270,7 +306,9 @@
       "belt": "or",
       "number": 5,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to sweep up the opponent with the right leg and throw him down by breaking his balance forward and loading him onto the back of the right hip.",
+      "youtube": "https://youtu.be/qTo8HlAAkOo"
     },
     {
       "id": "hane-goshi",
@@ -280,7 +318,9 @@
       "belt": "or",
       "number": 6,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to spring up the opponent with the back of the right hip and the right leg and throw him down by breaking his balance forward.",
+      "youtube": "https://youtu.be/M9_7De6A1kk"
     },
     {
       "id": "ushiro-goshi",
@@ -290,7 +330,9 @@
       "belt": "gr",
       "number": 7,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent vertically by counteracting his Nage-waza or other attack and holding and lifting his hip.",
+      "youtube": "https://youtu.be/ORIYstuxYT8"
     },
     {
       "id": "tsuri-komi-goshi",
@@ -300,7 +342,9 @@
       "belt": "gr",
       "number": 8,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to load the opponent onto the back of the hip and throw him down by breaking his balance forward while gripping his left front-lapel with the right hand and lifting it up.",
+      "youtube": "https://youtu.be/McfzA0yRVt4"
     },
     {
       "id": "utsuri-goshi",
@@ -310,7 +354,9 @@
       "belt": "bl",
       "number": 9,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by counteracting his Nage-waza or other attack, holding and lifting his hip with the right arm and shifting him onto the back of the hip.",
+      "youtube": "https://youtu.be/4pQd_bEnlf0"
     },
     {
       "id": "uchi-mata",
@@ -320,7 +366,9 @@
       "belt": "bl",
       "number": 10,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to sweep up the opponent’s left inner thigh with the back of the right thigh and throw him down by breaking his balance forward.",
+      "youtube": "https://youtu.be/iUpSu5J-bgw"
     },
     {
       "id": "ippon-seoi-nage",
@@ -330,7 +378,9 @@
       "belt": "ge",
       "number": 1,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw the opponent over the right shoulder by breaking his balance forward and holding his right arm from the inside with the right arm to carry him on the back.",
+      "youtube": "https://youtu.be/FQnOlCxo4oI"
     },
     {
       "id": "morote-seoi-nage",
@@ -340,7 +390,9 @@
       "belt": "ge",
       "number": 2,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw the opponent over the right shoulder by breaking his balance forward and inserting the right elbow underneath his right armpit to carry him on the back.",
+      "youtube": "https://youtu.be/zIq0xI0ogxk"
     },
     {
       "id": "kata-guruma",
@@ -350,7 +402,9 @@
       "belt": "or",
       "number": 3,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to uplift the opponent on both shoulders across the back of the neck and throw him down by breaking his balance forward while holding his right thigh from the inside with the right arm.",
+      "youtube": "https://youtu.be/cnHRhSy8yi4"
     },
     {
       "id": "seoi-otoshi",
@@ -360,7 +414,9 @@
       "belt": "bl",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to pull down and throw the opponent by breaking his balance forward and falling on one of the knees or both while carrying him on the back.",
+      "youtube": "https://youtu.be/vu1TMVNnq34"
     },
     {
       "id": "hidari-kata-seoi",
@@ -380,7 +436,9 @@
       "belt": "ge",
       "number": 1,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to pull down and throw the opponent by breaking his balance forward and turning the body to the left to put the right foot in front of his right foot.",
+      "youtube": "https://youtu.be/4x6S3Q-Ktv8"
     },
     {
       "id": "uki-otoshi",
@@ -390,7 +448,9 @@
       "belt": "ge",
       "number": 2,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance forward and pulling him down toward the frontal-right corner.",
+      "youtube": "https://youtu.be/6H5tmncOY4Q"
     },
     {
       "id": "hiji-otoshi",
@@ -410,7 +470,9 @@
       "belt": "gr",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to uplift and throw down the opponent by breaking his balance backward while stepping behind him and holding both of his thighs from the front side with both hands or another technique to uplift the opponent’s one of thighs and throw him down by inserting the hand between his legs.",
+      "youtube": "https://youtu.be/vU6aJ2kFxoI"
     },
     {
       "id": "mochiage-otoshi",
@@ -440,7 +502,9 @@
       "belt": null,
       "number": null,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to push and throw down the opponent by breaking his balance toward the retral-right corner while stepping onto the outside of his right foot with the left.",
+      "youtube": "https://youtu.be/lLU9wv52ni0"
     },
     {
       "id": "obi-otoshi",
@@ -450,7 +514,9 @@
       "belt": null,
       "number": null,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to uplift and throw down the opponent by grabbing the front side of his belt with the right hand, pulling it forward while stepping behind him and holding his hip from the front side with the left hand to break his balance backward.",
+      "youtube": "https://youtu.be/ff8U2TVZIYI"
     },
     {
       "id": "kata-ashi-dori",
@@ -480,7 +546,9 @@
       "belt": "or",
       "number": 1,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw the opponent over the head by breaking his balance forward and putting the right sole on his lower abdomen while laying down the body onto the back.",
+      "youtube": "https://youtu.be/880WbHvHv6A"
     },
     {
       "id": "yoko-tomoe",
@@ -510,7 +578,9 @@
       "belt": "bl",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to wrap the opponent round and throw down him by breaking his balance forward, holding his right arm in the right armpit and thrusting the hip deeply.",
+      "youtube": "https://youtu.be/bWG9O1BVKtQ"
     },
     {
       "id": "yoko-gake",
@@ -520,7 +590,9 @@
       "belt": "bl",
       "number": 5,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance toward his right small toe and pushing and sweeping his right outer ankle with the left foot while laying down the body onto the left side.",
+      "youtube": "https://youtu.be/tP1Sj1uDfSo"
     },
     {
       "id": "tani-otoshi",
@@ -530,7 +602,9 @@
       "belt": "bl",
       "number": 6,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to pull and throw down the opponent by breaking his balance backward and laying down the body onto the left side while sliding the left leg behind him.",
+      "youtube": "https://youtu.be/3b9Me3Fohpk"
     },
     {
       "id": "sumi-gaeshi",
@@ -540,7 +614,9 @@
       "belt": "bl",
       "number": 7,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw the opponent over the head by breaking his balance forward, drawing his upper body closer, while grabbing his lapel or back with the right hand and laying down the body onto the back, and lifting up the inside of his left thigh with the right lower leg.",
+      "youtube": "https://youtu.be/5VhduA5xkbA"
     },
     {
       "id": "uki-waza",
@@ -550,7 +626,9 @@
       "belt": "bl",
       "number": 8,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance toward the frontal-right corner and stretching the left leg to put it on the outside of his right foot while laying down the body onto the left side and rotating him.",
+      "youtube": "https://youtu.be/weVOpJ63gII"
     },
     {
       "id": "kani-basami",
@@ -560,7 +638,9 @@
       "belt": "br",
       "number": 9,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent while holding his lower body with both legs by breaking his balance backward, turning the body toward his left side and putting the right leg on his lower abdomen and the left leg on the backside of both of his knees while laying down the body onto the left side.",
+      "youtube": "https://youtu.be/OR-HGHnarYc"
     },
     {
       "id": "yoko-otoshi",
@@ -570,7 +650,9 @@
       "belt": "br",
       "number": 10,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to pull and throw down the opponent by breaking his balance rightward and laying down the body onto the left side while sliding the left leg toward the outside of his right foot .",
+      "youtube": "https://youtu.be/MnNG67pF_a0"
     },
     {
       "id": "hane-maki-komi",
@@ -580,7 +662,9 @@
       "belt": "zw",
       "number": 11,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to wrap the opponent round and throw down him by applying Hane-goshi and holding his right arm in the right armpit.",
+      "youtube": "https://youtu.be/6CRBGLGz9j8"
     },
     {
       "id": "ura-nage",
@@ -590,7 +674,9 @@
       "belt": "zw",
       "number": 12,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw the opponent over the shoulder by counteracting the opponent’s Nage-waza or other attack and holding and lifting his upper body while laying down the body onto the back.",
+      "youtube": "https://youtu.be/Fgi9b8DJ5sQ"
     },
     {
       "id": "yoko-guruma",
@@ -600,7 +686,9 @@
       "belt": "zw",
       "number": 13,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to rotate and throw down the opponent by counteracting his Nage-waza or other attack, holding his hip with the left arm to break his balance forward, sliding the right leg between his legs from the front while twisting the body and laying down the body onto the left side.",
+      "youtube": "https://youtu.be/MehP6I5cY2c"
     },
     {
       "id": "yoko-wakare",
@@ -610,7 +698,9 @@
       "belt": null,
       "number": 14,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to throw down the opponent by breaking his balance forward and stepping both feet onto the outside of his right foot while laying down the body onto the left side and rotating him over the body.",
+      "youtube": "https://youtu.be/bp1tscHlePI"
     },
     {
       "id": "taware-gaeshi",
@@ -620,7 +710,9 @@
       "belt": null,
       "number": 15,
       "series": null,
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to throw the opponent over the shoulder by breaking his balance forward, leaning over his back, holding and lifting his upper body in both arms while laying down the body onto the back.",
+      "youtube": "https://youtu.be/TmTWgrmViZc"
     },
     {
       "id": "hon-geza-gatame",
@@ -630,7 +722,9 @@
       "belt": "ge",
       "number": 1,
       "series": null,
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to hold down the opponent’s upper body under the right side of the chest region by holding his right arm in the left arm from the right side of the opponent lying on his back and gripping the back of his collar with the right hand.",
+      "youtube": "https://youtu.be/NDaQuJOFBYk"
     },
     {
       "id": "kata-gatame",
@@ -640,7 +734,9 @@
       "belt": "ge",
       "number": 2,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent by holding his right arm and neck with the right side of the neck and both arms from the right side of the opponent lying on his back.",
+      "youtube": "https://youtu.be/zQR3IOXxO_Q"
     },
     {
       "id": "kami-shiho-gatame",
@@ -650,7 +746,9 @@
       "belt": "ge",
       "number": 3,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by gripping both sides of his belt with both hands from the top side of his head while he is lying on his back.",
+      "youtube": "https://youtu.be/HFuMjOv0WN8"
     },
     {
       "id": "kuzure-kami-shiho-gatame",
@@ -660,7 +758,9 @@
       "belt": "ge",
       "number": 4,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by holding his right arm in the right arm from the diagonal-right side of his head and gripping the left side of his belt with the left hand while he is lying on his back.",
+      "youtube": "https://youtu.be/YUrogQWdwiY"
     },
     {
       "id": "ushiro-gesa-gatame",
@@ -670,7 +770,9 @@
       "belt": "ge",
       "number": 5,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the left side of the chest region by putting the left hip on the right side of his body from the right side of the opponent lying on his back, holding his right arm in the right arm and holding his upper body in the left arm.",
+      "youtube": "https://youtu.be/SBapox2M2dE"
     },
     {
       "id": "yoko-shiho-gatame",
@@ -680,7 +782,9 @@
       "belt": "ge",
       "number": 6,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by grabbing his belt or trousers through his legs with the right hand from the right side of the opponent lying on his back and gripping his left side-collar through the back of his neck with the left hand.",
+      "youtube": "https://youtu.be/TT7XJVSEQxA"
     },
     {
       "id": "mune-gatame",
@@ -700,7 +804,9 @@
       "belt": "gr",
       "number": 8,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by lying on the stomach over the opponent lying on his back, holding his right arm and neck with both hands and holding his lower body with both legs.",
+      "youtube": "https://youtu.be/55-rFmBx53g"
     },
     {
       "id": "kuzure-gesa-gatame",
@@ -710,7 +816,9 @@
       "belt": "bl",
       "number": 9,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body under the right side of the chest region by holding his right arm in the left arm from the right side of the opponent lying on his back and inserting the right arm through his left armpit.",
+      "youtube": "https://youtu.be/Q2fb9jaoUFQ"
     },
     {
       "id": "kata-oesa-gatame",
@@ -720,7 +828,9 @@
       "belt": "bl",
       "number": 10,
       "series": null,
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to hold down the opponent by holding his right arm and neck with the right side of the neck and both arms from the right side of the opponent lying on his back.",
+      "youtube": "https://youtu.be/zQR3IOXxO_Q"
     },
     {
       "id": "ura-gatame",
@@ -730,7 +840,9 @@
       "belt": "zw",
       "number": 11,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent under the back region by holding his right arm with the right arm from the right side of the opponent lying on his back and grabbing his leg with the left hand.",
+      "youtube": "https://youtu.be/eeAHZB0v3XY"
     },
     {
       "id": "kashira-gatame",
@@ -750,7 +862,9 @@
       "belt": "zw",
       "number": 13,
       "series": null,
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by grabbing his belt or trousers through his legs with the right hand from the right side of the opponent lying on his back and gripping his left side-collar through the back of his neck with the left hand.",
+      "youtube": "https://youtu.be/TT7XJVSEQxA"
     },
     {
       "id": "kami-sankaku-gatame",
@@ -760,7 +874,9 @@
       "belt": "zw",
       "number": 14,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by holding his neck and right armpit between both legs and hooking the right foot on the back of the left knee while forming a triangular form.",
+      "youtube": "https://youtu.be/lq1CUBRAm7s"
     },
     {
       "id": "kuzure-yoko-shiho-gatame",
@@ -790,7 +906,9 @@
       "belt": "zw",
       "number": 17,
       "series": null,
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to hold down the opponent’s upper body with the right leg by holding his right arm with one of the arms or both from the right side of the opponent lying on his back and stretching the left leg backward.",
+      "youtube": "https://youtu.be/e_lAjik1SUM"
     },
     {
       "id": "udi-hishigi-juji-katame",
@@ -800,7 +918,9 @@
       "belt": "ge",
       "number": 1,
       "series": "1e serie",
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
+      "youtube": "https://youtu.be/OWgSOlCuMXw"
     },
     {
       "id": "ude-garami",
@@ -810,7 +930,9 @@
       "belt": "ge",
       "number": 2,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to twist and lock the opponent’s elbow joint by grabbing his left wrist with the left hand from the right side of the opponent lying on his back and inserting the right hand to grip one&#8217;s left wrist underneath his upper arm.",
+      "youtube": "https://youtu.be/AIlTvZb4RlE"
     },
     {
       "id": "ude-hishigi",
@@ -820,7 +942,9 @@
       "belt": "ge",
       "number": 3,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
+      "youtube": "https://youtu.be/OWgSOlCuMXw"
     },
     {
       "id": "hiza-gatame",
@@ -830,7 +954,9 @@
       "belt": "ge",
       "number": 4,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
+      "youtube": "https://youtu.be/H2HtAJdiJcE"
     },
     {
       "id": "kami-ude-juji-gatame",
@@ -840,7 +966,9 @@
       "belt": "or",
       "number": 1,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
+      "youtube": "https://youtu.be/OWgSOlCuMXw"
     },
     {
       "id": "yoko-ude-hishigi",
@@ -850,7 +978,9 @@
       "belt": "or",
       "number": 2,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands and holding the arm under the left armpit.",
+      "youtube": "https://youtu.be/8F5p1zuJRG0"
     },
     {
       "id": "kami-hiza-katame",
@@ -860,7 +990,9 @@
       "belt": "or",
       "number": 3,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
+      "youtube": "https://youtu.be/H2HtAJdiJcE"
     },
     {
       "id": "ude-hishigi-henkawaza",
@@ -880,7 +1012,9 @@
       "belt": "gr",
       "number": 2,
       "series": "3e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front gripping his side-collars with four fingers of both hands inside and tightening arms.",
+      "youtube": "https://youtu.be/t3tQriIPdlI"
     },
     {
       "id": "shime-garami",
@@ -900,7 +1034,9 @@
       "belt": "gr",
       "number": 4,
       "series": "3e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
+      "youtube": "https://youtu.be/H2HtAJdiJcE"
     },
     {
       "id": "hara-katame",
@@ -910,7 +1046,9 @@
       "belt": "bl",
       "number": 1,
       "series": "4e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with the right hand from the right side of the opponent and pressing his arm on the abdomen.",
+      "youtube": "https://youtu.be/ZzEycg8R_9M"
     },
     {
       "id": "ashi-katame",
@@ -920,7 +1058,9 @@
       "belt": "bl",
       "number": 2,
       "series": "4e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint by hooking the right leg on his right arm from the right side of the opponent lying on his stomach.",
+      "youtube": "https://youtu.be/ClY7g_pX-4s"
     },
     {
       "id": "ude-garami-henkawaza",
@@ -1040,7 +1180,9 @@
       "belt": "zw",
       "number": 5,
       "series": "6e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
+      "youtube": "https://youtu.be/H2HtAJdiJcE"
     },
     {
       "id": "kata-juji-jime",
@@ -1050,7 +1192,9 @@
       "belt": "ge",
       "number": 1,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front gripping his left side-collar with four fingers of the left hand inside and the right side-collar with right thumb inside, pulling the left hand and pushing the right hand.",
+      "youtube": "https://youtu.be/3VZVUAmiMD8"
     },
     {
       "id": "gyaku-juji-jime",
@@ -1060,7 +1204,9 @@
       "belt": "ge",
       "number": 2,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front gripping his side-collars with four fingers of both hands inside and tightening arms.",
+      "youtube": "https://youtu.be/t3tQriIPdlI"
     },
     {
       "id": "yoko-juji-jime",
@@ -1090,7 +1236,9 @@
       "belt": "or",
       "number": 5,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by gripping his left side-collar through his throat with the right hand and the right front-lapel through the left armpit with the left hand from behind, pulling the right hand in a right-rear direction and pulling down the left hand.",
+      "youtube": "https://youtu.be/EiqyoVcIAi8"
     },
     {
       "id": "kata-ha-jime",
@@ -1100,7 +1248,9 @@
       "belt": "or",
       "number": 6,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by gripping his left side-collar through his throat with right hand from behind, inserting the left arm through the left armpit to raise the arm upward, pulling the right hand in a right-rear direction and thrusting the left hand under the right arm.",
+      "youtube": "https://youtu.be/yaTGgRjnwB8"
     },
     {
       "id": "hadaka-jime",
@@ -1110,7 +1260,9 @@
       "belt": "or",
       "number": 7,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region without using judogi by putting the right forearm on the opponent’s throat from behind and joining the left arm on it.",
+      "youtube": "https://youtu.be/9f0n8jez7iA"
     },
     {
       "id": "ebi-garami",
@@ -1170,7 +1322,9 @@
       "belt": "bl",
       "number": 13,
       "series": "1e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent by holding his torso region between both legs.",
+      "youtube": "https://youtu.be/D_0fFcoIbvY"
     },
     {
       "id": "hiza-jime",
@@ -1190,7 +1344,9 @@
       "belt": "bl",
       "number": 15,
       "series": "1e serie",
-      "needs_review": true
+      "needs_review": true,
+      "description": "A technique to choke the opponent’s neck region from the front by gripping his right front-lapel with the left hand and the left front-lapel with the right hand and thrusting the right hand toward the right side of his neck.",
+      "youtube": "https://youtu.be/dKKpnD3eLcY"
     },
     {
       "id": "ebi-jime",
@@ -1230,7 +1386,9 @@
       "belt": null,
       "number": 1,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front, gripping his side-collars with both thumbs inside and pushing both hands.",
+      "youtube": "https://youtu.be/k2cHry9HByQ"
     },
     {
       "id": "katate-jime",
@@ -1240,7 +1398,9 @@
       "belt": null,
       "number": 2,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region by gripping his right side-collar with the right thumb inside from the left side of the opponent lying on his back.",
+      "youtube": "https://youtu.be/cHeIs-fSqwE"
     },
     {
       "id": "sode-guruma",
@@ -1250,7 +1410,9 @@
       "belt": null,
       "number": 3,
       "series": "2e serie",
-      "needs_review": false
+      "needs_review": false,
+      "description": "A technique to choke the opponent’s neck region from the front by putting the right forearm on his throat and the left forearm behind the neck to hold his neck between them, gripping the right cuff with left hand and thrusting the right hand into the right side of his neck.",
+      "youtube": "https://youtu.be/E3nvQzClcAU"
     },
     {
       "id": "hidari-ashi-jime",

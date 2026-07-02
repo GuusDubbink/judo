@@ -42,6 +42,8 @@ class Technique(BaseModel):
     number: Optional[int] = None
     series: Optional[str] = None
     needs_review: bool = False
+    description: Optional[str] = None
+    youtube: Optional[str] = None
 
 
 class Category(BaseModel):
