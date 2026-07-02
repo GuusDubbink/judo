@@ -29,8 +29,11 @@ function validateQuestion(
     ambiguities: [],
   }
 
-  if (question.options.length !== OPTION_COUNT) {
-    result.errors.push(`expected ${OPTION_COUNT} options, got ${question.options.length}`)
+  const expectedOptionCount = question.type === 'domain' ? 2 : OPTION_COUNT
+  if (question.options.length !== expectedOptionCount) {
+    result.errors.push(
+      `expected ${expectedOptionCount} options, got ${question.options.length}`,
+    )
   }
 
   const uniqueOptions = new Set(question.options)

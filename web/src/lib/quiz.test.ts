@@ -104,6 +104,21 @@ describe('quiz ground truth', () => {
 })
 
 describe('quiz scoring truth', () => {
+  it('domain questions only offer the two domain labels as options', () => {
+    const filters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
+    const domainLabels = new Set(['Staande techniek (nage waza)', 'Grondtechniek (ne waza)'])
+    const questions = buildQuestionPool(filters).filter((question) => question.type === 'domain')
+
+    expect(questions.length).toBeGreaterThan(0)
+
+    for (const question of questions) {
+      expect(question.options).toHaveLength(2)
+      for (const option of question.options) {
+        expect(domainLabels.has(option)).toBe(true)
+      }
+    }
+  })
+
   it('marked correctIndex always matches JSON for every generated question', () => {
     const filters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
     const questions = buildQuestionPool(filters)

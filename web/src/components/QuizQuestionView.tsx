@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import type { QuizQuestion } from '../types'
 import { QUESTION_TYPE_LABELS } from '../lib/constants'
 
@@ -33,6 +34,9 @@ export function QuizQuestionView({
   validIndices,
 }: QuizQuestionViewProps) {
   const progress = (questionNumber / total) * 100
+  const validSet = useMemo(() => new Set(validIndices), [validIndices])
+  const answeredCorrectly =
+    showFeedback && selectedIndex !== null && validSet.has(selectedIndex)
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:gap-6 sm:py-8">
@@ -53,7 +57,14 @@ export function QuizQuestionView({
         <div className="text-sm text-muted">
           Vraag {questionNumber} van {total}
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-club-blue-light">
+        <div
+          className="h-2 overflow-hidden rounded-full bg-club-blue-light"
+          role="progressbar"
+          aria-valuenow={questionNumber}
+          aria-valuemin={1}
+          aria-valuemax={total}
+          aria-label={`Voortgang: vraag ${questionNumber} van ${total}`}
+        >
           <div
             className="h-full rounded-full bg-club-blue transition-all duration-300"
             style={{ width: `${progress}%` }}
@@ -70,10 +81,14 @@ export function QuizQuestionView({
         ) : null}
       </div>
 
-      <div className="grid gap-2.5 sm:gap-3">
+      <div
+        className="grid gap-2.5 sm:gap-3"
+        role="radiogroup"
+        aria-label={question.prompt}
+      >
         {question.options.map((option, optionIndex) => {
           const isSelected = selectedIndex === optionIndex
-          const isValid = validIndices.includes(optionIndex)
+          const isValid = validSet.has(optionIndex)
           let classes =
             'min-h-12 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
 
@@ -91,8 +106,10 @@ export function QuizQuestionView({
 
           return (
             <button
-              key={`${question.id}-${option}`}
+              key={`${question.id}-${optionIndex}`}
               type="button"
+              role="radio"
+              aria-checked={isSelected}
               disabled={showFeedback}
               onClick={() => onSelect(optionIndex)}
               className={classes}
@@ -102,6 +119,18 @@ export function QuizQuestionView({
           )
         })}
       </div>
+
+      {showFeedback ? (
+        <p
+          className={`text-center text-sm font-semibold sm:text-base ${
+            answeredCorrectly ? 'text-correct' : 'text-wrong'
+          }`}
+          role="status"
+          aria-live="polite"
+        >
+          {answeredCorrectly ? 'Goed!' : 'Niet helemaal goed.'}
+        </p>
+      ) : null}
 
       <div className="grid grid-cols-2 gap-3 pt-1 sm:pt-2">
         <button

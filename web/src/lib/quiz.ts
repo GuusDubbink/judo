@@ -53,13 +53,7 @@ function buildTechniqueQuestion(technique: Technique): QuizQuestion | null {
 function buildDomainQuestion(technique: Technique): QuizQuestion | null {
   const correctLabel = DOMAIN_LABELS[technique.domain]
   const wrongDomain = technique.domain === 'nage_waza' ? 'ne_waza' : 'nage_waza'
-  const decoys = Object.values(db.categories)
-    .filter((category) => category.domain === wrongDomain)
-    .map((category) => category.nl)
-
-  const pool = [correctLabel, DOMAIN_LABELS[wrongDomain], ...decoys]
-  const options = pickDistractors([...new Set(pool)], correctLabel, DISTRACTOR_COUNT, (label) => label)
-  if (!options) return null
+  const options = shuffle([correctLabel, DOMAIN_LABELS[wrongDomain]])
 
   return {
     id: `${technique.id}-domain`,
@@ -222,4 +216,17 @@ export function availableQuestionCount(filters: QuizFilters): number {
 
 export function techniqueCount(filters: QuizFilters): number {
   return filterTechniques(db, filters).length
+}
+
+export function getSetupStats(filters: QuizFilters): {
+  techniques: number
+  questions: number
+  quizLength: number
+} {
+  const questions = buildQuestionPool(filters)
+  return {
+    techniques: filterTechniques(db, filters).length,
+    questions: questions.length,
+    quizLength: Math.min(filters.count, questions.length),
+  }
 }

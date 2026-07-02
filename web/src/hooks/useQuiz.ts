@@ -64,14 +64,12 @@ export function useQuiz() {
   }, [])
 
   const goToNext = useCallback(() => {
-    setIndex((current) => {
-      if (current + 1 >= questions.length) {
-        setScreen('results')
-        return current
-      }
-      return current + 1
-    })
-  }, [questions.length])
+    if (index + 1 >= questions.length) {
+      setScreen('results')
+      return
+    }
+    setIndex((current) => current + 1)
+  }, [index, questions.length])
 
   const retry = useCallback(() => {
     if (!filters) return

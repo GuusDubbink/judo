@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from 'react'
 import type { BeltCode, Domain, QuizFilters } from '../types'
 import { BELT_ORDER } from '../types'
 import { QUESTION_COUNTS } from '../lib/constants'
-import { availableQuestionCount, getBelts, getMeta, techniqueCount } from '../lib/quiz'
+import { getBelts, getMeta, getSetupStats } from '../lib/quiz'
 
 interface QuizSetupProps {
   onStart: (filters: QuizFilters) => void
@@ -20,9 +20,12 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
     [belt, domain, count],
   )
 
-  const techniques = techniqueCount(filters)
-  const questions = availableQuestionCount(filters)
+  const { techniques, questions, quizLength } = useMemo(
+    () => getSetupStats(filters),
+    [filters],
+  )
   const canStart = questions > 0
+  const countCapped = canStart && count > questions
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:gap-8 sm:py-10">
@@ -47,9 +50,9 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
           <FilterChip active={belt === 'all'} onClick={() => setBelt('all')}>
             Alle banden
           </FilterChip>
-          {(Object.entries(belts) as [BeltCode, string][]).map(([code, label]) => (
+          {(BELT_ORDER as BeltCode[]).map((code) => (
             <FilterChip key={code} active={belt === code} onClick={() => setBelt(code)}>
-              {label}
+              {belts[code]}
             </FilterChip>
           ))}
         </div>
@@ -85,6 +88,11 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
         </div>
         <p className="mt-4 text-sm text-muted">
           {techniques} technieken · {questions} mogelijke vragen in deze selectie.
+          {countCapped ? (
+            <span className="mt-1 block text-ink">
+              Er zijn maar {questions} vragen beschikbaar; je krijgt er {quizLength}.
+            </span>
+          ) : null}
         </p>
       </section>
 
@@ -94,7 +102,7 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
         onClick={() => onStart(filters)}
         className="min-h-12 rounded-xl bg-club-blue px-6 py-4 text-lg font-semibold text-white shadow-sm transition hover:bg-club-blue-dark disabled:cursor-not-allowed disabled:bg-club-blue-light disabled:text-muted"
       >
-        Start quiz
+        {canStart ? `Start quiz (${quizLength} vragen)` : 'Geen vragen beschikbaar'}
       </button>
     </div>
   )
@@ -112,6 +120,7 @@ function FilterChip({
   return (
     <button
       type="button"
+      aria-pressed={active}
       onClick={onClick}
       className={`min-h-11 rounded-full border px-4 py-2.5 text-sm font-medium transition ${
         active
