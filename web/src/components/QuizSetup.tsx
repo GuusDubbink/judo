@@ -142,7 +142,7 @@ function BeltFilterInfo({ belts }: { belts: Record<BeltCode, string> }) {
       <span
         id={tooltipId}
         role="tooltip"
-        className={`absolute top-full right-0 left-0 z-10 mt-2 rounded-lg border border-border bg-surface px-3 py-2 text-left text-sm font-normal text-muted shadow-sm sm:left-1/2 sm:w-72 sm:-translate-x-1/2 ${
+        className={`absolute top-full right-0 left-0 z-10 mt-2 rounded-lg border border-border bg-surface px-3 py-2 text-left text-sm font-normal text-muted shadow-sm sm:right-auto sm:w-72 ${
           open ? 'block' : 'hidden group-hover:block group-focus-within:block'
         }`}
       >
