@@ -41,11 +41,10 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
         <p className="text-sm text-muted/80">{meta.school}</p>
       </header>
 
-      <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
-        <h2 className="mb-4 flex items-center text-lg font-semibold text-ink">
-          Band
+      <section className="overflow-visible rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+        <div className="mb-4">
           <BeltFilterInfo belts={belts} />
-        </h2>
+        </div>
         <div className="flex flex-wrap gap-2">
           <FilterChip active={belt === 'all'} onClick={() => setBelt('all')}>
             Alle banden
@@ -119,32 +118,37 @@ function BeltFilterInfo({ belts }: { belts: Record<BeltCode, string> }) {
   const text = `Hogere banden omvatten alle technieken van lagere banden (${BELT_ORDER.map((code) => belts[code]).join(' → ')}).`
 
   return (
-    <span className="group relative ml-1.5 inline-flex">
-      <button
-        type="button"
-        className="flex h-6 w-6 items-center justify-center rounded-full border border-border text-xs font-bold text-muted transition hover:border-club-blue hover:text-club-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-club-blue"
-        aria-describedby={tooltipId}
-        aria-label="Uitleg over bandfilter"
-        aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
-        onBlur={(event) => {
-          if (!event.currentTarget.parentElement?.contains(event.relatedTarget as Node | null)) {
-            setOpen(false)
-          }
-        }}
-      >
-        i
-      </button>
+    <div className="group relative" data-belt-info>
+      <h2 className="flex items-center text-lg font-semibold text-ink">
+        Band
+        <span className="ml-1.5 inline-flex">
+          <button
+            type="button"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-border text-xs font-bold text-muted transition hover:border-club-blue hover:text-club-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-club-blue"
+            aria-describedby={open ? tooltipId : undefined}
+            aria-label="Uitleg over bandfilter"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+            onBlur={(event) => {
+              if (!event.currentTarget.closest('[data-belt-info]')?.contains(event.relatedTarget as Node | null)) {
+                setOpen(false)
+              }
+            }}
+          >
+            i
+          </button>
+        </span>
+      </h2>
       <span
         id={tooltipId}
         role="tooltip"
-        className={`absolute top-full left-1/2 z-10 mt-2 w-64 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-lg border border-border bg-surface px-3 py-2 text-left text-sm font-normal text-muted shadow-sm ${
+        className={`absolute top-full right-0 left-0 z-10 mt-2 rounded-lg border border-border bg-surface px-3 py-2 text-left text-sm font-normal text-muted shadow-sm sm:left-1/2 sm:w-72 sm:-translate-x-1/2 ${
           open ? 'block' : 'hidden group-hover:block group-focus-within:block'
         }`}
       >
         {text}
       </span>
-    </span>
+    </div>
   )
 }
 
