@@ -1,0 +1,23 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --color-club-blue: #00aeef;
+  --color-club-blue-dark: #0090c8;
+  --color-club-blue-light: #e8f7fd;
+  --color-club-blue-soft: #f4fbff;
+  --color-ink: #1a1a1a;
+  --color-muted: #5a6b7a;
+  --color-surface: #ffffff;
+  --color-border: #c5e8f7;
+  --color-correct: #16a34a;
+  --color-wrong: #dc2626;
+}
+
+body {
+  @apply m-0 min-h-screen bg-club-blue-soft font-sans text-ink antialiased;
+}
+
+#root {
+  @apply min-h-screen;
+}
