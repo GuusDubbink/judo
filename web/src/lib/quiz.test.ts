@@ -11,6 +11,7 @@ const FILTER_SCENARIOS: QuizFilters[] = [
   ...BELT_ORDER.map((belt) => ({ belt, domain: 'all' as const, count: 9999 })),
   { belt: 'all', domain: 'nage_waza', count: 9999 },
   { belt: 'all', domain: 'ne_waza', count: 9999 },
+  { belt: 'all', domain: 'glossary', count: 9999 },
 ]
 
 describe('quiz ground truth', () => {
@@ -104,6 +105,24 @@ describe('quiz ground truth', () => {
 })
 
 describe('quiz scoring truth', () => {
+  it('glossary filter only generates glossary questions', () => {
+    const filters: QuizFilters = { belt: 'all', domain: 'glossary', count: 9999 }
+    const questions = buildQuestionPool(filters)
+
+    expect(questions.length).toBeGreaterThan(0)
+    expect(questions.every((question) => question.type === 'glossary')).toBe(true)
+  })
+
+  it('standing and ground filters exclude glossary questions', () => {
+    for (const domain of ['nage_waza', 'ne_waza'] as const) {
+      const filters: QuizFilters = { belt: 'all', domain, count: 9999 }
+      const questions = buildQuestionPool(filters)
+
+      expect(questions.length).toBeGreaterThan(0)
+      expect(questions.some((question) => question.type === 'glossary')).toBe(false)
+    }
+  })
+
   it('domain questions only offer the two domain labels as options', () => {
     const filters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
     const domainLabels = new Set(['Staande techniek (nage waza)', 'Grondtechniek (ne waza)'])

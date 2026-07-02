@@ -189,8 +189,10 @@ export function buildQuestionPool(filters: QuizFilters): QuizQuestion[] {
     }
   }
 
-  for (const entry of db.glossary) {
-    add(buildGlossaryQuestion(entry, db.glossary))
+  if (filters.domain === 'all' || filters.domain === 'glossary') {
+    for (const entry of db.glossary) {
+      add(buildGlossaryQuestion(entry, db.glossary))
+    }
   }
 
   return questions
@@ -220,12 +222,15 @@ export function techniqueCount(filters: QuizFilters): number {
 
 export function getSetupStats(filters: QuizFilters): {
   techniques: number
+  glossaryTerms: number
   questions: number
   quizLength: number
 } {
   const questions = buildQuestionPool(filters)
+  const isGlossaryOnly = filters.domain === 'glossary'
   return {
-    techniques: filterTechniques(db, filters).length,
+    techniques: isGlossaryOnly ? 0 : filterTechniques(db, filters).length,
+    glossaryTerms: isGlossaryOnly ? db.glossary.length : 0,
     questions: questions.length,
     quizLength: Math.min(filters.count, questions.length),
   }

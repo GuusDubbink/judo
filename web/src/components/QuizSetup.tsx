@@ -1,5 +1,5 @@
 import { useId, useMemo, useState, type ReactNode } from 'react'
-import type { BeltCode, Domain, QuizFilters } from '../types'
+import type { BeltCode, QuizDomainFilter, QuizFilters } from '../types'
 import { BELT_ORDER } from '../types'
 import { QUESTION_COUNTS } from '../lib/constants'
 import { getBelts, getMeta, getSetupStats } from '../lib/quiz'
@@ -12,7 +12,7 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
   const meta = getMeta()
   const belts = getBelts()
   const [belt, setBelt] = useState<BeltCode | 'all'>('all')
-  const [domain, setDomain] = useState<Domain | 'all'>('all')
+  const [domain, setDomain] = useState<QuizDomainFilter>('all')
   const [count, setCount] = useState<number>(10)
 
   const filters = useMemo<QuizFilters>(
@@ -20,12 +20,13 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
     [belt, domain, count],
   )
 
-  const { techniques, questions, quizLength } = useMemo(
+  const { techniques, glossaryTerms, questions, quizLength } = useMemo(
     () => getSetupStats(filters),
     [filters],
   )
   const canStart = questions > 0
   const countCapped = canStart && count > questions
+  const isGlossaryOnly = domain === 'glossary'
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:gap-8 sm:py-10">
@@ -69,6 +70,9 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
           <FilterChip active={domain === 'ne_waza'} onClick={() => setDomain('ne_waza')}>
             Grondtechnieken
           </FilterChip>
+          <FilterChip active={domain === 'glossary'} onClick={() => setDomain('glossary')}>
+            Woordenlijst
+          </FilterChip>
         </div>
       </section>
 
@@ -86,7 +90,9 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
           ))}
         </div>
         <p className="mt-4 text-sm text-muted">
-          {techniques} technieken · {questions} mogelijke vragen in deze selectie.
+          {isGlossaryOnly
+            ? `${glossaryTerms} woorden · ${questions} mogelijke vragen in deze selectie.`
+            : `${techniques} technieken · ${questions} mogelijke vragen in deze selectie.`}
           {countCapped ? (
             <span className="mt-1 block text-ink">
               Er zijn maar {questions} vragen beschikbaar; je krijgt er {quizLength}.

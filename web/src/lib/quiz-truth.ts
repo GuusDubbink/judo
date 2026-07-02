@@ -2,9 +2,7 @@ import { db, getTechnique, techniqueById } from '../data/db'
 import type { BeltCode, JudoData, QuizFilters, QuizQuestion, Technique } from '../types'
 import { BELT_ORDER } from '../types'
 import { DOMAIN_LABELS } from './constants'
-import {
-  glossarySlug,
-} from './quiz-options'
+import { glossarySlug } from './quiz-options'
 
 export { db }
 
@@ -19,6 +17,8 @@ function beltsUpTo(selected: BeltCode): BeltCode[] {
 }
 
 export function filterTechniques(data: JudoData, filters: QuizFilters): Technique[] {
+  if (filters.domain === 'glossary') return []
+
   return data.techniques.filter((technique) => {
     if (filters.belt !== 'all') {
       if (!technique.belt) return false

@@ -1,5 +1,6 @@
 export type BeltCode = 'ge' | 'or' | 'gr' | 'bl' | 'br' | 'zw'
 export type Domain = 'nage_waza' | 'ne_waza'
+export type QuizDomainFilter = Domain | 'all' | 'glossary'
 
 export const BELT_ORDER: BeltCode[] = ['ge', 'or', 'gr', 'bl', 'br', 'zw']
 
@@ -76,6 +77,6 @@ export interface QuizQuestion {
 
 export interface QuizFilters {
   belt: BeltCode | 'all'
-  domain: Domain | 'all'
+  domain: QuizDomainFilter
   count: number
 }
