@@ -25,6 +25,13 @@ export default function App() {
     setScreen('quiz')
   }, [])
 
+  const goHome = useCallback(() => {
+    setScreen('setup')
+    setQuestions([])
+    setAnswers({})
+    setIndex(0)
+  }, [])
+
   const currentQuestion = questions[index]
   const selectedIndex = answers[index] ?? null
   const showFeedback = selectedIndex !== null
@@ -78,6 +85,7 @@ export default function App() {
           onSelect={handleSelect}
           onPrevious={goToPrevious}
           onNext={goToNext}
+          onHome={goHome}
         />
       ) : null}
 
@@ -86,7 +94,7 @@ export default function App() {
           score={score}
           total={questions.length}
           onRetry={retry}
-          onRestart={() => setScreen('setup')}
+          onRestart={goHome}
         />
       ) : null}
     </main>

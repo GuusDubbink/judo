@@ -1,6 +1,8 @@
 export type BeltCode = 'ge' | 'or' | 'gr' | 'bl' | 'br' | 'zw'
 export type Domain = 'nage_waza' | 'ne_waza'
 
+export const BELT_ORDER: BeltCode[] = ['ge', 'or', 'gr', 'bl', 'br', 'zw']
+
 export interface Technique {
   id: string
   name: string
@@ -19,6 +21,25 @@ export interface Category {
   en: string
 }
 
+export interface Counter {
+  attack: string
+  attack_id?: string | null
+  counter: string
+  counter_id?: string | null
+}
+
+export interface Combination {
+  first: string
+  first_id?: string | null
+  then: string
+  then_id?: string | null
+}
+
+export interface GlossaryEntry {
+  term: string
+  nl: string
+}
+
 export interface JudoData {
   meta: {
     school: string
@@ -28,9 +49,19 @@ export interface JudoData {
   belts: Record<BeltCode, string>
   categories: Record<string, Category>
   techniques: Technique[]
+  counters: Counter[]
+  combinations: Combination[]
+  glossary: GlossaryEntry[]
 }
 
-export type QuestionType = 'category' | 'belt' | 'technique'
+export type QuestionType =
+  | 'category'
+  | 'technique'
+  | 'counter'
+  | 'combination'
+  | 'domain'
+  | 'number'
+  | 'glossary'
 
 export interface QuizQuestion {
   id: string
@@ -39,7 +70,6 @@ export interface QuizQuestion {
   hint?: string
   options: string[]
   correctIndex: number
-  techniqueId: string
 }
 
 export interface QuizFilters {

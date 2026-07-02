@@ -1,21 +1,35 @@
 import data from '@data'
 import type {
   BeltCode,
+  Combination,
+  Counter,
+  GlossaryEntry,
   JudoData,
   QuizFilters,
   QuizQuestion,
-  QuestionType,
   Technique,
 } from '../types'
+import { BELT_ORDER } from '../types'
 import { sample, shuffle } from './shuffle'
 
 const db = data as JudoData
 
-const QUESTION_TYPES: QuestionType[] = ['category', 'belt', 'technique']
+const DOMAIN_LABELS: Record<string, string> = {
+  nage_waza: 'Staande techniek (nage waza)',
+  ne_waza: 'Grondtechniek (ne waza)',
+}
+
+function beltsUpTo(selected: BeltCode): BeltCode[] {
+  const index = BELT_ORDER.indexOf(selected)
+  return BELT_ORDER.slice(0, index + 1)
+}
 
 function filterTechniques(filters: QuizFilters): Technique[] {
   return db.techniques.filter((technique) => {
-    if (filters.belt !== 'all' && technique.belt !== filters.belt) return false
+    if (filters.belt !== 'all') {
+      if (!technique.belt) return false
+      if (!beltsUpTo(filters.belt).includes(technique.belt)) return false
+    }
     if (filters.domain !== 'all' && technique.domain !== filters.domain) return false
     return true
   })
@@ -26,8 +40,9 @@ function pickDistractors<T>(
   correct: T,
   count: number,
   key: (item: T) => string,
-): T[] {
+): T[] | null {
   const unique = pool.filter((item) => key(item) !== key(correct))
+  if (unique.length < count) return null
   const picks = sample(unique, count)
   return shuffle([correct, ...picks])
 }
@@ -37,8 +52,8 @@ function categoryLabel(categoryId: string): string {
   return category ? `${category.nl} (${category.jp})` : categoryId
 }
 
-function beltLabel(code: BeltCode): string {
-  return db.belts[code]
+function glossaryTermLabel(term: string): string {
+  return term.split('(')[0].trim()
 }
 
 function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
@@ -47,10 +62,8 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
     .filter((id) => db.categories[id].domain === technique.domain)
     .map((id) => categoryLabel(id))
 
-  if (pool.length < 4) return null
-
   const options = pickDistractors(pool, correctLabel, 3, (label) => label)
-  const correctIndex = options.indexOf(correctLabel)
+  if (!options) return null
 
   return {
     id: `${technique.id}-category`,
@@ -58,27 +71,7 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
     prompt: 'Welke categorie hoort bij deze techniek?',
     hint: technique.name,
     options,
-    correctIndex,
-    techniqueId: technique.id,
-  }
-}
-
-function buildBeltQuestion(technique: Technique): QuizQuestion | null {
-  if (!technique.belt) return null
-
-  const correctLabel = beltLabel(technique.belt)
-  const pool = (Object.keys(db.belts) as BeltCode[]).map((code) => beltLabel(code))
-  const options = pickDistractors(pool, correctLabel, 3, (label) => label)
-  const correctIndex = options.indexOf(correctLabel)
-
-  return {
-    id: `${technique.id}-belt`,
-    type: 'belt',
-    prompt: 'Bij welke band leer je deze techniek?',
-    hint: technique.name,
-    options,
-    correctIndex,
-    techniqueId: technique.id,
+    correctIndex: options.indexOf(correctLabel),
   }
 }
 
@@ -86,12 +79,11 @@ function buildTechniqueQuestion(technique: Technique, pool: Technique[]): QuizQu
   const sameCategory = pool.filter(
     (item) => item.category === technique.category && item.id !== technique.id,
   )
-  if (sameCategory.length < 3) return null
-
-  const options = pickDistractors(sameCategory, technique, 3, (item) => item.id).map(
+  const options = pickDistractors(sameCategory, technique, 3, (item) => item.id)?.map(
     (item) => item.name,
   )
-  const correctIndex = options.indexOf(technique.name)
+  if (!options) return null
+
   const category = db.categories[technique.category]
 
   return {
@@ -100,46 +92,161 @@ function buildTechniqueQuestion(technique: Technique, pool: Technique[]): QuizQu
     prompt: `Welke techniek hoort bij ${category?.nl ?? technique.category}?`,
     hint: category?.jp,
     options,
-    correctIndex,
-    techniqueId: technique.id,
+    correctIndex: options.indexOf(technique.name),
   }
 }
 
-function buildQuestion(
-  technique: Technique,
-  type: QuestionType,
+function buildDomainQuestion(technique: Technique): QuizQuestion | null {
+  const correctLabel = DOMAIN_LABELS[technique.domain]
+  const wrongDomain = technique.domain === 'nage_waza' ? 'ne_waza' : 'nage_waza'
+  const decoys = Object.values(db.categories)
+    .filter((category) => category.domain === wrongDomain)
+    .map((category) => category.nl)
+
+  const pool = [correctLabel, DOMAIN_LABELS[wrongDomain], ...decoys]
+  const uniquePool = [...new Set(pool)]
+  const options = pickDistractors(uniquePool, correctLabel, 3, (label) => label)
+  if (!options) return null
+
+  return {
+    id: `${technique.id}-domain`,
+    type: 'domain',
+    prompt: 'Is dit een staande of grondtechniek?',
+    hint: technique.name,
+    options,
+    correctIndex: options.indexOf(correctLabel),
+  }
+}
+
+function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuestion | null {
+  if (technique.number == null) return null
+
+  const sameCategory = pool.filter(
+    (item) => item.category === technique.category && item.id !== technique.id,
+  )
+  const options = pickDistractors(sameCategory, technique, 3, (item) => item.id)?.map(
+    (item) => item.name,
+  )
+  if (!options) return null
+
+  const category = db.categories[technique.category]
+
+  return {
+    id: `${technique.id}-number`,
+    type: 'number',
+    prompt: `Welke techniek is nummer ${technique.number} bij ${category?.nl ?? technique.category}?`,
+    hint: category?.jp,
+    options,
+    correctIndex: options.indexOf(technique.name),
+  }
+}
+
+function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion | null {
+  if (!counter.attack_id || !counter.counter_id) return null
+
+  const attack = pool.find((technique) => technique.id === counter.attack_id)
+  const counterTechnique = db.techniques.find((technique) => technique.id === counter.counter_id)
+  if (!attack || !counterTechnique) return null
+
+  const optionPool = pool.filter((technique) => technique.id !== counter.counter_id)
+  const options = pickDistractors(optionPool, counterTechnique, 3, (item) => item.id)?.map(
+    (item) => item.name,
+  )
+  if (!options) return null
+
+  return {
+    id: `counter-${counter.attack_id}-${counter.counter_id}`,
+    type: 'counter',
+    prompt: 'Welke counter hoort bij deze techniek?',
+    hint: attack.name,
+    options,
+    correctIndex: options.indexOf(counterTechnique.name),
+  }
+}
+
+function buildCombinationQuestion(
+  combination: Combination,
   pool: Technique[],
 ): QuizQuestion | null {
-  switch (type) {
-    case 'category':
-      return buildCategoryQuestion(technique)
-    case 'belt':
-      return buildBeltQuestion(technique)
-    case 'technique':
-      return buildTechniqueQuestion(technique, pool)
-    default:
-      return null
+  if (!combination.first_id || !combination.then_id) return null
+
+  const first = pool.find((technique) => technique.id === combination.first_id)
+  const thenTechnique = db.techniques.find((technique) => technique.id === combination.then_id)
+  if (!first || !thenTechnique) return null
+
+  const optionPool = pool.filter((technique) => technique.id !== combination.then_id)
+  const options = pickDistractors(optionPool, thenTechnique, 3, (item) => item.id)?.map(
+    (item) => item.name,
+  )
+  if (!options) return null
+
+  return {
+    id: `combo-${combination.first_id}-${combination.then_id}`,
+    type: 'combination',
+    prompt: 'Welke techniek volgt hierop in de combinatie?',
+    hint: first.name,
+    options,
+    correctIndex: options.indexOf(thenTechnique.name),
   }
 }
 
-export function createQuiz(filters: QuizFilters): QuizQuestion[] {
+function buildGlossaryQuestion(entry: GlossaryEntry, pool: GlossaryEntry[]): QuizQuestion | null {
+  const options = pickDistractors(pool, entry, 3, (item) => item.term)?.map((item) => item.nl)
+  if (!options) return null
+
+  const label = glossaryTermLabel(entry.term)
+
+  return {
+    id: `glossary-${entry.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+    type: 'glossary',
+    prompt: `Wat betekent ${label}?`,
+    options,
+    correctIndex: options.indexOf(entry.nl),
+  }
+}
+
+function buildQuestionPool(filters: QuizFilters): QuizQuestion[] {
   const pool = filterTechniques(filters)
-  if (pool.length < 4) return []
-
-  const selectedTechniques = sample(pool, filters.count)
+  const techniqueIds = new Set(pool.map((technique) => technique.id))
   const questions: QuizQuestion[] = []
+  const seen = new Set<string>()
 
-  for (const [index, technique] of selectedTechniques.entries()) {
-    const type = QUESTION_TYPES[index % QUESTION_TYPES.length]
-    const question =
-      buildQuestion(technique, type, pool) ??
-      buildCategoryQuestion(technique) ??
-      buildTechniqueQuestion(technique, pool)
+  const add = (question: QuizQuestion | null) => {
+    if (!question || seen.has(question.id)) return
+    seen.add(question.id)
+    questions.push(question)
+  }
 
-    if (question) questions.push(question)
+  for (const technique of pool) {
+    add(buildCategoryQuestion(technique))
+    add(buildTechniqueQuestion(technique, pool))
+    add(buildDomainQuestion(technique))
+    add(buildNumberQuestion(technique, pool))
+  }
+
+  for (const counter of db.counters) {
+    if (counter.attack_id && techniqueIds.has(counter.attack_id)) {
+      add(buildCounterQuestion(counter, pool))
+    }
+  }
+
+  for (const combination of db.combinations) {
+    if (combination.first_id && techniqueIds.has(combination.first_id)) {
+      add(buildCombinationQuestion(combination, pool))
+    }
+  }
+
+  for (const entry of db.glossary) {
+    add(buildGlossaryQuestion(entry, db.glossary))
   }
 
   return questions
+}
+
+export function createQuiz(filters: QuizFilters): QuizQuestion[] {
+  const pool = buildQuestionPool(filters)
+  if (pool.length === 0) return []
+  return shuffle(pool).slice(0, Math.min(filters.count, pool.length))
 }
 
 export function getMeta() {
@@ -148,6 +255,10 @@ export function getMeta() {
 
 export function getBelts() {
   return db.belts
+}
+
+export function availableQuestionCount(filters: QuizFilters): number {
+  return buildQuestionPool(filters).length
 }
 
 export function techniqueCount(filters: QuizFilters): number {

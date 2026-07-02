@@ -12,6 +12,7 @@ interface QuizQuestionViewProps {
   onSelect: (index: number) => void
   onPrevious: () => void
   onNext: () => void
+  onHome: () => void
 }
 
 export function QuizQuestionView({
@@ -26,17 +27,26 @@ export function QuizQuestionView({
   onSelect,
   onPrevious,
   onNext,
+  onHome,
 }: QuizQuestionViewProps) {
   const progress = (questionNumber / total) * 100
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8">
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:gap-6 sm:py-8">
+      <div className="flex items-center justify-between gap-3">
+        <button
+          type="button"
+          onClick={onHome}
+          className="min-h-11 rounded-lg px-2 text-sm font-medium text-club-blue transition hover:bg-club-blue-light sm:px-3"
+        >
+          ← Start
+        </button>
+        <span className="text-sm text-muted capitalize">{questionTypeLabel(question.type)}</span>
+      </div>
+
       <div className="space-y-2">
-        <div className="flex items-center justify-between text-sm text-muted">
-          <span>
-            Vraag {questionNumber} van {total}
-          </span>
-          <span className="capitalize">{questionTypeLabel(question.type)}</span>
+        <div className="text-sm text-muted">
+          Vraag {questionNumber} van {total}
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-club-blue-light">
           <div
@@ -46,24 +56,26 @@ export function QuizQuestionView({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
-        <p className="text-lg text-muted">{question.prompt}</p>
+      <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-8">
+        <p className="text-base text-muted sm:text-lg">{question.prompt}</p>
         {question.hint ? (
-          <p className="mt-4 text-3xl font-bold tracking-tight text-ink">{question.hint}</p>
+          <p className="mt-3 text-2xl font-bold tracking-tight text-ink sm:mt-4 sm:text-3xl">
+            {question.hint}
+          </p>
         ) : null}
       </div>
 
-      <div className="grid gap-3">
+      <div className="grid gap-2.5 sm:gap-3">
         {question.options.map((option, optionIndex) => {
           const isSelected = selectedIndex === optionIndex
           const isCorrect = optionIndex === question.correctIndex
           let classes =
-            'rounded-xl border px-5 py-4 text-left text-base font-medium transition'
+            'min-h-12 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
 
           if (!showFeedback) {
             classes += isSelected
               ? ' border-club-blue bg-club-blue-light text-ink'
-              : ' border-border bg-surface text-ink hover:border-club-blue hover:bg-club-blue-soft'
+              : ' border-border bg-surface text-ink active:bg-club-blue-soft hover:border-club-blue hover:bg-club-blue-soft'
           } else if (isCorrect) {
             classes += ' border-correct bg-green-50 text-ink'
           } else if (isSelected) {
@@ -86,12 +98,12 @@ export function QuizQuestionView({
         })}
       </div>
 
-      <div className="flex gap-3 pt-2">
+      <div className="grid grid-cols-2 gap-3 pt-1 sm:pt-2">
         <button
           type="button"
           onClick={onPrevious}
           disabled={!canGoBack}
-          className="flex-1 rounded-xl border border-border bg-surface px-5 py-3 font-semibold text-ink transition hover:border-club-blue hover:bg-club-blue-soft disabled:cursor-not-allowed disabled:border-border disabled:text-muted disabled:hover:bg-surface"
+          className="min-h-12 rounded-xl border border-border bg-surface px-4 py-3 font-semibold text-ink transition hover:border-club-blue hover:bg-club-blue-soft disabled:cursor-not-allowed disabled:border-border disabled:text-muted disabled:hover:bg-surface"
         >
           Vorige
         </button>
@@ -99,9 +111,9 @@ export function QuizQuestionView({
           type="button"
           onClick={onNext}
           disabled={!canGoForward}
-          className="flex-1 rounded-xl bg-club-blue px-5 py-3 font-semibold text-white transition hover:bg-club-blue-dark disabled:cursor-not-allowed disabled:bg-club-blue-light disabled:text-muted"
+          className="min-h-12 rounded-xl bg-club-blue px-4 py-3 font-semibold text-white transition hover:bg-club-blue-dark disabled:cursor-not-allowed disabled:bg-club-blue-light disabled:text-muted"
         >
-          {isLastQuestion ? 'Bekijk resultaat' : 'Volgende'}
+          {isLastQuestion ? 'Resultaat' : 'Volgende'}
         </button>
       </div>
     </div>
@@ -112,10 +124,18 @@ function questionTypeLabel(type: QuizQuestion['type']): string {
   switch (type) {
     case 'category':
       return 'categorie'
-    case 'belt':
-      return 'band'
     case 'technique':
       return 'techniek'
+    case 'counter':
+      return 'counter'
+    case 'combination':
+      return 'combinatie'
+    case 'domain':
+      return 'domein'
+    case 'number':
+      return 'nummer'
+    case 'glossary':
+      return 'woordenlijst'
     default:
       return type
   }
