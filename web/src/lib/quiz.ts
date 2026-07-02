@@ -32,6 +32,7 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
     hint: technique.name,
     options,
     correctIndex: options.indexOf(correctLabel),
+    infoTechniqueIds: [technique.id],
   }
 }
 
@@ -47,6 +48,7 @@ function buildTechniqueQuestion(technique: Technique): QuizQuestion | null {
     hint: categoryLabel(db, technique.category),
     options,
     correctIndex: options.indexOf(technique.name),
+    infoTechniqueIds: [technique.id],
   }
 }
 
@@ -62,6 +64,7 @@ function buildDomainQuestion(technique: Technique): QuizQuestion | null {
     hint: technique.name,
     options,
     correctIndex: options.indexOf(correctLabel),
+    infoTechniqueIds: [technique.id],
   }
 }
 
@@ -83,6 +86,7 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
     hint: category?.jp,
     options,
     correctIndex: options.indexOf(technique.name),
+    infoTechniqueIds: [technique.id],
   }
 }
 
@@ -110,6 +114,7 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
     hint: attack.name,
     options,
     correctIndex: options.indexOf(counterTechnique.name),
+    infoTechniqueIds: [attack.id, counterTechnique.id],
   }
 }
 
@@ -142,6 +147,7 @@ function buildCombinationQuestion(
     hint: first.name,
     options,
     correctIndex: options.indexOf(thenTechnique.name),
+    infoTechniqueIds: [first.id, thenTechnique.id],
   }
 }
 

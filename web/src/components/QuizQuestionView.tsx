@@ -1,6 +1,8 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { QuizQuestion } from '../types'
 import { QUESTION_TYPE_LABELS } from '../lib/constants'
+import { resolveTechniqueInfo } from '../lib/technique-info'
+import { TechniqueInfoSheet } from './TechniqueInfoSheet'
 
 interface QuizQuestionViewProps {
   question: QuizQuestion
@@ -33,6 +35,17 @@ export function QuizQuestionView({
   onHome,
   validIndices,
 }: QuizQuestionViewProps) {
+  const [infoOpen, setInfoOpen] = useState(false)
+  const techniqueInfo = useMemo(
+    () => resolveTechniqueInfo(question.infoTechniqueIds ?? []),
+    [question.infoTechniqueIds],
+  )
+  const showInfoButton = techniqueInfo.length > 0
+
+  useEffect(() => {
+    setInfoOpen(false)
+  }, [question.id])
+
   const progress = (questionNumber / total) * 100
   const validSet = useMemo(() => new Set(validIndices), [validIndices])
   const answeredCorrectly =
@@ -79,7 +92,24 @@ export function QuizQuestionView({
             {question.hint}
           </p>
         ) : null}
+        {showInfoButton ? (
+          <div className="mt-4 flex justify-end sm:mt-5">
+            <button
+              type="button"
+              onClick={() => setInfoOpen(true)}
+              className="min-h-11 rounded-xl border border-club-blue bg-club-blue-light px-4 py-2.5 text-sm font-semibold text-club-blue-dark transition hover:bg-club-blue hover:text-white"
+            >
+              Meer info
+            </button>
+          </div>
+        ) : null}
       </div>
+
+      <TechniqueInfoSheet
+        open={infoOpen}
+        techniques={techniqueInfo}
+        onClose={() => setInfoOpen(false)}
+      />
 
       <div
         className="grid gap-2.5 sm:gap-3"
