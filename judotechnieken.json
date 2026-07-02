@@ -1,0 +1,2502 @@
+{
+  "meta": {
+    "source": "Judotechnieken.docx",
+    "school": "Eerste Utrechtse Judo en Ju Jutsu School",
+    "language": "nl",
+    "schema_version": 1,
+    "notes": "Technique names transcribed verbatim from source; suspected typos kept as-is and marked needs_review. Belt codes map to kyu grade colors.",
+    "ref_abbreviations": {
+      "bw": "beenworp",
+      "hw": "heupworp",
+      "sw": "schouderworp",
+      "aw": "armworp",
+      "sut": "sutemi/offerworp"
+    }
+  },
+  "belts": {
+    "ge": "geel",
+    "or": "oranje",
+    "gr": "groen",
+    "bl": "blauw",
+    "br": "bruin",
+    "zw": "zwart"
+  },
+  "categories": {
+    "ashi_waza": {
+      "domain": "nage_waza",
+      "jp": "Ashi Waza",
+      "nl": "beenworpen",
+      "en": "leg/foot throws"
+    },
+    "koshi_waza": {
+      "domain": "nage_waza",
+      "jp": "Koshi Waza",
+      "nl": "heupworpen",
+      "en": "hip throws"
+    },
+    "kata_waza": {
+      "domain": "nage_waza",
+      "jp": "Kata Waza",
+      "nl": "schouderworpen",
+      "en": "shoulder throws"
+    },
+    "te_waza": {
+      "domain": "nage_waza",
+      "jp": "Te Waza",
+      "nl": "armworpen",
+      "en": "arm/hand throws"
+    },
+    "sutemi_waza": {
+      "domain": "nage_waza",
+      "jp": "Sutemi Waza",
+      "nl": "offerworpen",
+      "en": "sacrifice throws"
+    },
+    "osaekomi_waza": {
+      "domain": "ne_waza",
+      "jp": "Osae Komi Waza / Katame Waza",
+      "nl": "houdgrepen",
+      "en": "pins/holds"
+    },
+    "kansetsu_waza": {
+      "domain": "ne_waza",
+      "jp": "Ude Kansetsu Waza",
+      "nl": "armklemmen",
+      "en": "arm locks"
+    },
+    "jime_waza": {
+      "domain": "ne_waza",
+      "jp": "Jime Waza",
+      "nl": "verwurgingen",
+      "en": "strangles/chokes"
+    }
+  },
+  "techniques": [
+    {
+      "id": "o-soto-gari",
+      "name": "O Soto Gari",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "de-ashi-barai",
+      "name": "De Ashi Barai",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "hiza-guruma",
+      "name": "Hiza Guruma",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ko-soto-gake",
+      "name": "Ko Soto Gake",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "o-uchi-gari",
+      "name": "O Uchi Gari",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ko-uchi-gari",
+      "name": "Ko Uchi Gari",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 6,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "okuri-ashi-barai",
+      "name": "Okuri Ashi Barai",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "gr",
+      "number": 7,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "o-soto-guruma",
+      "name": "O Soto Guruma",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 8,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "o-soto-otoshi",
+      "name": "O Soto Otoshi",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 9,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ko-soto-gari",
+      "name": "Ko Soto Gari",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 10,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "sasae-tsuri-komi-ashi",
+      "name": "Sasae Tsuri Komi Ashi",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 11,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "harai-tsuri-komi-ashi",
+      "name": "Harai Tsuri Komi Ashi",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 12,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "soto-gake",
+      "name": "Soto Gake",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": 13,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ko-uchi-maki-komi",
+      "name": "Ko Uchi Maki Komi",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": 14,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ashi-guruma",
+      "name": "Ashi Guruma",
+      "category": "ashi_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": 15,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uki-goshi",
+      "name": "Uki Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kubi-nage",
+      "name": "Kubi Nage",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tsuri-goshi",
+      "name": "Tsuri Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "koshi-guruma",
+      "name": "Koshi Guruma",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "harai-goshi",
+      "name": "Harai Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "hane-goshi",
+      "name": "Hane Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 6,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ushiro-goshi",
+      "name": "Ushiro Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "gr",
+      "number": 7,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tsuri-komi-goshi",
+      "name": "Tsuri Komi Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "gr",
+      "number": 8,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "utsuri-goshi",
+      "name": "Utsuri Goshi",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 9,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uchi-mata",
+      "name": "Uchi Mata",
+      "category": "koshi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 10,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ippon-seoi-nage",
+      "name": "Ippon Seoi Nage / Kata Seoi",
+      "category": "kata_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "morote-seoi-nage",
+      "name": "Morote Seoi Nage",
+      "category": "kata_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kata-guruma",
+      "name": "Kata Guruma",
+      "category": "kata_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "seoi-otoshi",
+      "name": "Seoi Otoshi",
+      "category": "kata_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "hidari-kata-seoi",
+      "name": "Hidari Kata Seoi",
+      "category": "kata_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tai-otoshi",
+      "name": "Tai Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uki-otoshi",
+      "name": "Uki Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "hiji-otoshi",
+      "name": "Hiji Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "sukui-nage",
+      "name": "Sukui Nage",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": "gr",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "mochiage-otoshi",
+      "name": "Mochiage Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "te-guruma",
+      "name": "Te Guruma",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": null,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "sumi-otoshi",
+      "name": "Sumi Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": null,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "obi-otoshi",
+      "name": "Obi Otoshi",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": null,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kata-ashi-dori",
+      "name": "Kata Ashi Dori",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": null,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ryo-ashi-dori",
+      "name": "Ryo Ashi Dori",
+      "category": "te_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": null,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tomoe-nage",
+      "name": "Tomoe Nage",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 1,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-tomoe",
+      "name": "Yoko Tomoe",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "or",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tomoe-nage-klem",
+      "name": "Tomoe Nage + klem",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "gr",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "soto-maki-komi",
+      "name": "Soto Maki Komi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-gake",
+      "name": "Yoko Gake",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tani-otoshi",
+      "name": "Tani Otoshi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 6,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "sumi-gaeshi",
+      "name": "Sumi Gaeshi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 7,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uki-waza",
+      "name": "Uki Waza",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "bl",
+      "number": 8,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kani-basami",
+      "name": "Kani Basami",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "br",
+      "number": 9,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-otoshi",
+      "name": "Yoko Otoshi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "br",
+      "number": 10,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "hane-maki-komi",
+      "name": "Hane Maki Komi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 11,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ura-nage",
+      "name": "Ura Nage",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 12,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-guruma",
+      "name": "Yoko Guruma",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": "zw",
+      "number": 13,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-wakare",
+      "name": "Yoko Wakare",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": 14,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "taware-gaeshi",
+      "name": "Taware Gaeshi",
+      "category": "sutemi_waza",
+      "domain": "nage_waza",
+      "belt": null,
+      "number": 15,
+      "series": null,
+      "needs_review": true
+    },
+    {
+      "id": "hon-geza-gatame",
+      "name": "Hon Geza Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": null,
+      "needs_review": true
+    },
+    {
+      "id": "kata-gatame",
+      "name": "Kata Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kami-shiho-gatame",
+      "name": "Kami Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 3,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kuzure-kami-shiho-gatame",
+      "name": "Kuzure Kami Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 4,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "ushiro-gesa-gatame",
+      "name": "Ushiro Gesa Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 5,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "yoko-shiho-gatame",
+      "name": "Yoko Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 6,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "mune-gatame",
+      "name": "Mune Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 7,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tate-shiho-gatame",
+      "name": "Tate Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 8,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kuzure-gesa-gatame",
+      "name": "Kuzure Gesa Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 9,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kata-oesa-gatame",
+      "name": "Kata Oesa Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 10,
+      "series": null,
+      "needs_review": true
+    },
+    {
+      "id": "ura-gatame",
+      "name": "Ura Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 11,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kashira-gatame",
+      "name": "Kashira Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 12,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uri-shiho-gatame",
+      "name": "Uri Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 13,
+      "series": null,
+      "needs_review": true
+    },
+    {
+      "id": "kami-sankaku-gatame",
+      "name": "Kami Sankaku Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 14,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "kuzure-yoko-shiho-gatame",
+      "name": "Kuzure Yoko Shiho Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 15,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "tate-sankaku-gatame",
+      "name": "Tate Sankaku Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 16,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "uki-gatame",
+      "name": "Uki Gatame",
+      "category": "osaekomi_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 17,
+      "series": null,
+      "needs_review": false
+    },
+    {
+      "id": "udi-hishigi-juji-katame",
+      "name": "Udi Hishigi Juji Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": "1e serie",
+      "needs_review": true
+    },
+    {
+      "id": "ude-garami",
+      "name": "Ude Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ude-hishigi",
+      "name": "Ude Hishigi",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 3,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hiza-gatame",
+      "name": "Hiza Gatame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 4,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kami-ude-juji-gatame",
+      "name": "Kami Ude Juji Gatame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 1,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "yoko-ude-hishigi",
+      "name": "Yoko Ude Hishigi",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 2,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kami-hiza-katame",
+      "name": "Kami Hiza Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 3,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ude-hishigi-henkawaza",
+      "name": "Ude Hishigi Henkawaza",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 1,
+      "series": "3e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-juji",
+      "name": "Gyaku Juji",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 2,
+      "series": "3e serie",
+      "needs_review": false
+    },
+    {
+      "id": "shime-garami",
+      "name": "Shime Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 3,
+      "series": "3e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hiza-gatame-2",
+      "name": "Hiza Gatame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 4,
+      "series": "3e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hara-katame",
+      "name": "Hara Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 1,
+      "series": "4e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ashi-katame",
+      "name": "Ashi Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 2,
+      "series": "4e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ude-garami-henkawaza",
+      "name": "Ude Garami Henkawaza",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 3,
+      "series": "4e serie",
+      "needs_review": false
+    },
+    {
+      "id": "othen-karami",
+      "name": "Othen Karami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 4,
+      "series": "4e serie",
+      "needs_review": true
+    },
+    {
+      "id": "keza-garami",
+      "name": "Keza Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "br",
+      "number": 1,
+      "series": "5e serie",
+      "needs_review": true
+    },
+    {
+      "id": "kuzure-kami-shiho-garami",
+      "name": "Kuzure Kami Shiho Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "br",
+      "number": 2,
+      "series": "5e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-kesa-garami",
+      "name": "Gyaku Kesa Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "br",
+      "number": 3,
+      "series": "5e serie",
+      "needs_review": false
+    },
+    {
+      "id": "mune-garami",
+      "name": "Mune Garami",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "br",
+      "number": 4,
+      "series": "5e serie",
+      "needs_review": false
+    },
+    {
+      "id": "mune-gyaku",
+      "name": "Mune Gyaku",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "br",
+      "number": 5,
+      "series": "5e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-te-kubi",
+      "name": "Gyaku Te Kubi",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 1,
+      "series": "6e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hiji-maki-komi",
+      "name": "Hiji Maki Komi",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 2,
+      "series": "6e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kuzure-hiji-maki-komi",
+      "name": "Kuzure Hiji Maki Komi",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 3,
+      "series": "6e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kanuki-katame",
+      "name": "Kanuki Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 4,
+      "series": "6e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ude-hishigi-hiza-katame",
+      "name": "Ude Hishigi Hiza Katame",
+      "category": "kansetsu_waza",
+      "domain": "ne_waza",
+      "belt": "zw",
+      "number": 5,
+      "series": "6e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kata-juji-jime",
+      "name": "Kata Juji Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 1,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-juji-jime",
+      "name": "Gyaku Juji Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 2,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "yoko-juji-jime",
+      "name": "Yoko Juji Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "ge",
+      "number": 3,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ushiro-jime",
+      "name": "Ushiro Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 4,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "okuri-eri-jime",
+      "name": "Okuri Eri Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 5,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kata-ha-jime",
+      "name": "Kata Ha Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 6,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hadaka-jime",
+      "name": "Hadaka Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "or",
+      "number": 7,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "ebi-garami",
+      "name": "Ebi Garami",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 8,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "tomoe-jime",
+      "name": "Tomoe Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 9,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "eri-jime",
+      "name": "Eri Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 10,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kensui-jime",
+      "name": "Kensui Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "gr",
+      "number": 11,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kata-jime",
+      "name": "Kata Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 12,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "do-jime",
+      "name": "Do Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 13,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hiza-jime",
+      "name": "Hiza Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 14,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "tsukomi-jime",
+      "name": "Tsukomi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 15,
+      "series": "1e serie",
+      "needs_review": true
+    },
+    {
+      "id": "ebi-jime",
+      "name": "Ebi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 16,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hasami-jime",
+      "name": "Hasami Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 17,
+      "series": "1e serie",
+      "needs_review": false
+    },
+    {
+      "id": "othen-jime",
+      "name": "Othen Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": "bl",
+      "number": 18,
+      "series": "1e serie",
+      "needs_review": true
+    },
+    {
+      "id": "narabi-juji-jime",
+      "name": "Narabi Juji Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 1,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "katate-jime",
+      "name": "Katate Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 2,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "sode-guruma",
+      "name": "Sode Guruma",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 3,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "hidari-ashi-jime",
+      "name": "Hidari Ashi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 4,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kagato-jime",
+      "name": "Kagato Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 5,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kami-shiho-jime",
+      "name": "Kami Shiho Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 6,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kami-shiho-ashi-jime",
+      "name": "Kami Shiho Ashi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 7,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "kami-shiho-basami",
+      "name": "Kami Shiho Basami",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 8,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-okuri-eri",
+      "name": "Gyaku Okuri Eri",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 9,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gaeshi-jime",
+      "name": "Gaeshi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 10,
+      "series": "2e serie",
+      "needs_review": false
+    },
+    {
+      "id": "gyaku-gaeshi-jime",
+      "name": "Gyaku Gaeshi Jime",
+      "category": "jime_waza",
+      "domain": "ne_waza",
+      "belt": null,
+      "number": 11,
+      "series": "2e serie",
+      "needs_review": false
+    }
+  ],
+  "counters": [
+    {
+      "attack": "O Soto Gari",
+      "attack_id": "o-soto-gari",
+      "counter": "O Soto Gari",
+      "counter_id": "o-soto-gari",
+      "source_ref": "1e bw",
+      "target_ref": "1e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "O Soto Gari",
+      "attack_id": "o-soto-gari",
+      "counter": "Sumi Otoshi",
+      "counter_id": "sumi-otoshi",
+      "source_ref": "1e bw",
+      "target_ref": "6e aw",
+      "needs_review": false
+    },
+    {
+      "attack": "De Ashi Barai",
+      "attack_id": "de-ashi-barai",
+      "counter": "De Ashi Barai",
+      "counter_id": "de-ashi-barai",
+      "source_ref": "2e bw",
+      "target_ref": "2e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Hiza Guruma",
+      "attack_id": "hiza-guruma",
+      "counter": "Hiza Guruma",
+      "counter_id": "hiza-guruma",
+      "source_ref": "3e bw",
+      "target_ref": "3e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Ko Soto Gake",
+      "attack_id": "ko-soto-gake",
+      "counter": "Uchi Mata",
+      "counter_id": "uchi-mata",
+      "source_ref": "4e bw",
+      "target_ref": "10e hw",
+      "needs_review": false
+    },
+    {
+      "attack": "Ko Soto Gake",
+      "attack_id": "ko-soto-gake",
+      "counter": "O Uchi Gari",
+      "counter_id": "o-uchi-gari",
+      "source_ref": "4e bw",
+      "target_ref": "5e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Ko Soto Gake",
+      "attack_id": "ko-soto-gake",
+      "counter": "Uki Waza",
+      "counter_id": "uki-waza",
+      "source_ref": "4e bw",
+      "target_ref": "8e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "O Uchi Gari",
+      "attack_id": "o-uchi-gari",
+      "counter": "Yoko Guruma",
+      "counter_id": "yoko-guruma",
+      "source_ref": "5e bw",
+      "target_ref": "13e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "O Uchi Gari",
+      "attack_id": "o-uchi-gari",
+      "counter": "Uchi Mata",
+      "counter_id": "uchi-mata",
+      "source_ref": "5e bw",
+      "target_ref": "10e hw",
+      "needs_review": false
+    },
+    {
+      "attack": "O Uchi Gari",
+      "attack_id": "o-uchi-gari",
+      "counter": "Maki Komi",
+      "counter_id": null,
+      "source_ref": "5e bw",
+      "target_ref": "4e sut",
+      "needs_review": true
+    },
+    {
+      "attack": "O Uchi Gari",
+      "attack_id": "o-uchi-gari",
+      "counter": "Kata Guruma",
+      "counter_id": "kata-guruma",
+      "source_ref": "5e bw",
+      "target_ref": "3e sw",
+      "needs_review": false
+    },
+    {
+      "attack": "Uki Goshi",
+      "attack_id": "uki-goshi",
+      "counter": "Yoko Tomoe",
+      "counter_id": "yoko-tomoe",
+      "source_ref": "1e hw",
+      "target_ref": "2e sut / 7e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Uki Goshi",
+      "attack_id": "uki-goshi",
+      "counter": "Yoko Gake",
+      "counter_id": "yoko-gake",
+      "source_ref": "1e hw",
+      "target_ref": "5e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Tsuri Goshi",
+      "attack_id": "tsuri-goshi",
+      "counter": "Tani Otoshi",
+      "counter_id": "tani-otoshi",
+      "source_ref": "3e hw",
+      "target_ref": "6e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Harai Goshi",
+      "attack_id": "harai-goshi",
+      "counter": "Utsuri Goshi",
+      "counter_id": "utsuri-goshi",
+      "source_ref": "5e hw",
+      "target_ref": "9e hw",
+      "needs_review": false
+    },
+    {
+      "attack": "Harai Goshi",
+      "attack_id": "harai-goshi",
+      "counter": "Utsuri Goshi",
+      "counter_id": "utsuri-goshi",
+      "source_ref": "5e hw",
+      "target_ref": "9e hw",
+      "needs_review": false
+    },
+    {
+      "attack": "Kata Seoi",
+      "attack_id": "ippon-seoi-nage",
+      "counter": "Tani Otoshi",
+      "counter_id": "tani-otoshi",
+      "source_ref": "1e sw",
+      "target_ref": "6e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Ippon Seoi Nage",
+      "attack_id": "ippon-seoi-nage",
+      "counter": "Uki Waza",
+      "counter_id": "uki-waza",
+      "source_ref": "1e sw",
+      "target_ref": "8e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Ippon Seoi Nage",
+      "attack_id": "ippon-seoi-nage",
+      "counter": "O Soto Gari",
+      "counter_id": "o-soto-gari",
+      "source_ref": "1e sw",
+      "target_ref": "1e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Tai Otoshi",
+      "attack_id": "tai-otoshi",
+      "counter": "Ura Nage",
+      "counter_id": "ura-nage",
+      "source_ref": "1e aw",
+      "target_ref": "12e sut",
+      "needs_review": false
+    },
+    {
+      "attack": "Tai Otoshi",
+      "attack_id": "tai-otoshi",
+      "counter": "Ko soto gake",
+      "counter_id": "ko-soto-gake",
+      "source_ref": "1e aw",
+      "target_ref": "4e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Tomoe Nage",
+      "attack_id": "tomoe-nage",
+      "counter": "Ko Uchi Maki Komi",
+      "counter_id": "ko-uchi-maki-komi",
+      "source_ref": "1e sut",
+      "target_ref": "14e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Yoko Tomoe",
+      "attack_id": "yoko-tomoe",
+      "counter": "O Uchi Gari",
+      "counter_id": "o-uchi-gari",
+      "source_ref": "2e sut",
+      "target_ref": "5e bw",
+      "needs_review": false
+    },
+    {
+      "attack": "Maki Komi",
+      "attack_id": null,
+      "counter": "Tani Otoshi",
+      "counter_id": "tani-otoshi",
+      "source_ref": "4e sut",
+      "target_ref": "6e sut",
+      "needs_review": true
+    },
+    {
+      "attack": "Maki Komi",
+      "attack_id": null,
+      "counter": "Yoko Wakare",
+      "counter_id": "yoko-wakare",
+      "source_ref": "4e sut",
+      "target_ref": "14e sut",
+      "needs_review": true
+    }
+  ],
+  "combinations": [
+    {
+      "first": "O Soto Gari",
+      "first_id": "o-soto-gari",
+      "then": "Harai Goshi",
+      "then_id": "harai-goshi",
+      "first_ref": "1e bw",
+      "then_ref": "5e hw",
+      "needs_review": false
+    },
+    {
+      "first": "Hiza Guruma",
+      "first_id": "hiza-guruma",
+      "then": "Harai Goshi",
+      "then_id": "harai-goshi",
+      "first_ref": "3e bw",
+      "then_ref": "5e hw",
+      "needs_review": false
+    },
+    {
+      "first": "Ko Soto Gake",
+      "first_id": "ko-soto-gake",
+      "then": "Sumi Gaeshi",
+      "then_id": "sumi-gaeshi",
+      "first_ref": "4e bw",
+      "then_ref": "7e sut",
+      "needs_review": false
+    },
+    {
+      "first": "O Uchi Gari",
+      "first_id": "o-uchi-gari",
+      "then": "Uchi Mata",
+      "then_id": "uchi-mata",
+      "first_ref": "5e bw",
+      "then_ref": "10e hw",
+      "needs_review": false
+    },
+    {
+      "first": "Ko Uchi Gari",
+      "first_id": "ko-uchi-gari",
+      "then": "O Uchi Gari",
+      "then_id": "o-uchi-gari",
+      "first_ref": "6e bw",
+      "then_ref": "5e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Ko Uchi Gari",
+      "first_id": "ko-uchi-gari",
+      "then": "Hane Goshi",
+      "then_id": "hane-goshi",
+      "first_ref": "6e bw",
+      "then_ref": "6e hw",
+      "needs_review": false
+    },
+    {
+      "first": "Sasei Tsuri Komi Ashi",
+      "first_id": null,
+      "then": "Ashi Guruma",
+      "then_id": "ashi-guruma",
+      "first_ref": "11e bw",
+      "then_ref": "15e bw",
+      "needs_review": true
+    },
+    {
+      "first": "Harai Tsuri Komi Ashi",
+      "first_id": "harai-tsuri-komi-ashi",
+      "then": "Yoko Wakare",
+      "then_id": "yoko-wakare",
+      "first_ref": "12e bw",
+      "then_ref": "14e sut",
+      "needs_review": false
+    },
+    {
+      "first": "Harai Tsuri Komi Ashi",
+      "first_id": "harai-tsuri-komi-ashi",
+      "then": "Ko Soto Gake",
+      "then_id": "ko-soto-gake",
+      "first_ref": "12e bw",
+      "then_ref": "4e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Kubi Nage",
+      "first_id": "kubi-nage",
+      "then": "Maki Komi",
+      "then_id": null,
+      "first_ref": "2e hw",
+      "then_ref": "4e sut",
+      "needs_review": true
+    },
+    {
+      "first": "Tsuri Komi Goshi",
+      "first_id": "tsuri-komi-goshi",
+      "then": "O Uchi Gari",
+      "then_id": "o-uchi-gari",
+      "first_ref": "8e hw",
+      "then_ref": "5e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Tsuri Komi Goshi",
+      "first_id": "tsuri-komi-goshi",
+      "then": "Sode Tsuri Komi Goshi",
+      "then_id": null,
+      "first_ref": "8e hw",
+      "then_ref": "8e hw l",
+      "needs_review": true
+    },
+    {
+      "first": "Uchi Mata",
+      "first_id": "uchi-mata",
+      "then": "O Uchi Gari",
+      "then_id": "o-uchi-gari",
+      "first_ref": "10e hw",
+      "then_ref": "5e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Ippon Seoi Nage",
+      "first_id": "ippon-seoi-nage",
+      "then": "Ko Uchi Gari",
+      "then_id": "ko-uchi-gari",
+      "first_ref": "1e sw",
+      "then_ref": "6e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Ippon Seoi Nage",
+      "first_id": "ippon-seoi-nage",
+      "then": "Ko Uchi Maki Komi",
+      "then_id": "ko-uchi-maki-komi",
+      "first_ref": "1e sw",
+      "then_ref": "14e bw",
+      "needs_review": false
+    },
+    {
+      "first": "Tao Otoshi",
+      "first_id": null,
+      "then": "O Uchi Gari",
+      "then_id": "o-uchi-gari",
+      "first_ref": "1e aw",
+      "then_ref": "5e bw",
+      "needs_review": true
+    },
+    {
+      "first": "Tai Otoshi",
+      "first_id": "tai-otoshi",
+      "then": "O Uchi Gari",
+      "then_id": "o-uchi-gari",
+      "first_ref": "1e aw",
+      "then_ref": "5e bw",
+      "needs_review": false
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Arashi",
+      "nl": "storm"
+    },
+    {
+      "term": "Ashi",
+      "nl": "voet/been"
+    },
+    {
+      "term": "Barai (ook harai)",
+      "nl": "vegen"
+    },
+    {
+      "term": "Basami (ook hasami)",
+      "nl": "schaar"
+    },
+    {
+      "term": "Budo",
+      "nl": "verzamelnaam voor Japanse krijgskunsten"
+    },
+    {
+      "term": "Bushido",
+      "nl": "erecode van de Japanse ridder"
+    },
+    {
+      "term": "Chusen",
+      "nl": "loting"
+    },
+    {
+      "term": "Dan",
+      "nl": "graad, klas"
+    },
+    {
+      "term": "De",
+      "nl": "vooruitkomen(d)"
+    },
+    {
+      "term": "Do",
+      "nl": "weg, romp"
+    },
+    {
+      "term": "Dojo",
+      "nl": "judozaal, zaal"
+    },
+    {
+      "term": "Dori",
+      "nl": "(mee)nemen"
+    },
+    {
+      "term": "Ebi",
+      "nl": "kreeft/schaar"
+    },
+    {
+      "term": "Eri",
+      "nl": "revers/kraag"
+    },
+    {
+      "term": "Fusengachi",
+      "nl": "winnaar door opgave van de tegenstander"
+    },
+    {
+      "term": "Gaeshi (kaeshi)",
+      "nl": "tegenaanval/tegenworp"
+    },
+    {
+      "term": "Gake",
+      "nl": "haken"
+    },
+    {
+      "term": "Garami",
+      "nl": "oprollen, buigen"
+    },
+    {
+      "term": "Gari",
+      "nl": "maaien"
+    },
+    {
+      "term": "Gatame (katame)",
+      "nl": "controle, (vast)houden"
+    },
+    {
+      "term": "Geiko (keiko)",
+      "nl": "oefening"
+    },
+    {
+      "term": "Gesa (kesa)",
+      "nl": "schuin"
+    },
+    {
+      "term": "Go",
+      "nl": "vijf"
+    },
+    {
+      "term": "Gokyo (Gokio)",
+      "nl": "vijf series"
+    },
+    {
+      "term": "Gonosen-no-kata",
+      "nl": "vorm van tegenworpen (overname-kata)"
+    },
+    {
+      "term": "Goshi (koshi)",
+      "nl": "heup"
+    },
+    {
+      "term": "Guruma",
+      "nl": "rad, wiel"
+    },
+    {
+      "term": "Gyaku (giaku)",
+      "nl": "omgekeerd"
+    },
+    {
+      "term": "Hadaka",
+      "nl": "naakt"
+    },
+    {
+      "term": "Hajime",
+      "nl": "begin(nen)"
+    },
+    {
+      "term": "Hane",
+      "nl": "vleugel"
+    },
+    {
+      "term": "Han-so-ku-make",
+      "nl": "diskwalificatie"
+    },
+    {
+      "term": "Hantei",
+      "nl": "oordeel, (vrij:) scheidsrechterbeslissing"
+    },
+    {
+      "term": "Hara",
+      "nl": "buik"
+    },
+    {
+      "term": "Harai (barai)",
+      "nl": "vegen"
+    },
+    {
+      "term": "Hasami (basami)",
+      "nl": "schaar"
+    },
+    {
+      "term": "Hidari",
+      "nl": "links"
+    },
+    {
+      "term": "Hiji",
+      "nl": "elleboog"
+    },
+    {
+      "term": "Hikiwake",
+      "nl": "gelijk, gelijkspel"
+    },
+    {
+      "term": "Hishigi",
+      "nl": "klemmen, ontwrichten"
+    },
+    {
+      "term": "Hon",
+      "nl": "basis"
+    },
+    {
+      "term": "Ichi",
+      "nl": "een"
+    },
+    {
+      "term": "Idori",
+      "nl": "geknielde zit"
+    },
+    {
+      "term": "Ippon",
+      "nl": "een punt, een zijde"
+    },
+    {
+      "term": "Itsutsu-no-kata",
+      "nl": "vorm van vijf (kata van het technische judo-principe)"
+    },
+    {
+      "term": "Jigo",
+      "nl": "verdediging"
+    },
+    {
+      "term": "Jigotai",
+      "nl": "verdedigingshouding"
+    },
+    {
+      "term": "Jikan",
+      "nl": "tijd"
+    },
+    {
+      "term": "Jime (shime)",
+      "nl": "verwurgen"
+    },
+    {
+      "term": "Jitsu (jutsu)",
+      "nl": "techniek"
+    },
+    {
+      "term": "Ju",
+      "nl": "kunst; zacht"
+    },
+    {
+      "term": "Judogi",
+      "nl": "judokleding"
+    },
+    {
+      "term": "Judoka",
+      "nl": "judobeoefenaar"
+    },
+    {
+      "term": "Juji",
+      "nl": "gekruist"
+    },
+    {
+      "term": "Ju-no-kata",
+      "nl": "vorm van soepelheid (kata van soepelheid)"
+    },
+    {
+      "term": "Kachi",
+      "nl": "overwinning door opgave i.v.m. verwonding, ziekte of ongeval"
+    },
+    {
+      "term": "Kaeshi (gaeshi)",
+      "nl": "tegenaanval, tegenworp"
+    },
+    {
+      "term": "Kai (kwai)",
+      "nl": "gemeenschap"
+    },
+    {
+      "term": "Kake",
+      "nl": "uitvoeren"
+    },
+    {
+      "term": "Kami",
+      "nl": "boven op"
+    },
+    {
+      "term": "Kani (ebi)",
+      "nl": "kreeft, schaar"
+    },
+    {
+      "term": "Kansetsu (Kwansetsu)",
+      "nl": "gewricht"
+    },
+    {
+      "term": "Karate",
+      "nl": "lege hand"
+    },
+    {
+      "term": "Kata",
+      "nl": "schouder, een zijde, type/vorm"
+    },
+    {
+      "term": "Katame (gatame)",
+      "nl": "controle, (vast)houden"
+    },
+    {
+      "term": "Katame-no-kata",
+      "nl": "controle naar vorm (kata van controles in ne-waza)"
+    },
+    {
+      "term": "Katsu (Kwatsu)",
+      "nl": "reanimatiemethode"
+    },
+    {
+      "term": "Keiko (geiko)",
+      "nl": "oefening"
+    },
+    {
+      "term": "Kesa (gesa)",
+      "nl": "schuin"
+    },
+    {
+      "term": "Kiai",
+      "nl": "roepen, kreet"
+    },
+    {
+      "term": "Kime-no-kata",
+      "nl": "vorm van zelfverdediging (kata van zelfverdediging)"
+    },
+    {
+      "term": "Kimono",
+      "nl": "(judo)jas"
+    },
+    {
+      "term": "Kio (kyo)",
+      "nl": "beginsel, groep"
+    },
+    {
+      "term": "Ko",
+      "nl": "klein"
+    },
+    {
+      "term": "Koka",
+      "nl": "klein voordeel"
+    },
+    {
+      "term": "Kodokan",
+      "nl": "tempel, judocentrum te Tokio"
+    },
+    {
+      "term": "Kohaku-shiai",
+      "nl": "competitie met rood en wit"
+    },
+    {
+      "term": "Komi",
+      "nl": "tegen, binnen"
+    },
+    {
+      "term": "Koshi (goshi)",
+      "nl": "heup"
+    },
+    {
+      "term": "Koshiki-no-kata",
+      "nl": "antieke vorm"
+    },
+    {
+      "term": "Kubi",
+      "nl": "nek, hals"
+    },
+    {
+      "term": "Kumi-kata",
+      "nl": "manier van vastpakken/pakking"
+    },
+    {
+      "term": "Kuzure",
+      "nl": "variatie"
+    },
+    {
+      "term": "Kuzushi",
+      "nl": "balans verstoren, evenwicht verbreken"
+    },
+    {
+      "term": "Kyu",
+      "nl": "klas"
+    },
+    {
+      "term": "Kyudo",
+      "nl": "boogschietkunst"
+    },
+    {
+      "term": "Ma",
+      "nl": "recht, rug"
+    },
+    {
+      "term": "Mae",
+      "nl": "van voren"
+    },
+    {
+      "term": "Maitta",
+      "nl": "opgeven, 'ik geef op'"
+    },
+    {
+      "term": "Maki",
+      "nl": "oprollen"
+    },
+    {
+      "term": "Maki-komi",
+      "nl": "oprol-worp"
+    },
+    {
+      "term": "Mata",
+      "nl": "dij(been)"
+    },
+    {
+      "term": "Matte",
+      "nl": "stop, wacht"
+    },
+    {
+      "term": "Migi",
+      "nl": "rechts"
+    },
+    {
+      "term": "Mochi",
+      "nl": "met de handen pakken"
+    },
+    {
+      "term": "Morote",
+      "nl": "met twee handen"
+    },
+    {
+      "term": "Mune",
+      "nl": "borst"
+    },
+    {
+      "term": "Mudansha",
+      "nl": "kyu(graad) houder"
+    },
+    {
+      "term": "Nage",
+      "nl": "werpen"
+    },
+    {
+      "term": "Nage-no-kata",
+      "nl": "werpen naar vorm (kata van vijftien basisworpen)"
+    },
+    {
+      "term": "Nage-waza",
+      "nl": "werptechnieken"
+    },
+    {
+      "term": "Nami",
+      "nl": "normaal, gewoon"
+    },
+    {
+      "term": "Ne",
+      "nl": "liggend"
+    },
+    {
+      "term": "Ne-waza",
+      "nl": "grondtechnieken, grondjudo"
+    },
+    {
+      "term": "O",
+      "nl": "groot"
+    },
+    {
+      "term": "Obi",
+      "nl": "band/gordel/riem"
+    },
+    {
+      "term": "Okuri",
+      "nl": "zenden, sturen"
+    },
+    {
+      "term": "Osae-komi",
+      "nl": "houdgreep"
+    },
+    {
+      "term": "Otoshi",
+      "nl": "dropping, laten vallen"
+    },
+    {
+      "term": "Randori",
+      "nl": "vrij oefenen, oefenwedstrijd"
+    },
+    {
+      "term": "Rei",
+      "nl": "groet, buiging"
+    },
+    {
+      "term": "Renraku-waza",
+      "nl": "techniek van combinaties"
+    },
+    {
+      "term": "Renzoku-waza",
+      "nl": "vervolgtechnieken"
+    },
+    {
+      "term": "Rio (ryo)",
+      "nl": "twee, beide"
+    },
+    {
+      "term": "Ritsu-rei",
+      "nl": "staande houding"
+    },
+    {
+      "term": "Ryu (riu)",
+      "nl": "school, methode"
+    },
+    {
+      "term": "Sabaki",
+      "nl": "draaien"
+    },
+    {
+      "term": "Samurai (samoerai)",
+      "nl": "ridder, krijger"
+    },
+    {
+      "term": "Sankaku",
+      "nl": "driehoek"
+    },
+    {
+      "term": "Sasae",
+      "nl": "blokkeren"
+    },
+    {
+      "term": "Sensei",
+      "nl": "leraar"
+    },
+    {
+      "term": "Seoi",
+      "nl": "rug, op de rug (mee)nemen"
+    },
+    {
+      "term": "Shiai",
+      "nl": "competitie, wedstrijd"
+    },
+    {
+      "term": "Shiaijo",
+      "nl": "competitie-oppervlakte, wedstrijdoppervlakte"
+    },
+    {
+      "term": "Shihan",
+      "nl": "meester"
+    },
+    {
+      "term": "Shime (jime)",
+      "nl": "verwurgen"
+    },
+    {
+      "term": "Shinpan",
+      "nl": "scheidsrechter"
+    },
+    {
+      "term": "Shintai",
+      "nl": "verplaatsen zonder te draaien"
+    },
+    {
+      "term": "Shiho",
+      "nl": "vier punten"
+    },
+    {
+      "term": "Shisei",
+      "nl": "houding"
+    },
+    {
+      "term": "Shizentai",
+      "nl": "basishouding, normale houding"
+    },
+    {
+      "term": "Sode",
+      "nl": "mouw(en)"
+    },
+    {
+      "term": "Sono-mama",
+      "nl": "niet meer bewegen"
+    },
+    {
+      "term": "Sore-made",
+      "nl": "einde, slot"
+    },
+    {
+      "term": "Soto",
+      "nl": "buitenwaarts"
+    },
+    {
+      "term": "Sukui",
+      "nl": "lepel, oplepelen, opscheppen"
+    },
+    {
+      "term": "Sumi",
+      "nl": "hoek"
+    },
+    {
+      "term": "Sumo",
+      "nl": "Japans worstelen"
+    },
+    {
+      "term": "Sutemi",
+      "nl": "opofferen"
+    },
+    {
+      "term": "Tachi",
+      "nl": "staand"
+    },
+    {
+      "term": "Tai",
+      "nl": "lichaam"
+    },
+    {
+      "term": "Tai-sabaki",
+      "nl": "lichaam draaien"
+    },
+    {
+      "term": "Tanden",
+      "nl": "buik"
+    },
+    {
+      "term": "Tandoku Renshyu",
+      "nl": "alleen oefenen"
+    },
+    {
+      "term": "Tani",
+      "nl": "vallei"
+    },
+    {
+      "term": "Tatami",
+      "nl": "judomat"
+    },
+    {
+      "term": "Tate",
+      "nl": "lengte, verticaal"
+    },
+    {
+      "term": "Taware",
+      "nl": "rijstbaal"
+    },
+    {
+      "term": "Te",
+      "nl": "hand"
+    },
+    {
+      "term": "Toketa",
+      "nl": "verbroken"
+    },
+    {
+      "term": "Tokui",
+      "nl": "voorkeurtechniek, specialiteit"
+    },
+    {
+      "term": "Tomoe",
+      "nl": "boog, cirkel"
+    },
+    {
+      "term": "Tori",
+      "nl": "hij die uitvoert"
+    },
+    {
+      "term": "Tsukuri",
+      "nl": "voorbereiden"
+    },
+    {
+      "term": "Tsuri",
+      "nl": "opliften"
+    },
+    {
+      "term": "Tsuri-komi",
+      "nl": "trekken en opliften"
+    },
+    {
+      "term": "Uchi",
+      "nl": "binnen, binnenwaarts"
+    },
+    {
+      "term": "Uchi-komi",
+      "nl": "herhaald indraaien"
+    },
+    {
+      "term": "Ude",
+      "nl": "arm"
+    },
+    {
+      "term": "Uke",
+      "nl": "hij die ondergaat"
+    },
+    {
+      "term": "Ukemi",
+      "nl": "valbreken"
+    },
+    {
+      "term": "Uki",
+      "nl": "drijven"
+    },
+    {
+      "term": "Ura",
+      "nl": "tegengesteld"
+    },
+    {
+      "term": "Ushiro",
+      "nl": "van achteren"
+    },
+    {
+      "term": "Utsuri",
+      "nl": "wisselen"
+    },
+    {
+      "term": "Wakare",
+      "nl": "scheiden, splitsen"
+    },
+    {
+      "term": "Waza",
+      "nl": "kunst, techniek"
+    },
+    {
+      "term": "Waza-ari",
+      "nl": "bijna punt, half punt"
+    },
+    {
+      "term": "Waza-ari-awasete-ippon",
+      "nl": "tweemaal bijna punt wordt vol punt"
+    },
+    {
+      "term": "Yaku-soku-geiko",
+      "nl": "oefenen in beweging"
+    },
+    {
+      "term": "Yama",
+      "nl": "berg"
+    },
+    {
+      "term": "Yoko",
+      "nl": "zijde, kant"
+    },
+    {
+      "term": "Yudansha",
+      "nl": "houder van een dangraad"
+    },
+    {
+      "term": "Yuko",
+      "nl": "groot voordeel"
+    },
+    {
+      "term": "Yushei-gashi",
+      "nl": "winnaar door superioriteit"
+    },
+    {
+      "term": "Za",
+      "nl": "zitplaats"
+    },
+    {
+      "term": "Za-rei",
+      "nl": "geknielde groet"
+    },
+    {
+      "term": "Za-zen",
+      "nl": "meditatiezit (o.a. t.b.v. geknielde groet)"
+    },
+    {
+      "term": "Zen",
+      "nl": "meditatie"
+    },
+    {
+      "term": "Zori",
+      "nl": "slippers, sandalen"
+    }
+  ],
+  "competition_terms": [
+    {
+      "term": "rei",
+      "nl": "groet"
+    },
+    {
+      "term": "hajime",
+      "nl": "beginnen"
+    },
+    {
+      "term": "sore-made",
+      "nl": "einde"
+    },
+    {
+      "term": "matte",
+      "nl": "(tijdelijke) stop"
+    },
+    {
+      "term": "ippon",
+      "nl": "vol punt score; als je dit scoort heb je meteen gewonnen"
+    },
+    {
+      "term": "waza-ari",
+      "nl": "halve ippon; twee keer waza-ari in een wedstrijd telt als ippon ('waza-ari-awasete-ippon')"
+    },
+    {
+      "term": "yuko",
+      "nl": "groot voordeel"
+    },
+    {
+      "term": "koka",
+      "nl": "klein voordeel"
+    },
+    {
+      "term": "shido",
+      "nl": "straf omdat je (judotechnisch) iets gedaan hebt dat niet mag"
+    },
+    {
+      "term": "hansoku-make",
+      "nl": "diskwalificatie; vier keer een overtreding, gevaar voor jezelf, of onsportief gedrag"
+    },
+    {
+      "term": "osae-komi",
+      "nl": "er is een houdgreep"
+    },
+    {
+      "term": "toketa",
+      "nl": "degene die in de houdgreep lag is eruit gekomen; de houdgreep telt niet meer"
+    },
+    {
+      "term": "sonomama",
+      "nl": "tijdelijke stop van de actie"
+    },
+    {
+      "term": "yoshi",
+      "nl": "weer doorgaan na tijdelijke stop; wedstrijd gaat verder vanaf het stopgezette moment"
+    },
+    {
+      "term": "hiki wake",
+      "nl": "onbeslist; beide strijders hebben aan het einde een gelijk aantal punten"
+    }
+  ]
+}
