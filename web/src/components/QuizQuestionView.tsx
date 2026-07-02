@@ -107,12 +107,18 @@ export function QuizQuestionView({
       </div>
 
       <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-8">
-        <p className="text-base text-muted sm:text-lg">{question.prompt}</p>
         {question.hint ? (
-          <p className="mt-3 text-2xl font-bold tracking-tight text-ink sm:mt-4 sm:text-3xl">
-            {question.hint}
+          <>
+            <p className="text-base text-muted sm:text-lg">{question.prompt}</p>
+            <p className="mt-3 text-2xl font-bold tracking-tight text-ink sm:mt-4 sm:text-3xl">
+              {question.hint}
+            </p>
+          </>
+        ) : (
+          <p className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            {question.prompt}
           </p>
-        ) : null}
+        )}
         {showQuestionInfoButton ? (
           <div className="mt-4 flex justify-end sm:mt-5">
             <button

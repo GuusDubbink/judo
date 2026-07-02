@@ -77,13 +77,10 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
   const built = buildUniqueNameOptions(technique, sameCategory)
   if (!built) return null
 
-  const category = db.categories[technique.category]
-
   return {
     id: `${technique.id}-number`,
     type: 'number',
-    prompt: `Welke techniek is nummer ${technique.number} bij ${category?.nl ?? technique.category}?`,
-    hint: category?.jp,
+    prompt: `Welke techniek is nummer ${technique.number} bij ${categoryLabel(db, technique.category)}?`,
     options: built.options,
     correctIndex: built.options.indexOf(technique.name),
     optionInfoTechniqueIds: built.techniqueIds,

@@ -123,6 +123,18 @@ describe('quiz scoring truth', () => {
     }
   })
 
+  it('number questions use a single prompt with no separate hint', () => {
+    const filters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
+    const questions = buildQuestionPool(filters).filter((question) => question.type === 'number')
+
+    expect(questions.length).toBeGreaterThan(0)
+
+    for (const question of questions) {
+      expect(question.hint).toBeUndefined()
+      expect(question.prompt).toMatch(/^Welke techniek is nummer \d+ bij .+ \(.+\)\?$/)
+    }
+  })
+
   it('domain questions only offer the two domain labels as options', () => {
     const filters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
     const domainLabels = new Set(['Staande techniek (nage waza)', 'Grondtechniek (ne waza)'])
