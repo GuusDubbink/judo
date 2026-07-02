@@ -17,7 +17,7 @@ export function buildUniqueNameOptions(
   correct: Technique,
   pool: Technique[],
   distractorCount: number = DISTRACTOR_COUNT,
-): string[] | null {
+): { options: string[]; techniqueIds: string[] } | null {
   const usedNames = new Set([correct.name])
   const distractors: Technique[] = []
 
@@ -29,7 +29,11 @@ export function buildUniqueNameOptions(
   }
 
   if (distractors.length < distractorCount) return null
-  return shuffle([correct.name, ...distractors.map((item) => item.name)])
+  const selected = shuffle([correct, ...distractors])
+  return {
+    options: selected.map((item) => item.name),
+    techniqueIds: selected.map((item) => item.id),
+  }
 }
 
 export function buildUniqueMeaningOptions(

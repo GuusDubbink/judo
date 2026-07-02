@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { QuizQuestion } from '../types'
 import { QUESTION_TYPE_LABELS } from '../lib/constants'
-import { resolveTechniqueInfo } from '../lib/technique-info'
+import {
+  hasEnrichableTechnique,
+  resolveSingleTechniqueInfo,
+  resolveTechniqueInfo,
+  type TechniqueInfo,
+} from '../lib/technique-info'
 import { TechniqueInfoSheet } from './TechniqueInfoSheet'
 
 interface QuizQuestionViewProps {
@@ -36,15 +41,31 @@ export function QuizQuestionView({
   validIndices,
 }: QuizQuestionViewProps) {
   const [infoOpen, setInfoOpen] = useState(false)
-  const techniqueInfo = useMemo(
+  const [sheetTechniques, setSheetTechniques] = useState<TechniqueInfo[]>([])
+
+  const questionTechniqueInfo = useMemo(
     () => resolveTechniqueInfo(question.infoTechniqueIds ?? []),
     [question.infoTechniqueIds],
   )
-  const showInfoButton = techniqueInfo.length > 0
+  const showQuestionInfoButton = questionTechniqueInfo.length > 0
 
   useEffect(() => {
     setInfoOpen(false)
+    setSheetTechniques([])
   }, [question.id])
+
+  const openQuestionInfo = () => {
+    setSheetTechniques(questionTechniqueInfo)
+    setInfoOpen(true)
+  }
+
+  const openOptionInfo = (optionIndex: number) => {
+    const techniqueId = question.optionInfoTechniqueIds?.[optionIndex]
+    const info = resolveSingleTechniqueInfo(techniqueId)
+    if (!info) return
+    setSheetTechniques([info])
+    setInfoOpen(true)
+  }
 
   const progress = (questionNumber / total) * 100
   const validSet = useMemo(() => new Set(validIndices), [validIndices])
@@ -92,11 +113,11 @@ export function QuizQuestionView({
             {question.hint}
           </p>
         ) : null}
-        {showInfoButton ? (
+        {showQuestionInfoButton ? (
           <div className="mt-4 flex justify-end sm:mt-5">
             <button
               type="button"
-              onClick={() => setInfoOpen(true)}
+              onClick={openQuestionInfo}
               className="min-h-11 rounded-xl border border-club-blue bg-club-blue-light px-4 py-2.5 text-sm font-semibold text-club-blue-dark transition hover:bg-club-blue hover:text-white"
             >
               Meer info
@@ -107,7 +128,7 @@ export function QuizQuestionView({
 
       <TechniqueInfoSheet
         open={infoOpen}
-        techniques={techniqueInfo}
+        techniques={sheetTechniques}
         onClose={() => setInfoOpen(false)}
       />
 
@@ -119,8 +140,10 @@ export function QuizQuestionView({
         {question.options.map((option, optionIndex) => {
           const isSelected = selectedIndex === optionIndex
           const isValid = validSet.has(optionIndex)
+          const optionTechniqueId = question.optionInfoTechniqueIds?.[optionIndex]
+          const showOptionInfo = hasEnrichableTechnique(optionTechniqueId)
           let classes =
-            'min-h-12 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
+            'min-h-12 flex-1 rounded-xl border px-4 py-3.5 text-left text-base font-medium transition sm:px-5 sm:py-4'
 
           if (!showFeedback) {
             classes += isSelected
@@ -135,17 +158,28 @@ export function QuizQuestionView({
           }
 
           return (
-            <button
-              key={`${question.id}-${optionIndex}`}
-              type="button"
-              role="radio"
-              aria-checked={isSelected}
-              disabled={showFeedback}
-              onClick={() => onSelect(optionIndex)}
-              className={classes}
-            >
-              {option}
-            </button>
+            <div key={`${question.id}-${optionIndex}`} className="flex items-stretch gap-2">
+              <button
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                disabled={showFeedback}
+                onClick={() => onSelect(optionIndex)}
+                className={classes}
+              >
+                {option}
+              </button>
+              {showOptionInfo ? (
+                <button
+                  type="button"
+                  onClick={() => openOptionInfo(optionIndex)}
+                  aria-label={`Meer info over ${option}`}
+                  className="flex min-h-12 min-w-12 shrink-0 items-center justify-center rounded-xl border border-club-blue bg-club-blue-light text-sm font-semibold text-club-blue-dark transition hover:bg-club-blue hover:text-white"
+                >
+                  ℹ
+                </button>
+              ) : null}
+            </div>
           )
         })}
       </div>

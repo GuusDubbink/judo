@@ -7,13 +7,24 @@ export interface TechniqueInfo {
   youtube?: string
 }
 
-export function youtubeEmbedUrl(url: string): string | null {
+export function youtubeEmbedUrl(url: string, autoplay = true): string | null {
   const trimmed = url.trim()
   const match = trimmed.match(
     /(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([A-Za-z0-9_-]+)/,
   )
   if (!match) return null
-  return `https://www.youtube-nocookie.com/embed/${match[1]}`
+
+  const params = new URLSearchParams({
+    rel: '0',
+    modestbranding: '1',
+    playsinline: '1',
+  })
+  if (autoplay) {
+    params.set('autoplay', '1')
+    params.set('mute', '1')
+  }
+
+  return `https://www.youtube-nocookie.com/embed/${match[1]}?${params.toString()}`
 }
 
 function toTechniqueInfo(id: string): TechniqueInfo | null {
@@ -42,6 +53,15 @@ export function resolveTechniqueInfo(ids: string[]): TechniqueInfo[] {
   return result
 }
 
+export function resolveSingleTechniqueInfo(id: string | undefined): TechniqueInfo | null {
+  if (!id) return null
+  return toTechniqueInfo(id)
+}
+
 export function hasTechniqueInfo(ids: string[]): boolean {
   return resolveTechniqueInfo(ids).length > 0
+}
+
+export function hasEnrichableTechnique(id: string | undefined): boolean {
+  return resolveSingleTechniqueInfo(id) !== null
 }

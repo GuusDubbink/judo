@@ -74,6 +74,7 @@ export interface QuizQuestion {
   options: string[]
   correctIndex: number
   infoTechniqueIds?: string[]
+  optionInfoTechniqueIds?: string[]
 }
 
 export interface QuizFilters {

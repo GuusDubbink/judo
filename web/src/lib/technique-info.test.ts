@@ -3,15 +3,21 @@ import { buildQuestionPool } from './quiz'
 import { hasTechniqueInfo, resolveTechniqueInfo, youtubeEmbedUrl } from './technique-info'
 
 describe('youtubeEmbedUrl', () => {
-  it('converts youtu.be links', () => {
+  it('converts youtu.be links with autoplay params', () => {
     expect(youtubeEmbedUrl('https://youtu.be/zIq0xI0ogxk')).toBe(
-      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk',
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1',
     )
   })
 
-  it('converts youtube.com watch links', () => {
+  it('converts youtube.com watch links with autoplay params', () => {
     expect(youtubeEmbedUrl('https://www.youtube.com/watch?v=zIq0xI0ogxk')).toBe(
-      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk',
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1',
+    )
+  })
+
+  it('can omit autoplay when disabled', () => {
+    expect(youtubeEmbedUrl('https://youtu.be/zIq0xI0ogxk', false)).toBe(
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1',
     )
   })
 
@@ -49,27 +55,38 @@ describe('resolveTechniqueInfo', () => {
 })
 
 describe('question infoTechniqueIds', () => {
-  it('category questions include the subject technique id', () => {
+  it('category questions include the subject technique id at question level', () => {
     const questions = buildQuestionPool({ belt: 'all', domain: 'all', count: 9999 })
     const category = questions.find((q) => q.id === 'o-soto-gari-category')
     expect(category?.infoTechniqueIds).toEqual(['o-soto-gari'])
+    expect(category?.optionInfoTechniqueIds).toBeUndefined()
   })
 
-  it('counter questions include attack and counter ids', () => {
+  it('technique questions put info on each option, not at question level', () => {
+    const questions = buildQuestionPool({ belt: 'all', domain: 'all', count: 9999 })
+    const technique = questions.find((q) => q.id === 'o-soto-gari-technique')
+    expect(technique?.infoTechniqueIds).toBeUndefined()
+    expect(technique?.optionInfoTechniqueIds).toHaveLength(4)
+    expect(technique?.optionInfoTechniqueIds).toContain('o-soto-gari')
+  })
+
+  it('counter questions include attack at question level and counters on options', () => {
     const questions = buildQuestionPool({ belt: 'all', domain: 'all', count: 9999 })
     const counter = questions.find((q) => q.id.startsWith('counter-o-soto-gari-'))
-    expect(counter?.infoTechniqueIds).toHaveLength(2)
-    expect(counter?.infoTechniqueIds?.[0]).toBe('o-soto-gari')
+    expect(counter?.infoTechniqueIds).toEqual(['o-soto-gari'])
+    expect(counter?.optionInfoTechniqueIds).toHaveLength(4)
   })
 
-  it('combination questions include first and follow-up ids', () => {
+  it('combination questions include first technique at question level and follow-ups on options', () => {
     const questions = buildQuestionPool({ belt: 'all', domain: 'all', count: 9999 })
     const combo = questions.find((q) => q.type === 'combination')
-    expect(combo?.infoTechniqueIds).toHaveLength(2)
+    expect(combo?.infoTechniqueIds).toHaveLength(1)
+    expect(combo?.optionInfoTechniqueIds).toHaveLength(4)
   })
 
-  it('glossary questions omit infoTechniqueIds', () => {
+  it('glossary questions omit technique info', () => {
     const questions = buildQuestionPool({ belt: 'all', domain: 'glossary', count: 9999 })
     expect(questions.every((q) => !q.infoTechniqueIds?.length)).toBe(true)
+    expect(questions.every((q) => !q.optionInfoTechniqueIds?.length)).toBe(true)
   })
 })

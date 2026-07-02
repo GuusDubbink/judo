@@ -20,8 +20,20 @@ function TechniqueContent({
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-4">
       {showName ? <h3 className="text-lg font-bold text-ink">{technique.name}</h3> : null}
+
+      {showVideo && embedUrl ? (
+        <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
+          <iframe
+            src={embedUrl}
+            title={`Video: ${technique.name}`}
+            className="h-full w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      ) : null}
 
       {technique.description ? (
         <div>
@@ -29,18 +41,6 @@ function TechniqueContent({
             Officiële Kodokan-beschrijving (Engels)
           </p>
           <p className="mt-2 text-base leading-relaxed text-ink">{technique.description}</p>
-        </div>
-      ) : null}
-
-      {showVideo && embedUrl ? (
-        <div className="aspect-video overflow-hidden rounded-xl border border-border bg-black">
-          <iframe
-            src={embedUrl}
-            title={`Video: ${technique.name}`}
-            className="h-full w-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
         </div>
       ) : null}
     </div>
@@ -139,7 +139,7 @@ export function TechniqueInfoSheet({ open, techniques, onClose }: TechniqueInfoS
           </div>
         ) : null}
 
-        <div className="overflow-y-auto px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="overflow-y-auto overscroll-y-contain px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <TechniqueContent
             key={activeTechnique.id}
             technique={activeTechnique}

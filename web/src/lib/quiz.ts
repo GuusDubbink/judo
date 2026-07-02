@@ -38,17 +38,17 @@ function buildCategoryQuestion(technique: Technique): QuizQuestion | null {
 
 function buildTechniqueQuestion(technique: Technique): QuizQuestion | null {
   const otherCategories = db.techniques.filter((item) => item.category !== technique.category)
-  const options = buildUniqueNameOptions(technique, otherCategories)
-  if (!options) return null
+  const built = buildUniqueNameOptions(technique, otherCategories)
+  if (!built) return null
 
   return {
     id: `${technique.id}-technique`,
     type: 'technique',
     prompt: 'Welke techniek hoort bij deze categorie?',
     hint: categoryLabel(db, technique.category),
-    options,
-    correctIndex: options.indexOf(technique.name),
-    infoTechniqueIds: [technique.id],
+    options: built.options,
+    correctIndex: built.options.indexOf(technique.name),
+    optionInfoTechniqueIds: built.techniqueIds,
   }
 }
 
@@ -74,8 +74,8 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
   const sameCategory = pool.filter(
     (item) => item.category === technique.category && item.id !== technique.id,
   )
-  const options = buildUniqueNameOptions(technique, sameCategory)
-  if (!options) return null
+  const built = buildUniqueNameOptions(technique, sameCategory)
+  if (!built) return null
 
   const category = db.categories[technique.category]
 
@@ -84,9 +84,9 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
     type: 'number',
     prompt: `Welke techniek is nummer ${technique.number} bij ${category?.nl ?? technique.category}?`,
     hint: category?.jp,
-    options,
-    correctIndex: options.indexOf(technique.name),
-    infoTechniqueIds: [technique.id],
+    options: built.options,
+    correctIndex: built.options.indexOf(technique.name),
+    optionInfoTechniqueIds: built.techniqueIds,
   }
 }
 
@@ -104,17 +104,18 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
     (technique) =>
       technique.id !== counter.counter_id && !otherValidNames.has(technique.name),
   )
-  const options = buildUniqueNameOptions(counterTechnique, optionPool)
-  if (!options) return null
+  const built = buildUniqueNameOptions(counterTechnique, optionPool)
+  if (!built) return null
 
   return {
     id: `counter-${counter.attack_id}-${counter.counter_id}`,
     type: 'counter',
     prompt: 'Welke counter hoort bij deze techniek?',
     hint: attack.name,
-    options,
-    correctIndex: options.indexOf(counterTechnique.name),
-    infoTechniqueIds: [attack.id, counterTechnique.id],
+    options: built.options,
+    correctIndex: built.options.indexOf(counterTechnique.name),
+    infoTechniqueIds: [attack.id],
+    optionInfoTechniqueIds: built.techniqueIds,
   }
 }
 
@@ -137,17 +138,18 @@ function buildCombinationQuestion(
     (technique) =>
       technique.id !== combination.then_id && !otherValidNames.has(technique.name),
   )
-  const options = buildUniqueNameOptions(thenTechnique, optionPool)
-  if (!options) return null
+  const built = buildUniqueNameOptions(thenTechnique, optionPool)
+  if (!built) return null
 
   return {
     id: `combo-${combination.first_id}-${combination.then_id}`,
     type: 'combination',
     prompt: 'Welke techniek volgt hierop in de combinatie?',
     hint: first.name,
-    options,
-    correctIndex: options.indexOf(thenTechnique.name),
-    infoTechniqueIds: [first.id, thenTechnique.id],
+    options: built.options,
+    correctIndex: built.options.indexOf(thenTechnique.name),
+    infoTechniqueIds: [first.id],
+    optionInfoTechniqueIds: built.techniqueIds,
   }
 }
 
