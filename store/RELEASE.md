@@ -13,6 +13,33 @@ Bump the version first (see **Versioning** below).
 
 ---
 
+## Automated cloud builds (Codemagic — no Mac required)
+
+`codemagic.yaml` (repo root) builds, signs and publishes **both** platforms in
+the cloud, so you can ship to TestFlight and Google Play from Windows without a
+Mac. Two workflows: `ios` (→ TestFlight) and `android` (→ Play internal track).
+
+**One-time setup in the Codemagic UI:**
+
+- Connect the repo, then add these so the YAML resolves:
+  - **iOS** — an App Store Connect API key integration named **`codemagic`**, and
+    an app record in App Store Connect for `nl.eujjjs.judoquiz`. Signing certs and
+    provisioning profiles are then created/fetched automatically (no Mac, no CSR).
+  - **Android** — upload your keystore (see below) as a reference named
+    **`judoquiz_keystore`**, and an env group **`google_play`** containing
+    `GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS` (a Play service-account JSON).
+  - Replace the placeholder `you@example.com` in `codemagic.yaml`.
+
+**Run it:** push a version tag (`git tag v1.0.0 && git push origin v1.0.0`) or
+start a build from the Codemagic UI. iOS lands in TestFlight (install the
+TestFlight app on your iPhone to test); Android lands on the Play internal track.
+
+The build number comes from Codemagic's `$BUILD_NUMBER` and the marketing version
+from `web/package.json` — `android/app/build.gradle` reads `-PversionCode` /
+`-PversionName`, and iOS uses `agvtool`. The manual steps below are the fallback.
+
+---
+
 ## Versioning
 
 Keep one source of truth in `web/package.json` `"version"` (e.g. `1.0.0`) and

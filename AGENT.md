@@ -435,6 +435,14 @@ steps and the pre-submit checklist: `store/RELEASE.md`. Listing copy and privacy
 policy: `store/`. The app collects no personal data → "no data collected" in both
 stores' privacy questionnaires (note the embedded YouTube player).
 
+**CI (`codemagic.yaml`, repo root):** cloud builds both platforms and publishes
+to TestFlight + Play — no Mac needed. Triggered by `v*` git tags. iOS builds via
+`--project App.xcodeproj` (SPM, no CocoaPods) and needs the **shared** scheme at
+`web/ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme` (committed, since
+CI can't share it via Xcode). Android release signing/versioning is wired in
+`android/app/build.gradle` (reads `CM_KEYSTORE_*` env or `key.properties`, and
+`-PversionCode`/`-PversionName`). Setup/secrets: `store/RELEASE.md`.
+
 ### 14.5 Don't
 
 - Hardcode `server.url` in `capacitor.config.ts` — production must bundle local

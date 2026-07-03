@@ -1,0 +1,121 @@
+# Codemagic CI/CD — cloud iOS + Android builds for Judoquiz (Capacitor).
+#
+# Lets you build, sign and ship to TestFlight + Google Play WITHOUT owning a Mac.
+# The web app and native projects live in web/, so every app command cd's there.
+# Capacitor 8 uses Swift Package Manager (no CocoaPods), hence build-ipa --project.
+#
+# ── One-time setup in the Codemagic UI before the first run ──────────────────
+# iOS:
+#   • Add an App Store Connect API key integration and name it "codemagic"
+#     (Team settings → Integrations → Developer Portal / App Store Connect).
+#   • Create the app record in App Store Connect (bundle id: nl.eujjjs.judoquiz).
+# Android:
+#   • Upload your upload keystore as a reference named "judoquiz_keystore"
+#     (this exposes CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS /
+#      CM_KEY_PASSWORD, which android/app/build.gradle already reads).
+#   • Create an env group "google_play" holding GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+#     (a Google Play service-account JSON with release permission).
+# Both: replace the placeholder email in the `publishing.email` blocks.
+#
+# Runs on version tags (git tag v1.0.0 && git push --tags) or manually from the UI.
+
+definitions:
+  common_env: &common_env
+    node: 22
+    java: 21
+  release_trigger: &release_trigger
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: 'v*'
+          include: true
+
+workflows:
+  ios:
+    name: Judoquiz iOS (TestFlight)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    <<: *release_trigger
+    integrations:
+      app_store_connect: codemagic
+    environment:
+      <<: *common_env
+      xcode: latest
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: nl.eujjjs.judoquiz
+      vars:
+        XCODE_SCHEME: "App"
+    scripts:
+      - name: Install web dependencies
+        script: cd web && npm ci
+      - name: Build web + sync Capacitor (iOS)
+        script: cd web && npm run build && npx cap sync ios
+      - name: Set marketing version + build number
+        script: |
+          cd web/ios/App
+          VERSION=$(node -p "require('$CM_BUILD_DIR/web/package.json').version")
+          agvtool new-marketing-version "$VERSION"
+          agvtool new-version -all "${BUILD_NUMBER:-1}"
+      - name: Apply signing profiles
+        script: cd web/ios/App && xcode-project use-profiles
+      - name: Build IPA
+        script: |
+          cd web/ios/App
+          xcode-project build-ipa --project "App.xcodeproj" --scheme "$XCODE_SCHEME"
+    artifacts:
+      - web/ios/App/build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false
+      email:
+        recipients:
+          - you@example.com          # ← replace with your email
+        notify:
+          success: true
+          failure: true
+
+  android:
+    name: Judoquiz Android (Play internal)
+    instance_type: linux_x2
+    max_build_duration: 60
+    <<: *release_trigger
+    environment:
+      <<: *common_env
+      android_signing:
+        - judoquiz_keystore
+      groups:
+        - google_play
+    scripts:
+      - name: Install web dependencies
+        script: cd web && npm ci
+      - name: Build web + sync Capacitor (Android)
+        script: cd web && npm run build && npx cap sync android
+      - name: Set up local.properties
+        script: echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/web/android/local.properties"
+      - name: Build AAB
+        script: |
+          VERSION=$(node -p "require('$CM_BUILD_DIR/web/package.json').version")
+          cd web/android
+          ./gradlew bundleRelease \
+            -PversionCode=${BUILD_NUMBER:-1} \
+            -PversionName="$VERSION.${BUILD_NUMBER:-1}"
+    artifacts:
+      - web/android/app/build/outputs/bundle/**/*.aab
+      - web/android/app/build/outputs/**/mapping.txt
+    publishing:
+      google_play:
+        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+      email:
+        recipients:
+          - you@example.com          # ← replace with your email
+        notify:
+          success: true
+          failure: true
