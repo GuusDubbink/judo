@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Placeholder app icon for Judoquiz. Club blue background, white judo-belt
+       knot motif. Full-bleed & opaque as required for the iOS App Store icon.
+       Replace with final artwork before submission, keeping 1024x1024. -->
+  <rect width="1024" height="1024" fill="#00aeef"/>
+  <!-- belt band -->
+  <rect x="96" y="452" width="832" height="120" rx="60" fill="#ffffff"/>
+  <!-- knot -->
+  <rect x="402" y="382" width="220" height="260" rx="44" fill="#ffffff"/>
+  <rect x="452" y="382" width="120" height="260" fill="#00aeef"/>
+  <rect x="402" y="472" width="220" height="80" rx="20" fill="#ffffff"/>
+  <!-- belt ends -->
+  <rect x="430" y="620" width="70" height="180" rx="30" fill="#ffffff"/>
+  <rect x="524" y="620" width="70" height="180" rx="30" fill="#ffffff"/>
+</svg>

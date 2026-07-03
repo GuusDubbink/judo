@@ -378,3 +378,67 @@ aeddf00 Add React quiz webapp with club styling and DigitalOcean deploy config
 - **Primary language:** Dutch (NL)
 
 When in doubt, prefer **correctness over features** — run the test suite.
+
+---
+
+## 14. Mobile apps (Capacitor — iOS & Android)
+
+The same web app ships to the App Store and Google Play via
+**[Capacitor](https://capacitorjs.com)**. Capacitor wraps the existing
+`web/dist` build in a native WKWebView (iOS) / WebView (Android) shell — **no UI
+rewrite, no separate codebase.** The DigitalOcean webapp is unaffected: mobile
+only adds files and reuses `npm run build`.
+
+### 14.1 Layout (inside `web/`)
+
+```
+web/
+├── capacitor.config.ts      # appId nl.eujjjs.judoquiz (PLACEHOLDER), appName, webDir: dist
+├── ios/                     # committed Xcode project (SPM-based, Capacitor 8)
+├── android/                 # committed Gradle project
+├── resources/               # icon.svg / splash.svg placeholders + how to generate
+└── src/lib/native.ts        # status bar + splash + Android back button (no-op on web)
+```
+
+`ios/` and `android/` sources are **committed**; their build output (Pods,
+`build/`, `.gradle/`, DerivedData, copied `public/`) is git-ignored by the
+per-platform `.gitignore` files. Signing secrets (`*.keystore`, `*.jks`,
+`key.properties`) are git-ignored — **never commit them**.
+
+### 14.2 Native integration — `src/lib/native.ts`
+
+Everything is guarded by `Capacitor.isNativePlatform()`, so the web build and
+Vitest are unaffected. It: colours the status bar club-blue, hides the splash
+once React mounts (`initNativeShell()` in `main.tsx`), and maps the Android
+hardware back button onto the quiz's own navigation (`useAndroidBackButton()` in
+`App.tsx`). Plugins: `@capacitor/status-bar`, `@capacitor/splash-screen`,
+`@capacitor/app`.
+
+### 14.3 Commands (from `web/`)
+
+```bash
+npm run cap:sync            # build + copy web assets into both native projects
+npm run cap:android         # build + sync + open Android Studio
+npm run cap:ios             # build + sync + open Xcode (macOS only)
+npx cap run android --livereload --external   # live reload against the dev server
+npm run cap:assets          # regenerate icons/splash from resources/ (needs @capacitor/assets)
+```
+
+**iOS requires macOS + Xcode** — it cannot be built or run from Linux/CI. Android
+needs Android Studio + the SDK. After any web change destined for a device, run
+`npm run cap:sync` (plain `npm run dev` alone does not update a bundled build).
+
+### 14.4 Store release
+
+App icons/splash: `web/resources/README.md`. Signing, versioning, build & upload
+steps and the pre-submit checklist: `store/RELEASE.md`. Listing copy and privacy
+policy: `store/`. The app collects no personal data → "no data collected" in both
+stores' privacy questionnaires (note the embedded YouTube player).
+
+### 14.5 Don't
+
+- Hardcode `server.url` in `capacitor.config.ts` — production must bundle local
+  `dist`; use the `--livereload` CLI flag for dev instead.
+- Call native plugin methods without the `isNativePlatform()` guard (breaks web).
+- Commit keystores or `key.properties`.
+- Change `appId` after the first store submission (it's permanent per listing).

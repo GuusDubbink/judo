@@ -48,3 +48,16 @@ Desktop.ini
 *.swp
 *.swo
 *~
+
+# Capacitor / mobile — native build output (project sources ARE committed).
+# Most artifacts are covered by web/android/.gitignore and web/ios/.gitignore.
+web/.env
+DerivedData/
+xcuserdata/
+
+# Mobile signing secrets — NEVER commit these.
+*.keystore
+*.jks
+key.properties
+web/ios/App/App/GoogleService-Info.plist
+web/android/app/google-services.json
