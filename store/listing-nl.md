@@ -1,13 +1,13 @@
 # Store-listing (Nederlands)
 
-**Naam:** Judoquiz
+**Naam:** Judo Quiz
 
 **Ondertitel / korte omschrijving (max ~30 tekens / 80 tekens):**
 Oefen judotechnieken (EUJJJS)
 
 **Volledige omschrijving:**
 
-Judoquiz helpt je de judotechnieken van de Eerste Utrechtse Judo en Ju Jutsu
+Judo Quiz helpt je de judotechnieken van de Eerste Utrechtse Judo en Ju Jutsu
 School (EUJJJS) te oefenen. Test jezelf met meerkeuzevragen over:
 
 - Technieken en hun categorie (ashi waza, koshi waza, …)

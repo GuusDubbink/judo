@@ -1,6 +1,6 @@
 # Store release assets
 
-Everything needed to publish **Judoquiz** to the App Store and Google Play that
+Everything needed to publish **Judo Quiz** to the App Store and Google Play that
 isn't source code.
 
 | File                | Purpose                                                        |

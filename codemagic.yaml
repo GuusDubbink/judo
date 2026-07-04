@@ -1,4 +1,4 @@
-# Codemagic CI/CD — cloud iOS + Android builds for Judoquiz (Capacitor).
+# Codemagic CI/CD — cloud iOS + Android builds for Judo Quiz (Capacitor).
 #
 # Lets you build, sign and ship to TestFlight + Google Play WITHOUT owning a Mac.
 # The web app and native projects live in web/, so every app command cd's there.
@@ -8,7 +8,7 @@
 # iOS:
 #   • Add an App Store Connect API key integration and name it "codemagic"
 #     (Team settings → Integrations → Developer Portal / App Store Connect).
-#   • Create the app record in App Store Connect (bundle id: nl.eujjjs.judoquiz).
+#   • Create the app record in App Store Connect (bundle id: nl.judotechnieken.app).
 # Android:
 #   • Upload your upload keystore as a reference named "judoquiz_keystore"
 #     (this exposes CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS /
@@ -33,7 +33,7 @@ definitions:
 
 workflows:
   ios:
-    name: Judoquiz iOS (TestFlight)
+    name: Judo Quiz iOS (TestFlight)
     instance_type: mac_mini_m2
     max_build_duration: 60
     <<: *release_trigger
@@ -44,7 +44,7 @@ workflows:
       xcode: latest
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: nl.eujjjs.judoquiz
+        bundle_identifier: nl.judotechnieken.app
       vars:
         XCODE_SCHEME: "App"
     scripts:
@@ -81,7 +81,7 @@ workflows:
           failure: true
 
   android:
-    name: Judoquiz Android (Play internal)
+    name: Judo Quiz Android (Play internal)
     instance_type: linux_x2
     max_build_duration: 60
     <<: *release_trigger

@@ -4,12 +4,13 @@ import type { CapacitorConfig } from '@capacitor/cli'
 // The apps reuse the exact same web build that DigitalOcean serves:
 // `npm run build` -> `dist/`, which Capacitor bundles into each platform.
 //
-// NOTE: `appId` is the permanent store identifier. `nl.eujjjs.judoquiz` is a
-// placeholder tied to the school (EUJJJS) — confirm/replace before the FIRST
-// store submission, because it cannot be changed for an existing listing.
+// NOTE: `appId` is the permanent store identifier — it CANNOT be changed once
+// the app is published. `nl.judotechnieken.app` is brand-agnostic on purpose so
+// the app can grow beyond the quiz. `appName` is only the on-device label and
+// can be changed any time.
 const config: CapacitorConfig = {
-  appId: 'nl.eujjjs.judoquiz',
-  appName: 'Judoquiz',
+  appId: 'nl.judotechnieken.app',
+  appName: 'Judo Quiz',
   webDir: 'dist',
   // No `server.url` here on purpose: production builds must bundle the local
   // `dist`. For live reload during development, pass it on the CLI instead:

@@ -393,7 +393,7 @@ only adds files and reuses `npm run build`.
 
 ```
 web/
-├── capacitor.config.ts      # appId nl.eujjjs.judoquiz (PLACEHOLDER), appName, webDir: dist
+├── capacitor.config.ts      # appId nl.judotechnieken.app, appName "Judo Quiz", webDir: dist
 ├── ios/                     # committed Xcode project (SPM-based, Capacitor 8)
 ├── android/                 # committed Gradle project
 ├── resources/               # icon.svg / splash.svg placeholders + how to generate

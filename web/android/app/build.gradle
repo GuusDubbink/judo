@@ -10,10 +10,10 @@ if (keystorePropertiesFile.exists()) {
 def hasReleaseSigning = System.getenv('CM_KEYSTORE_PATH') || keystorePropertiesFile.exists()
 
 android {
-    namespace = "nl.eujjjs.judoquiz"
+    namespace = "nl.judotechnieken.app"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "nl.eujjjs.judoquiz"
+        applicationId "nl.judotechnieken.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         // Overridable from CI: ./gradlew bundleRelease -PversionCode=42 -PversionName=1.0.42

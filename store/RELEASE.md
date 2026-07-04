@@ -1,4 +1,4 @@
-# Release guide — Judoquiz
+# Release guide — Judo Quiz
 
 How to produce signed store builds from the Capacitor project in `web/`.
 
@@ -23,7 +23,7 @@ Mac. Two workflows: `ios` (→ TestFlight) and `android` (→ Play internal trac
 
 - Connect the repo, then add these so the YAML resolves:
   - **iOS** — an App Store Connect API key integration named **`codemagic`**, and
-    an app record in App Store Connect for `nl.eujjjs.judoquiz`. Signing certs and
+    an app record in App Store Connect for `nl.judotechnieken.app`. Signing certs and
     provisioning profiles are then created/fetched automatically (no Mac, no CSR).
   - **Android** — upload your keystore (see below) as a reference named
     **`judoquiz_keystore`**, and an env group **`google_play`** containing

@@ -1,13 +1,13 @@
 # Store listing (English)
 
-**Name:** Judoquiz
+**Name:** Judo Quiz
 
 **Subtitle / short description (~30 / 80 chars):**
 Practise judo techniques (EUJJJS)
 
 **Full description:**
 
-Judoquiz helps you practise the judo techniques of the Eerste Utrechtse Judo en
+Judo Quiz helps you practise the judo techniques of the Eerste Utrechtse Judo en
 Ju Jutsu School (EUJJJS). Test yourself with multiple-choice questions on:
 
 - Techniques and their category (ashi waza, koshi waza, …)

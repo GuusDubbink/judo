@@ -1,8 +1,8 @@
-# Privacybeleid — Judoquiz
+# Privacybeleid — Judo Quiz
 
 _Laatst bijgewerkt: 2026-07-03_
 
-Judoquiz is een oefen-app voor judotechnieken van de Eerste Utrechtse Judo en
+Judo Quiz is een oefen-app voor judotechnieken van de Eerste Utrechtse Judo en
 Ju Jutsu School.
 
 ## Welke gegevens verzamelen we?
@@ -29,11 +29,11 @@ Vragen over dit beleid? Neem contact op via de ontwikkelaar van de app.
 
 ---
 
-# Privacy Policy — Judoquiz (English)
+# Privacy Policy — Judo Quiz (English)
 
 _Last updated: 2026-07-03_
 
-Judoquiz is a practice app for judo techniques of the Eerste Utrechtse Judo en
+Judo Quiz is a practice app for judo techniques of the Eerste Utrechtse Judo en
 Ju Jutsu School.
 
 ## What data do we collect?

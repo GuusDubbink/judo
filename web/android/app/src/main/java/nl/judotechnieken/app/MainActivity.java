@@ -1,4 +1,4 @@
-package nl.eujjjs.judoquiz;
+package nl.judotechnieken.app;
 
 import com.getcapacitor.BridgeActivity;
 
