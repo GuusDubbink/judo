@@ -8,6 +8,7 @@ import { Capacitor } from '@capacitor/core'
 import { App as CapacitorApp } from '@capacitor/app'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { StatusBar, Style } from '@capacitor/status-bar'
+import { Browser } from '@capacitor/browser'
 
 const CLUB_BLUE = '#00aeef'
 
@@ -34,6 +35,19 @@ export async function initNativeShell(): Promise<void> {
 /** True inside the native iOS/Android shell; false in the web (and Vitest) build. */
 export function isNativePlatform(): boolean {
   return Capacitor.isNativePlatform()
+}
+
+/**
+ * Open a URL in the system in-app browser (SFSafariViewController on iOS, Custom
+ * Tab on Android). Used for YouTube videos, which the iOS WKWebView refuses to
+ * embed inline (error 153). On the web build it opens a new tab.
+ */
+export async function openExternalUrl(url: string): Promise<void> {
+  if (Capacitor.isNativePlatform()) {
+    await Browser.open({ url })
+  } else {
+    window.open(url, '_blank', 'noopener')
+  }
 }
 
 /** Close the app (Android only — used when back is pressed on the home screen). */

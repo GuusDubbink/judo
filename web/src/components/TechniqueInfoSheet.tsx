@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { TechniqueInfo } from '../lib/technique-info'
 import { youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
-import { isNativePlatform } from '../lib/native'
+import { isNativePlatform, openExternalUrl } from '../lib/native'
 
 interface TechniqueInfoSheetProps {
   open: boolean
@@ -18,21 +18,41 @@ function TechniqueContent({
   showName: boolean
   showVideo: boolean
 }) {
-  // On the native iOS/Android webview, embed via the bundled same-origin
-  // /youtube.html proxy so YouTube receives a valid https referer — a direct
-  // iframe fails there with "error 153". The web build embeds YouTube directly.
+  // The iOS/Android WKWebView can't embed YouTube inline (error 153 — it strips
+  // the referer YouTube requires), so on native we show a thumbnail that opens
+  // the video in the system in-app browser. The web build embeds inline.
   const videoId = technique.youtube ? youtubeVideoId(technique.youtube) : null
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
-  const iframeSrc = videoId && isNativePlatform() ? `/youtube.html?v=${videoId}` : embedUrl
+  const native = isNativePlatform()
 
   return (
     <div className="flex flex-col gap-4">
       {showName ? <h3 className="text-lg font-bold text-ink">{technique.name}</h3> : null}
 
-      {showVideo && iframeSrc ? (
+      {showVideo && videoId && native ? (
+        <button
+          type="button"
+          onClick={() => void openExternalUrl(`https://www.youtube.com/watch?v=${videoId}`)}
+          aria-label={`Speel video af: ${technique.name}`}
+          className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-border bg-black"
+        >
+          <img
+            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+            alt=""
+            className="h-full w-full object-cover opacity-95 transition group-active:opacity-100"
+          />
+          <span className="absolute inset-0 flex items-center justify-center">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 shadow-lg transition group-hover:bg-club-blue">
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="ml-1 h-7 w-7 fill-white">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </span>
+          </span>
+        </button>
+      ) : showVideo && embedUrl ? (
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
           <iframe
-            src={iframeSrc}
+            src={embedUrl}
             title={`Video: ${technique.name}`}
             className="h-full w-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
