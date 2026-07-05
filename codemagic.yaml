@@ -42,6 +42,8 @@ workflows:
     environment:
       <<: *common_env
       xcode: latest
+      groups:
+        - appstore_signing        # holds CERTIFICATE_PRIVATE_KEY (secure)
       vars:
         XCODE_SCHEME: "App"
         BUNDLE_ID: "nl.judotechnieken.app"
@@ -58,13 +60,15 @@ workflows:
           agvtool new-version -all "${BUILD_NUMBER:-1}"
       - name: Set up iOS code signing (fetch or create cert + profile)
         # The App Store Connect integration (codemagic) provides the API creds.
-        # --create makes the distribution cert + provisioning profile on first
-        # run, so this works on a brand-new account with no profiles yet.
+        # --certificate-key supplies the persistent private key so --create can
+        # build the distribution certificate + provisioning profile on a
+        # brand-new account (create needs a key to sign the CSR).
         script: |
+          keychain initialize
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
+            --certificate-key=@env:CERTIFICATE_PRIVATE_KEY \
             --create
-          keychain initialize
           keychain add-certificates
           cd web/ios/App
           xcode-project use-profiles
