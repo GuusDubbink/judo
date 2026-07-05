@@ -31,6 +31,11 @@ export async function initNativeShell(): Promise<void> {
   await SplashScreen.hide()
 }
 
+/** True inside the native iOS/Android shell; false in the web (and Vitest) build. */
+export function isNativePlatform(): boolean {
+  return Capacitor.isNativePlatform()
+}
+
 /** Close the app (Android only — used when back is pressed on the home screen). */
 export async function exitNativeApp(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return

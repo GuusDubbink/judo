@@ -59,5 +59,7 @@ xcuserdata/
 *.keystore
 *.jks
 key.properties
+*.pem
+codemagic-certificate-key.txt
 web/ios/App/App/GoogleService-Info.plist
 web/android/app/google-services.json

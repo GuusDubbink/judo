@@ -96,7 +96,10 @@ workflows:
     name: Judo Quiz Android (Play internal)
     instance_type: linux_x2
     max_build_duration: 60
-    <<: *release_trigger
+    # No tag trigger yet: Android signing/publishing secrets (keystore
+    # `judoquiz_keystore` + group `google_play`) aren't configured, so it would
+    # fail on every release tag. Run it manually, and re-add `<<: *release_trigger`
+    # once those secrets are set (see store/RELEASE.md).
     environment:
       <<: *common_env
       android_signing:

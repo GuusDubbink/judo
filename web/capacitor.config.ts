@@ -12,10 +12,15 @@ const config: CapacitorConfig = {
   appId: 'nl.judotechnieken.app',
   appName: 'Judo Quiz',
   webDir: 'dist',
-  // No `server.url` here on purpose: production builds must bundle the local
-  // `dist`. For live reload during development, pass it on the CLI instead:
-  //   npx cap run android --livereload --external
-  //   npx cap run ios --livereload --external
+  server: {
+    // Serve the iOS webview from https://localhost instead of capacitor:// so
+    // embedded YouTube iframes get a valid https origin + referer (fixes the
+    // "Fout 153 / videospeler-configuratie" error in WKWebView on iOS 18+).
+    // Android already defaults to the https scheme.
+    iosScheme: 'https',
+    // No `server.url`: production builds bundle the local `dist`. For live
+    // reload during dev use: `npx cap run ios --livereload --external`.
+  },
   plugins: {
     SplashScreen: {
       // Hidden manually from main.tsx once React has mounted, so users never

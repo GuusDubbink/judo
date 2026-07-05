@@ -23,7 +23,7 @@ export default function App() {
   useAndroidBackButton(handleBack)
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(0,174,239,0.14),_transparent_38%),linear-gradient(180deg,_#f4fbff_0%,_#ffffff_55%,_#eef8fd_100%)]">
+    <main className="min-h-screen pt-[env(safe-area-inset-top)] bg-[radial-gradient(circle_at_top,_rgba(0,174,239,0.14),_transparent_38%),linear-gradient(180deg,_#f4fbff_0%,_#ffffff_55%,_#eef8fd_100%)]">
       {quiz.screen === 'setup' ? <QuizSetup onStart={quiz.startQuiz} /> : null}
 
       {quiz.screen === 'quiz' && quiz.currentQuestion ? (
