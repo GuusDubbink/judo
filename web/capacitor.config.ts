@@ -13,10 +13,11 @@ const config: CapacitorConfig = {
   appName: 'Judo Quiz',
   webDir: 'dist',
   server: {
-    // Serve the iOS webview from https://localhost instead of capacitor:// so
-    // embedded YouTube iframes get a valid https origin + referer (fixes the
-    // "Fout 153 / videospeler-configuratie" error in WKWebView on iOS 18+).
-    // Android already defaults to the https scheme.
+    // Serve the iOS webview from https://localhost instead of the non-standard
+    // capacitor:// scheme, so the app runs on a normal web origin (Android is
+    // https by default). NB: this does NOT make YouTube embeddable inline —
+    // WKWebView still blocks that (error 153), so videos open externally via
+    // @capacitor/browser (see TechniqueInfoSheet).
     iosScheme: 'https',
     // No `server.url`: production builds bundle the local `dist`. For live
     // reload during dev use: `npx cap run ios --livereload --external`.
