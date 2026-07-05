@@ -42,11 +42,9 @@ workflows:
     environment:
       <<: *common_env
       xcode: latest
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: nl.judotechnieken.app
       vars:
         XCODE_SCHEME: "App"
+        BUNDLE_ID: "nl.judotechnieken.app"
     scripts:
       - name: Install web dependencies
         script: cd web && npm ci
@@ -58,8 +56,18 @@ workflows:
           VERSION=$(node -p "require('$CM_BUILD_DIR/web/package.json').version")
           agvtool new-marketing-version "$VERSION"
           agvtool new-version -all "${BUILD_NUMBER:-1}"
-      - name: Apply signing profiles
-        script: cd web/ios/App && xcode-project use-profiles
+      - name: Set up iOS code signing (fetch or create cert + profile)
+        # The App Store Connect integration (codemagic) provides the API creds.
+        # --create makes the distribution cert + provisioning profile on first
+        # run, so this works on a brand-new account with no profiles yet.
+        script: |
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+          keychain initialize
+          keychain add-certificates
+          cd web/ios/App
+          xcode-project use-profiles
       - name: Build IPA
         script: |
           cd web/ios/App
