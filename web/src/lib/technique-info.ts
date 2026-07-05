@@ -27,6 +27,14 @@ export function youtubeEmbedUrl(url: string, autoplay = true): string | null {
   return `https://www.youtube-nocookie.com/embed/${match[1]}?${params.toString()}`
 }
 
+/** Extract the 11-char YouTube video id from a watch/share/embed URL. */
+export function youtubeVideoId(url: string): string | null {
+  const match = url
+    .trim()
+    .match(/(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/embed\/)([A-Za-z0-9_-]+)/)
+  return match ? match[1] : null
+}
+
 function toTechniqueInfo(id: string): TechniqueInfo | null {
   const technique = getTechnique(id)
   if (!technique) return null

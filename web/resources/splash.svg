@@ -1,14 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2732" height="2732" viewBox="0 0 2732 2732">
-  <!-- Placeholder splash screen for Judo Quiz. Solid club blue with the belt-knot
-       mark centered. 2732x2732 so it covers every device when center-cropped.
-       Replace with final artwork before submission, keeping 2732x2732. -->
-  <rect width="2732" height="2732" fill="#00aeef"/>
-  <g transform="translate(1058 1058) scale(0.6)">
-    <rect x="96" y="452" width="832" height="120" rx="60" fill="#ffffff"/>
-    <rect x="402" y="382" width="220" height="260" rx="44" fill="#ffffff"/>
-    <rect x="452" y="382" width="120" height="260" fill="#00aeef"/>
-    <rect x="402" y="472" width="220" height="80" rx="20" fill="#ffffff"/>
-    <rect x="430" y="620" width="70" height="180" rx="30" fill="#ffffff"/>
-    <rect x="524" y="620" width="70" height="180" rx="30" fill="#ffffff"/>
+  <!-- Judo Quiz splash: the belt-knot mark centered on the club-blue gradient,
+       matching the app icon. 2732x2732 so it covers every device when cropped. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2abffa"/>
+      <stop offset="0.55" stop-color="#0d97d9"/>
+      <stop offset="1" stop-color="#0070ae"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#8fe1ff" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#8fe1ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="ds" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="20" stdDeviation="30" flood-color="#00405f" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <rect width="2732" height="2732" fill="url(#bg)"/>
+  <rect width="2732" height="2732" fill="url(#glow)"/>
+
+  <g transform="translate(649 638) scale(1.4)" filter="url(#ds)">
+    <rect x="70"  y="470" width="432" height="126" rx="63" fill="#eee5cb"/>
+    <rect x="522" y="470" width="432" height="126" rx="63" fill="#eee5cb"/>
+    <rect x="402" y="470" width="34" height="126" fill="#d5caa8" opacity="0.55"/>
+    <rect x="588" y="470" width="34" height="126" fill="#d5caa8" opacity="0.55"/>
+    <path d="M450 566 h58 l16 252 -45 36 -45 -36 z" fill="#e7dcbe"/>
+    <path d="M516 566 h58 l16 252 -45 36 -45 -36 z" fill="#f1e8cd"/>
+    <rect x="408" y="428" width="208" height="184" rx="42" fill="#f5eed7"/>
+    <rect x="384" y="484" width="256" height="120" rx="36" fill="#fbf5e2"/>
+    <rect x="384" y="484" width="256" height="18" rx="9" fill="#ffffff" opacity="0.38"/>
+    <rect x="384" y="586" width="256" height="18" rx="9" fill="#d5caa8" opacity="0.5"/>
+    <rect x="506" y="484" width="12" height="120" fill="#d5caa8" opacity="0.42"/>
   </g>
 </svg>

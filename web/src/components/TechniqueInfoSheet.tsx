@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { TechniqueInfo } from '../lib/technique-info'
-import { youtubeEmbedUrl } from '../lib/technique-info'
+import { youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
+import { isNativePlatform } from '../lib/native'
 
 interface TechniqueInfoSheetProps {
   open: boolean
@@ -17,16 +18,21 @@ function TechniqueContent({
   showName: boolean
   showVideo: boolean
 }) {
+  // On the native iOS/Android webview, embed via the bundled same-origin
+  // /youtube.html proxy so YouTube receives a valid https referer — a direct
+  // iframe fails there with "error 153". The web build embeds YouTube directly.
+  const videoId = technique.youtube ? youtubeVideoId(technique.youtube) : null
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
+  const iframeSrc = videoId && isNativePlatform() ? `/youtube.html?v=${videoId}` : embedUrl
 
   return (
     <div className="flex flex-col gap-4">
       {showName ? <h3 className="text-lg font-bold text-ink">{technique.name}</h3> : null}
 
-      {showVideo && embedUrl ? (
+      {showVideo && iframeSrc ? (
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
           <iframe
-            src={embedUrl}
+            src={iframeSrc}
             title={`Video: ${technique.name}`}
             className="h-full w-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
