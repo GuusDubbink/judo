@@ -7,6 +7,9 @@ export interface TechniqueInfo {
   youtube?: string
 }
 
+/** Skip intros/logos at the start of every technique video. */
+export const YOUTUBE_START_SECONDS = 5
+
 export function youtubeEmbedUrl(url: string, autoplay = true): string | null {
   const trimmed = url.trim()
   const match = trimmed.match(
@@ -23,6 +26,7 @@ export function youtubeEmbedUrl(url: string, autoplay = true): string | null {
     params.set('autoplay', '1')
     params.set('mute', '1')
   }
+  params.set('start', String(YOUTUBE_START_SECONDS))
 
   return `https://www.youtube-nocookie.com/embed/${match[1]}?${params.toString()}`
 }

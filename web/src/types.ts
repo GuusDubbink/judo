@@ -81,4 +81,18 @@ export interface QuizFilters {
   belt: BeltCode | 'all'
   domain: QuizDomainFilter
   count: number
+  excludedQuestionTypes?: QuestionType[]
+}
+
+export type SetupFilters = Pick<QuizFilters, 'belt' | 'domain'>
+
+export type QuizMode = 'quiz' | 'study'
+
+export interface QuizMissedReview {
+  questionNumber: number
+  type: QuestionType
+  prompt: string
+  hint?: string
+  selectedOption: string
+  correctOptions: string[]
 }

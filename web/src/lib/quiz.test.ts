@@ -131,8 +131,33 @@ describe('quiz scoring truth', () => {
 
     for (const question of questions) {
       expect(question.hint).toBeUndefined()
-      expect(question.prompt).toMatch(/^Welke techniek is nummer \d+ bij .+ \(.+\)\?$/)
+      // Series-based categories add "van de Ne serie" to stay unambiguous.
+      expect(question.prompt).toMatch(
+        /^Welke techniek is nummer \d+( van de .+? serie)? bij .+ \(.+\)\?$/,
+      )
     }
+  })
+
+  it('number questions in series-based categories name the series so they stay unambiguous', () => {
+    // kansetsu waza (armklemmen) and jime waza (verwurgingen) restart numbering
+    // every serie, so "nummer 3 bij armklemmen" alone matches one technique per
+    // serie. The prompt must scope to the serie.
+    const filters: QuizFilters = { belt: 'all', domain: 'ne_waza', count: 9999 }
+    const questions = buildQuestionPool(filters).filter((question) => question.type === 'number')
+    const seriesById = new Map(
+      db.techniques.filter((t) => t.series).map((t) => [t.id, t.series as string]),
+    )
+
+    let checked = 0
+    for (const question of questions) {
+      const techniqueId = question.id.replace(/-number$/, '')
+      const series = seriesById.get(techniqueId)
+      if (!series) continue
+      checked += 1
+      expect(question.prompt).toContain(`van de ${series}`)
+    }
+
+    expect(checked).toBeGreaterThan(0)
   })
 
   it('domain questions only offer the two domain labels as options', () => {
@@ -159,5 +184,21 @@ describe('quiz scoring truth', () => {
       const item = report.errors.find((entry) => entry.questionId === question.id)
       expect(item, `question ${question.id} failed validation`).toBeUndefined()
     }
+  })
+
+  it('excludes configured question types from the pool', () => {
+    const allFilters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
+    const filteredFilters: QuizFilters = {
+      ...allFilters,
+      excludedQuestionTypes: ['number', 'glossary'],
+    }
+
+    const allPool = buildQuestionPool(allFilters)
+    const filteredPool = buildQuestionPool(filteredFilters)
+
+    expect(filteredPool.every((question) => question.type !== 'number')).toBe(true)
+    expect(filteredPool.every((question) => question.type !== 'glossary')).toBe(true)
+    expect(filteredPool.length).toBeLessThan(allPool.length)
+    expect(allPool.some((question) => question.type === 'number')).toBe(true)
   })
 })

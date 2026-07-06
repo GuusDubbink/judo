@@ -1,11 +1,21 @@
+import { QUESTION_TYPE_LABELS } from '../lib/constants'
+import type { QuizMissedReview } from '../types'
+
 interface QuizResultsProps {
   score: number
   total: number
+  missedReviews: QuizMissedReview[]
   onRetry: () => void
   onRestart: () => void
 }
 
-export function QuizResults({ score, total, onRetry, onRestart }: QuizResultsProps) {
+export function QuizResults({
+  score,
+  total,
+  missedReviews,
+  onRetry,
+  onRestart,
+}: QuizResultsProps) {
   const percentage = total > 0 ? Math.round((score / total) * 100) : 0
   const message =
     percentage >= 90
@@ -28,6 +38,20 @@ export function QuizResults({ score, total, onRetry, onRestart }: QuizResultsPro
 
       <p className="max-w-md text-base text-muted sm:text-lg">{message}</p>
 
+      {missedReviews.length > 0 ? (
+        <section className="w-full text-left">
+          <h3 className="mb-3 text-lg font-semibold text-ink">
+            Terugblik ({missedReviews.length}{' '}
+            {missedReviews.length === 1 ? 'fout' : 'fouten'})
+          </h3>
+          <ol className="flex flex-col gap-3">
+            {missedReviews.map((review) => (
+              <MissedReviewItem key={review.questionNumber} review={review} />
+            ))}
+          </ol>
+        </section>
+      ) : null}
+
       <div className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
         <button
           type="button"
@@ -45,5 +69,37 @@ export function QuizResults({ score, total, onRetry, onRestart }: QuizResultsPro
         </button>
       </div>
     </div>
+  )
+}
+
+function MissedReviewItem({ review }: { review: QuizMissedReview }) {
+  const correctLabel =
+    review.correctOptions.length === 1 ? 'Goed antwoord' : 'Goede antwoorden'
+
+  return (
+    <li className="rounded-2xl border border-border bg-surface p-4 shadow-sm sm:p-5">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <p className="text-sm font-medium text-muted">Vraag {review.questionNumber}</p>
+        <p className="text-xs font-medium text-muted capitalize">
+          {QUESTION_TYPE_LABELS[review.type]}
+        </p>
+      </div>
+      <div className="space-y-1">
+        <p className="text-base text-ink sm:text-lg">{review.prompt}</p>
+        {review.hint ? (
+          <p className="text-lg font-semibold text-ink sm:text-xl">{review.hint}</p>
+        ) : null}
+      </div>
+      <dl className="mt-4 space-y-2 text-sm sm:text-base">
+        <div>
+          <dt className="font-medium text-wrong">Jouw antwoord</dt>
+          <dd className="text-ink">{review.selectedOption}</dd>
+        </div>
+        <div>
+          <dt className="font-medium text-correct">{correctLabel}</dt>
+          <dd className="text-ink">{review.correctOptions.join(' · ')}</dd>
+        </div>
+      </dl>
+    </li>
   )
 }

@@ -13,7 +13,7 @@ School (EUJJJS) te oefenen. Test jezelf met meerkeuzevragen over:
 - Technieken en hun categorie (ashi waza, koshi waza, …)
 - Staand (nage waza) versus grond (ne waza)
 - Nummers binnen een categorie
-- Counters en combinaties
+- Overnames en combinaties
 - De Japanse woordenlijst
 
 Kies je band (geel t/m zwart) en het aantal vragen, en ga aan de slag. Bij veel

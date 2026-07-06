@@ -131,9 +131,11 @@ web/src/
 ├── hooks/
 │   └── useQuiz.ts           # Quiz state machine (setup → quiz → results)
 ├── components/
-│   ├── QuizSetup.tsx        # Filters + start button
+│   ├── QuizSetup.tsx        # Mode toggle (Oefenen/Leren) + filters + start button
 │   ├── QuizQuestionView.tsx # Question UI + nav buttons
-│   └── QuizResults.tsx      # Score screen
+│   ├── QuizResults.tsx      # Score screen
+│   ├── StudyView.tsx        # Leren-modus flashcard browser (reuses TechniqueContent)
+│   └── TechniqueInfoSheet.tsx # Bottom sheet; exports TechniqueContent (video+desc)
 └── lib/
     ├── constants.ts         # OPTION_COUNT, labels, question counts
     ├── shuffle.ts           # shuffle + sample utilities
@@ -141,8 +143,19 @@ web/src/
     ├── quiz.ts              # Question pool builder + public API
     ├── quiz-truth.ts        # Ground truth: which options are correct per JSON
     ├── quiz-validate.ts     # Structural validation for tests
-    └── quiz.test.ts         # Correctness test suite (14 tests)
+    ├── quiz.test.ts         # Correctness test suite
+    ├── study.ts             # Leren-modus deck builder (serie-ordered) + size
+    ├── study.test.ts        # Study deck + word-breakdown tests
+    └── word-breakdown.ts    # Split a technique name into glossary word meanings
 ```
+
+**Two modes (one setup screen).** `QuizSetup` has an *Oefenen* / *Leren* toggle.
+Both share the belt/type filters. *Oefenen* → the quiz (below). *Leren* →
+`StudyView`: browse the selection as flashcards (name, category, serie/nr, word
+breakdown, video, Kodokan description) at your own pace — no scoring, no backend.
+The study deck is built by `buildStudyDeck()` ordered category → serie → number
+(the way judoka learn the *rijtjes*). Screen state lives in `useQuiz.ts`
+(`'setup' | 'quiz' | 'results' | 'study'`).
 
 ### 4.3 Module responsibilities (read before editing)
 
@@ -162,13 +175,21 @@ web/src/
 | `category` | categorie | “Welke categorie hoort bij O Soto Gari?” |
 | `technique` | techniek | Category hint → pick technique name (distractors from **other** categories) |
 | `domain` | domein | Staand vs grond for a named technique |
-| `number` | nummer | “Welke techniek is nummer 3 bij beenworpen?” |
+| `number` | nummer | “Welke techniek is nummer 3 bij beenworpen?” (serie-scoped for ne-waza — see below) |
 | `counter` | counter | Valid counter for attack (excludes other valid counters as distractors) |
 | `combination` | combinatie | Valid follow-up technique (same exclusion rule) |
 | `glossary` | woordenlijst | “Wat betekent Guruma?” |
 
 **Removed intentionally:** belt questions (“bij welke band leer je…”) — not relevant
 for this syllabus use case.
+
+**Serie-scoped number questions (important):** armklemmen (`kansetsu_waza`) and
+verwurgingen (`jime_waza`) restart their numbering every *serie*, so “nummer 3 bij
+armklemmen” alone has one valid answer **per serie** (ambiguous). `buildNumberQuestion`
+adds “van de Ne serie” to the prompt for any technique with a `series`, and prefers
+distractors from the **same serie** so the question drills the row. The truth layer
+stays name-based (safe because `buildUniqueNameOptions` dedupes names, so the one
+duplicate name — “Hiza Gatame” — never appears as its own distractor).
 
 ### 4.5 Quiz flow
 
@@ -322,7 +343,7 @@ Discussed with user but **not implemented:**
 
 | Idea | Notes |
 |------|-------|
-| Flashcard mode | Self-rate; different UI |
+| ~~Flashcard mode~~ | **Done** — Leren-modus (`StudyView`), browse deck, no self-rate |
 | Competition terms quiz | Data exists in JSON |
 | `kodokan-techniques.json` integration | Descriptions + YouTube links |
 | Generate TS types from `models.py` | Manual sync works for now |

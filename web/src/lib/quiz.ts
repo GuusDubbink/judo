@@ -74,13 +74,29 @@ function buildNumberQuestion(technique: Technique, pool: Technique[]): QuizQuest
   const sameCategory = pool.filter(
     (item) => item.category === technique.category && item.id !== technique.id,
   )
-  const built = buildUniqueNameOptions(technique, sameCategory)
+
+  // Grond-categorieën als armklemmen (kansetsu waza) en verwurgingen (jime waza)
+  // hernummeren per serie, dus "nummer 3 bij armklemmen" heeft één juist antwoord
+  // per serie — ambigu. Scope de vraag daarom op de serie en trek de afleiders bij
+  // voorkeur uit dezelfde serie, zodat de vraag het rijtje oefent.
+  let distractorPool = sameCategory
+  if (technique.series) {
+    const sameSeries = sameCategory.filter((item) => item.series === technique.series)
+    const uniqueNames = new Set(sameSeries.map((item) => item.name))
+    if (uniqueNames.size >= DISTRACTOR_COUNT) distractorPool = sameSeries
+  }
+
+  const built = buildUniqueNameOptions(technique, distractorPool)
   if (!built) return null
+
+  const position = technique.series
+    ? `nummer ${technique.number} van de ${technique.series}`
+    : `nummer ${technique.number}`
 
   return {
     id: `${technique.id}-number`,
     type: 'number',
-    prompt: `Welke techniek is nummer ${technique.number} bij ${categoryLabel(db, technique.category)}?`,
+    prompt: `Welke techniek is ${position} bij ${categoryLabel(db, technique.category)}?`,
     options: built.options,
     correctIndex: built.options.indexOf(technique.name),
     optionInfoTechniqueIds: built.techniqueIds,
@@ -107,7 +123,7 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
   return {
     id: `counter-${counter.attack_id}-${counter.counter_id}`,
     type: 'counter',
-    prompt: 'Welke counter hoort bij deze techniek?',
+    prompt: 'Welke overname hoort bij deze techniek?',
     hint: attack.name,
     options: built.options,
     correctIndex: built.options.indexOf(counterTechnique.name),
@@ -168,9 +184,10 @@ export function buildQuestionPool(filters: QuizFilters): QuizQuestion[] {
   const techniqueIds = new Set(pool.map((technique) => technique.id))
   const questions: QuizQuestion[] = []
   const seen = new Set<string>()
+  const excluded = new Set(filters.excludedQuestionTypes ?? [])
 
   const add = (question: QuizQuestion | null) => {
-    if (!question || seen.has(question.id)) return
+    if (!question || seen.has(question.id) || excluded.has(question.type)) return
     seen.add(question.id)
     questions.push(question)
   }
