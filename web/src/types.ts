@@ -82,3 +82,5 @@ export interface QuizFilters {
   domain: QuizDomainFilter
   count: number
 }
+
+export type QuizMode = 'quiz' | 'study'

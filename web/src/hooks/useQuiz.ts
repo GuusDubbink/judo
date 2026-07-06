@@ -2,9 +2,10 @@ import { useCallback, useMemo, useState } from 'react'
 import { db } from '../data/db'
 import { createQuiz } from '../lib/quiz'
 import { getValidOptionIndices, isAnswerCorrect } from '../lib/quiz-truth'
+import { buildStudyDeck, type StudyCard } from '../lib/study'
 import type { QuizFilters, QuizQuestion } from '../types'
 
-type Screen = 'setup' | 'quiz' | 'results'
+type Screen = 'setup' | 'quiz' | 'results' | 'study'
 
 export function useQuiz() {
   const [screen, setScreen] = useState<Screen>('setup')
@@ -12,6 +13,8 @@ export function useQuiz() {
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<number, number>>({})
+  const [studyDeck, setStudyDeck] = useState<StudyCard[]>([])
+  const [studyIndex, setStudyIndex] = useState(0)
 
   const currentQuestion = questions[index] ?? null
   const selectedIndex = answers[index] ?? null
@@ -43,12 +46,32 @@ export function useQuiz() {
     setScreen('quiz')
   }, [])
 
+  const startStudy = useCallback((nextFilters: QuizFilters) => {
+    const deck = buildStudyDeck(nextFilters)
+    if (deck.length === 0) return
+
+    setFilters(nextFilters)
+    setStudyDeck(deck)
+    setStudyIndex(0)
+    setScreen('study')
+  }, [])
+
   const goHome = useCallback(() => {
     setScreen('setup')
     setFilters(null)
     setQuestions([])
     setAnswers({})
     setIndex(0)
+    setStudyDeck([])
+    setStudyIndex(0)
+  }, [])
+
+  const studyNext = useCallback(() => {
+    setStudyIndex((current) => Math.min(studyDeck.length - 1, current + 1))
+  }, [studyDeck.length])
+
+  const studyPrevious = useCallback(() => {
+    setStudyIndex((current) => Math.max(0, current - 1))
   }, [])
 
   const handleSelect = useCallback(
@@ -89,10 +112,18 @@ export function useQuiz() {
     canGoForward: showFeedback,
     isLastQuestion: index + 1 >= questions.length,
     startQuiz,
+    startStudy,
     goHome,
     handleSelect,
     goToPrevious,
     goToNext,
     retry,
+    studyCard: studyDeck[studyIndex] ?? null,
+    studyNumber: studyIndex + 1,
+    studyTotal: studyDeck.length,
+    canStudyPrevious: studyIndex > 0,
+    canStudyNext: studyIndex + 1 < studyDeck.length,
+    studyNext,
+    studyPrevious,
   }
 }

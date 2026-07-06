@@ -15,24 +15,63 @@ interface TechniqueInfoSheetProps {
   onClose: () => void
 }
 
-function TechniqueContent({
+/** YouTube thumbnail with a play button; used for both the native error
+ *  fallback and the lazy (tap-to-load) video in study mode. */
+function VideoPoster({
+  videoId,
+  name,
+  onClick,
+}: {
+  videoId: string
+  name: string
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={`Speel video af: ${name}`}
+      className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-border bg-black"
+    >
+      <img
+        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+        alt=""
+        className="h-full w-full object-cover opacity-95 transition group-active:opacity-100"
+      />
+      <span className="absolute inset-0 flex items-center justify-center">
+        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 shadow-lg transition group-hover:bg-club-blue">
+          <svg viewBox="0 0 24 24" aria-hidden="true" className="ml-1 h-7 w-7 fill-white">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </span>
+    </button>
+  )
+}
+
+export function TechniqueContent({
   technique,
   showName,
   showVideo,
+  lazyVideo = false,
 }: {
   technique: TechniqueInfo
   showName: boolean
   showVideo: boolean
+  /** When true, show a poster and only load the player after a tap. Used in the
+   *  study deck, where auto-loading a player per card would be wasteful. */
+  lazyVideo?: boolean
 }) {
   // Native: embed via the /youtube.html proxy on our real https domain (a valid
   // origin YouTube accepts). If that proxy still reports a player error it posts
   // a message back and we fall back to opening the video in the in-app browser.
   // Web: embed YouTube directly (unchanged). This component is keyed by
-  // technique id in the parent, so `videoFailed` resets per technique.
+  // technique id in the parent, so `videoFailed`/`started` reset per technique.
   const videoId = technique.youtube ? youtubeVideoId(technique.youtube) : null
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
   const native = isNativePlatform()
   const [videoFailed, setVideoFailed] = useState(false)
+  const [started, setStarted] = useState(false)
 
   useEffect(() => {
     if (!native) return
@@ -57,25 +96,13 @@ function TechniqueContent({
       {showName ? <h3 className="text-lg font-bold text-ink">{technique.name}</h3> : null}
 
       {showVideo && videoId && native && videoFailed ? (
-        <button
-          type="button"
+        <VideoPoster
+          videoId={videoId}
+          name={technique.name}
           onClick={() => void openExternalUrl(`https://www.youtube.com/watch?v=${videoId}`)}
-          aria-label={`Speel video af: ${technique.name}`}
-          className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-border bg-black"
-        >
-          <img
-            src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-            alt=""
-            className="h-full w-full object-cover opacity-95 transition group-active:opacity-100"
-          />
-          <span className="absolute inset-0 flex items-center justify-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/55 shadow-lg transition group-hover:bg-club-blue">
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="ml-1 h-7 w-7 fill-white">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          </span>
-        </button>
+        />
+      ) : showVideo && videoId && lazyVideo && !started ? (
+        <VideoPoster videoId={videoId} name={technique.name} onClick={() => setStarted(true)} />
       ) : showVideo && iframeSrc ? (
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
           <iframe

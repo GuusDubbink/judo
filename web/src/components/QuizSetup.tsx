@@ -1,16 +1,18 @@
 import { useId, useMemo, useState, type ReactNode } from 'react'
-import type { BeltCode, QuizDomainFilter, QuizFilters } from '../types'
+import type { BeltCode, QuizDomainFilter, QuizFilters, QuizMode } from '../types'
 import { BELT_ORDER } from '../types'
 import { QUESTION_COUNTS } from '../lib/constants'
 import { getBelts, getMeta, getSetupStats } from '../lib/quiz'
+import { studyDeckSize } from '../lib/study'
 
 interface QuizSetupProps {
-  onStart: (filters: QuizFilters) => void
+  onStart: (filters: QuizFilters, mode: QuizMode) => void
 }
 
 export function QuizSetup({ onStart }: QuizSetupProps) {
   const meta = getMeta()
   const belts = getBelts()
+  const [mode, setMode] = useState<QuizMode>('quiz')
   const [belt, setBelt] = useState<BeltCode | 'all'>('all')
   const [domain, setDomain] = useState<QuizDomainFilter>('all')
   const [count, setCount] = useState<number>(10)
@@ -24,8 +26,10 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
     () => getSetupStats(filters),
     [filters],
   )
-  const canStart = questions > 0
-  const countCapped = canStart && count > questions
+  const cardCount = useMemo(() => studyDeckSize(filters), [filters])
+  const isStudy = mode === 'study'
+  const canStart = isStudy ? cardCount > 0 : questions > 0
+  const countCapped = !isStudy && questions > 0 && count > questions
   const isGlossaryOnly = domain === 'glossary'
 
   return (
@@ -34,12 +38,27 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
         <p className="text-sm font-semibold tracking-[0.2em] text-club-blue uppercase">
           Judotechnieken
         </p>
-        <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-5xl">Oefenquiz</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-5xl">
+          {isStudy ? 'Leren' : 'Oefenquiz'}
+        </h1>
         <p className="text-sm text-muted sm:text-base">
-          Test je kennis van technieken, counters, combinaties en woorden.
+          {isStudy
+            ? 'Blader op je eigen tempo door de technieken: naam, rijtje, betekenis en video.'
+            : 'Test je kennis van technieken, counters, combinaties en woorden.'}
         </p>
         <p className="text-sm text-muted/80">{meta.school}</p>
       </header>
+
+      <section className="rounded-2xl border border-border bg-surface p-1.5 shadow-sm">
+        <div className="grid grid-cols-2 gap-1.5" role="tablist" aria-label="Modus">
+          <ModeTab active={!isStudy} onClick={() => setMode('quiz')}>
+            Oefenen
+          </ModeTab>
+          <ModeTab active={isStudy} onClick={() => setMode('study')}>
+            Leren
+          </ModeTab>
+        </div>
+      </section>
 
       <section className="overflow-visible rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
         <div className="mb-4">
@@ -75,38 +94,54 @@ export function QuizSetup({ onStart }: QuizSetupProps) {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
-        <h2 className="mb-4 text-lg font-semibold text-ink">Aantal vragen</h2>
-        <div className="flex flex-wrap gap-2">
-          {QUESTION_COUNTS.map((value) => (
-            <FilterChip
-              key={value}
-              active={count === value}
-              onClick={() => setCount(value)}
-            >
-              {value}
-            </FilterChip>
-          ))}
-        </div>
-        <p className="mt-4 text-sm text-muted">
-          {isGlossaryOnly
-            ? `${glossaryTerms} woorden · ${questions} mogelijke vragen in deze selectie.`
-            : `${techniques} technieken · ${questions} mogelijke vragen in deze selectie.`}
-          {countCapped ? (
-            <span className="mt-1 block text-ink">
-              Er zijn maar {questions} vragen beschikbaar; je krijgt er {quizLength}.
-            </span>
-          ) : null}
-        </p>
-      </section>
+      {isStudy ? (
+        <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+          <p className="text-sm text-muted">
+            {isGlossaryOnly
+              ? `${cardCount} woorden in deze selectie.`
+              : `${cardCount} technieken in deze selectie.`}
+          </p>
+        </section>
+      ) : (
+        <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-6">
+          <h2 className="mb-4 text-lg font-semibold text-ink">Aantal vragen</h2>
+          <div className="flex flex-wrap gap-2">
+            {QUESTION_COUNTS.map((value) => (
+              <FilterChip
+                key={value}
+                active={count === value}
+                onClick={() => setCount(value)}
+              >
+                {value}
+              </FilterChip>
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-muted">
+            {isGlossaryOnly
+              ? `${glossaryTerms} woorden · ${questions} mogelijke vragen in deze selectie.`
+              : `${techniques} technieken · ${questions} mogelijke vragen in deze selectie.`}
+            {countCapped ? (
+              <span className="mt-1 block text-ink">
+                Er zijn maar {questions} vragen beschikbaar; je krijgt er {quizLength}.
+              </span>
+            ) : null}
+          </p>
+        </section>
+      )}
 
       <button
         type="button"
         disabled={!canStart}
-        onClick={() => onStart(filters)}
+        onClick={() => onStart(filters, mode)}
         className="min-h-12 rounded-xl bg-club-blue px-6 py-4 text-lg font-semibold text-white shadow-sm transition hover:bg-club-blue-dark disabled:cursor-not-allowed disabled:bg-club-blue-light disabled:text-muted"
       >
-        {canStart ? `Start quiz (${quizLength} vragen)` : 'Geen vragen beschikbaar'}
+        {isStudy
+          ? canStart
+            ? `Begin met leren (${cardCount} kaarten)`
+            : 'Niets om te leren'
+          : canStart
+            ? `Start quiz (${quizLength} vragen)`
+            : 'Geen vragen beschikbaar'}
       </button>
     </div>
   )
@@ -149,6 +184,32 @@ function BeltFilterInfo({ belts }: { belts: Record<BeltCode, string> }) {
         {text}
       </span>
     </div>
+  )
+}
+
+function ModeTab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={active}
+      onClick={onClick}
+      className={`min-h-11 rounded-xl px-4 py-2.5 text-base font-semibold transition ${
+        active
+          ? 'bg-club-blue text-white shadow-sm'
+          : 'bg-transparent text-muted hover:bg-club-blue-soft hover:text-ink'
+      }`}
+    >
+      {children}
+    </button>
   )
 }
 
