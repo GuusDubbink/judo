@@ -411,8 +411,18 @@ Everything is guarded by `Capacitor.isNativePlatform()`, so the web build and
 Vitest are unaffected. It: colours the status bar club-blue, hides the splash
 once React mounts (`initNativeShell()` in `main.tsx`), and maps the Android
 hardware back button onto the quiz's own navigation (`useAndroidBackButton()` in
-`App.tsx`). Plugins: `@capacitor/status-bar`, `@capacitor/splash-screen`,
-`@capacitor/app`.
+`App.tsx`) and opens external URLs in the system in-app browser
+(`openExternalUrl()`). Plugins: `@capacitor/status-bar`,
+`@capacitor/splash-screen`, `@capacitor/app`, `@capacitor/browser`.
+
+**YouTube video (known WKWebView limit):** iOS can't embed YouTube inline
+(error 153 — WKWebView strips the referer YouTube requires; `iosScheme:https` +
+a bundled proxy still fail because YouTube rejects the `localhost` origin). So on
+native, the technique video in `TechniqueInfoSheet` is a tappable thumbnail that
+opens via `openExternalUrl()` / `@capacitor/browser`; the **web build keeps the
+inline `<iframe>`** (gated on `isNativePlatform()`). Restoring inline needs the
+embed hosted on a **real** https domain (the DO deployment) or a native player
+plugin — see §14.7.
 
 ### 14.3 Commands (from `web/`)
 
@@ -424,24 +434,35 @@ npx cap run android --livereload --external   # live reload against the dev serv
 npm run cap:assets          # regenerate icons/splash from resources/ (needs @capacitor/assets)
 ```
 
-**iOS requires macOS + Xcode** — it cannot be built or run from Linux/CI. Android
-needs Android Studio + the SDK. After any web change destined for a device, run
-`npm run cap:sync` (plain `npm run dev` alone does not update a bundled build).
+Building/running iOS **locally** needs macOS + Xcode (the maintainer has neither).
+That's fine — the **release path is Codemagic's cloud Macs**, so iOS ships without
+a Mac (see §14.6). Android likewise builds in CI. After any web change destined
+for a device, run `npm run cap:sync` (plain `npm run dev` alone does not update a
+bundled build). `cap sync` on **Windows** mangles
+`web/ios/App/CapApp-SPM/Package.swift` with backslash paths — convert them back to
+forward slashes before committing.
 
 ### 14.4 Store release
 
-App icons/splash: `web/resources/README.md`. Signing, versioning, build & upload
-steps and the pre-submit checklist: `store/RELEASE.md`. Listing copy and privacy
-policy: `store/`. The app collects no personal data → "no data collected" in both
-stores' privacy questionnaires (note the embedded YouTube player).
+App icons live in `web/resources/` (`icon.svg` full-bleed, `icon-foreground.svg`
+for the Android adaptive layer, `splash.svg`) — a judo belt-knot on a blue
+gradient; all platform sizes were generated with `sharp` (installed `--no-save`
+so it never touches `package.json`). Signing/versioning/upload + pre-submit
+checklist: `store/RELEASE.md`. Listing copy + privacy policy: `store/`. The app
+collects **no personal data** → "no data collected" in both stores' privacy
+questionnaires. (The technique videos link out to YouTube — see §14.2/§14.7.)
 
-**CI (`codemagic.yaml`, repo root):** cloud builds both platforms and publishes
-to TestFlight + Play — no Mac needed. Triggered by `v*` git tags. iOS builds via
-`--project App.xcodeproj` (SPM, no CocoaPods) and needs the **shared** scheme at
-`web/ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme` (committed, since
-CI can't share it via Xcode). Android release signing/versioning is wired in
-`android/app/build.gradle` (reads `CM_KEYSTORE_*` env or `key.properties`, and
-`-PversionCode`/`-PversionName`). Setup/secrets: `store/RELEASE.md`.
+**CI (`codemagic.yaml`, repo root):** cloud-builds both platforms and publishes
+to TestFlight + Play — **no Mac needed**. iOS builds via `--project App.xcodeproj`
+(SPM, no CocoaPods) and needs the **committed shared** scheme at
+`web/ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme` (CI can't share it
+via Xcode). iOS signing is the manual `app-store-connect fetch-signing-files
+--create --certificate-key=@env:CERTIFICATE_PRIVATE_KEY` recipe (the declarative
+`ios_signing` block does NOT create profiles). The **step-by-step release flow is
+§14.6.** Android signing/versioning is wired in `android/app/build.gradle` (reads
+`CM_KEYSTORE_*` env or `key.properties`, and `-PversionCode`/`-PversionName`), but
+its release tag-trigger is disabled until its secrets exist. Setup/secrets:
+`store/RELEASE.md`.
 
 ### 14.5 Don't
 
@@ -450,3 +471,60 @@ CI can't share it via Xcode). Android release signing/versioning is wired in
 - Call native plugin methods without the `isNativePlatform()` guard (breaks web).
 - Commit keystores or `key.properties`.
 - Change `appId` after the first store submission (it's permanent per listing).
+- Embed YouTube inline on native expecting it to work (iOS error 153 — see §14.2).
+- Assume a `v*` tag auto-builds — Codemagic tag-triggering is **not** enabled in
+  the UI; trigger explicitly (§14.6).
+
+### 14.6 Shipping a new iOS version via Codemagic (the live workflow)
+
+No Mac involved. Codemagic app `_id` `6a490243659bdcc85c8cd1ac` (name "judo").
+
+1. **Branch** off `master` (`fix/*` or `feat/*`) and make the change.
+2. **Bump the version** in `web/package.json` → becomes the iOS marketing version
+   `CFBundleShortVersionString`. The build number is Codemagic's auto-incrementing
+   `$BUILD_NUMBER`.
+3. **Gate:** `cd web && npm run typecheck && npm test && npm run lint && npm run build`.
+4. **If native deps/config changed:** `npx cap sync`, then fix the backslash paths
+   in `web/ios/App/CapApp-SPM/Package.swift` (Windows mangle) before committing.
+5. **PR + merge** with the **GitHub CLI** (`gh` is authenticated here):
+   `gh pr create --base master …` → `gh pr merge <branch> --merge --delete-branch`.
+   Merging to `master` also fires the harmless DigitalOcean web redeploy.
+6. **Tag** on master: `git tag -a vX.Y.Z -m "…" && git push origin vX.Y.Z`.
+7. **Trigger the iOS build explicitly** (tag auto-trigger is off) — either:
+   - **Codemagic MCP** (configured, user scope): `mcp__codemagic__trigger_build`
+     with `workflow_id: ios`, `tag: vX.Y.Z` (default app id is preset).
+   - **REST API:** `POST https://api.codemagic.io/builds`
+     `{ "appId": "6a490243659bdcc85c8cd1ac", "workflowId": "ios", "tag": "vX.Y.Z" }`,
+     header `x-auth-token: <CODEMAGIC_API_KEY from repo-root .env>`.
+8. **Watch it** — `mcp__codemagic__get_build` / `get_step_logs`, or poll
+   `GET /builds/{id}` (step logs at `GET /builds/{id}/step/{stepId}`). ~5–8 min →
+   publishes to TestFlight; then it processes in App Store Connect (~mins) and is
+   installable via the TestFlight app.
+
+**Tooling for agents:** `gh` CLI (PRs/merges/issues); **Codemagic MCP**
+(`mcp__codemagic__*` — builds, logs, artifacts, variables); Codemagic **REST API**
+(token in repo-root `.env`, header `x-auth-token`) as the fallback when the MCP
+isn't loaded.
+
+**Signing (working — don't touch unless renewing certs):** `CERTIFICATE_PRIVATE_KEY`
+is a secure Codemagic var in group `appstore_signing` (RSA PEM; local backup at
+git-ignored `codemagic-certificate-key.txt`). App Store Connect API-key integration
+is named `codemagic`. Export compliance is pre-answered via
+`ITSAppUsesNonExemptEncryption=false` in `Info.plist`.
+
+**Android:** the `android` workflow exists but its `<<: *release_trigger` is
+removed until its secrets are set (keystore `judoquiz_keystore` + env group
+`google_play`). Trigger manually, or re-add the trigger once configured.
+
+### 14.7 Inline video — open decision
+
+Native currently uses tap-to-open (`@capacitor/browser`), which leaves the app.
+To keep the user **in-app**, two options (fullscreen-in-app is acceptable):
+
+- **Inline via a real https domain** — host the embed proxy on the DigitalOcean
+  deployment (not `localhost`) and point the native `<iframe>` at
+  `https://<do-domain>/youtube.html?v=<id>`. Best UX (true inline); needs the DO
+  URL (ideally a stable custom domain). Consider a graceful fallback to tap-to-open
+  if the player still errors (YouTube tightened embed verification in July 2025).
+- **Native fullscreen player** — `@capgo/capacitor-youtube-player` (Cap 8). Plays
+  fullscreen but **stays in the app**; no domain dependency; adds a native plugin.

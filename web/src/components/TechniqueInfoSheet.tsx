@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { TechniqueInfo } from '../lib/technique-info'
 import { youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
-import { isNativePlatform, openExternalUrl } from '../lib/native'
+import { isNativePlatform, playYoutubeVideo } from '../lib/native'
 
 interface TechniqueInfoSheetProps {
   open: boolean
@@ -19,8 +19,8 @@ function TechniqueContent({
   showVideo: boolean
 }) {
   // The iOS/Android WKWebView can't embed YouTube inline (error 153 — it strips
-  // the referer YouTube requires), so on native we show a thumbnail that opens
-  // the video in the system in-app browser. The web build embeds inline.
+  // the referer YouTube requires), so on native a tap opens the video in the
+  // native fullscreen player (stays in-app). The web build embeds inline.
   const videoId = technique.youtube ? youtubeVideoId(technique.youtube) : null
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
   const native = isNativePlatform()
@@ -32,7 +32,7 @@ function TechniqueContent({
       {showVideo && videoId && native ? (
         <button
           type="button"
-          onClick={() => void openExternalUrl(`https://www.youtube.com/watch?v=${videoId}`)}
+          onClick={() => void playYoutubeVideo(videoId)}
           aria-label={`Speel video af: ${technique.name}`}
           className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-border bg-black"
         >
