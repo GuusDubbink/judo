@@ -415,14 +415,18 @@ hardware back button onto the quiz's own navigation (`useAndroidBackButton()` in
 (`openExternalUrl()`). Plugins: `@capacitor/status-bar`,
 `@capacitor/splash-screen`, `@capacitor/app`, `@capacitor/browser`.
 
-**YouTube video (known WKWebView limit):** iOS can't embed YouTube inline
-(error 153 — WKWebView strips the referer YouTube requires; `iosScheme:https` +
-a bundled proxy still fail because YouTube rejects the `localhost` origin). So on
-native, the technique video in `TechniqueInfoSheet` is a tappable thumbnail that
-opens via `openExternalUrl()` / `@capacitor/browser`; the **web build keeps the
-inline `<iframe>`** (gated on `isNativePlatform()`). Restoring inline needs the
-embed hosted on a **real** https domain (the DO deployment) or a native player
-plugin — see §14.7.
+**YouTube video (iOS inline — solved in v0.1.5):** YouTube rejects embeds from the
+app's own `localhost`/custom-scheme origin (error 153); `iosScheme:https`, a
+bundled localhost proxy, and the `@capgo` native player all failed. The fix:
+serve the embed from a **real https origin**. On native, `TechniqueInfoSheet`
+loads the video inline from `${VIDEO_PROXY_ORIGIN}/youtube?v=<id>` — the
+`web/public/youtube.html` proxy hosted on the DigitalOcean deployment
+(`judo-app-i4wta.ondigitalocean.app`), the same origin where the web inline embed
+works. Use the **clean `/youtube?v=`** URL, not `.html` (`serve` 301-redirects it
+and drops the query). The proxy uses the YouTube IFrame API and, on a player
+error, `postMessage`s the app to fall back to the in-app browser
+(`@capacitor/browser`). The web build embeds YouTube directly (gated on
+`isNativePlatform()`). See §14.7 for the domain caveat.
 
 ### 14.3 Commands (from `web/`)
 
@@ -516,15 +520,10 @@ is named `codemagic`. Export compliance is pre-answered via
 removed until its secrets are set (keystore `judoquiz_keystore` + env group
 `google_play`). Trigger manually, or re-add the trigger once configured.
 
-### 14.7 Inline video — open decision
+### 14.7 Inline video — the domain caveat
 
-Native currently uses tap-to-open (`@capacitor/browser`), which leaves the app.
-To keep the user **in-app**, two options (fullscreen-in-app is acceptable):
-
-- **Inline via a real https domain** — host the embed proxy on the DigitalOcean
-  deployment (not `localhost`) and point the native `<iframe>` at
-  `https://<do-domain>/youtube.html?v=<id>`. Best UX (true inline); needs the DO
-  URL (ideally a stable custom domain). Consider a graceful fallback to tap-to-open
-  if the player still errors (YouTube tightened embed verification in July 2025).
-- **Native fullscreen player** — `@capgo/capacitor-youtube-player` (Cap 8). Plays
-  fullscreen but **stays in the app**; no domain dependency; adds a native plugin.
+Inline video works (v0.1.5) via the DO-domain proxy (§14.2). The one caveat:
+`VIDEO_PROXY_ORIGIN` in `TechniqueInfoSheet.tsx` is hardcoded to
+`https://judo-app-i4wta.ondigitalocean.app`. If that DigitalOcean URL ever changes
+(e.g. moving to a custom domain), update that constant — otherwise native video
+silently falls back to the in-app browser. A custom domain would make it stable.
