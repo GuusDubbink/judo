@@ -83,4 +83,15 @@ export interface QuizFilters {
   count: number
 }
 
+export type SetupFilters = Pick<QuizFilters, 'belt' | 'domain'>
+
 export type QuizMode = 'quiz' | 'study'
+
+export interface QuizMissedReview {
+  questionNumber: number
+  type: QuestionType
+  prompt: string
+  hint?: string
+  selectedOption: string
+  correctOptions: string[]
+}
