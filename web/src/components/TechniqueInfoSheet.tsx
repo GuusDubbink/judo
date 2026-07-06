@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { TechniqueInfo } from '../lib/technique-info'
-import { youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
+import { YOUTUBE_START_SECONDS, youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
 import { isNativePlatform, openExternalUrl } from '../lib/native'
 
 // Our production web origin (DigitalOcean). The native app loads the YouTube
@@ -99,7 +99,11 @@ export function TechniqueContent({
         <VideoPoster
           videoId={videoId}
           name={technique.name}
-          onClick={() => void openExternalUrl(`https://www.youtube.com/watch?v=${videoId}`)}
+          onClick={() =>
+            void openExternalUrl(
+              `https://www.youtube.com/watch?v=${videoId}&t=${YOUTUBE_START_SECONDS}`,
+            )
+          }
         />
       ) : showVideo && videoId && lazyVideo && !started ? (
         <VideoPoster videoId={videoId} name={technique.name} onClick={() => setStarted(true)} />

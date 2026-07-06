@@ -5,19 +5,19 @@ import { hasTechniqueInfo, resolveTechniqueInfo, youtubeEmbedUrl } from './techn
 describe('youtubeEmbedUrl', () => {
   it('converts youtu.be links with autoplay params', () => {
     expect(youtubeEmbedUrl('https://youtu.be/zIq0xI0ogxk')).toBe(
-      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1',
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1&start=5',
     )
   })
 
   it('converts youtube.com watch links with autoplay params', () => {
     expect(youtubeEmbedUrl('https://www.youtube.com/watch?v=zIq0xI0ogxk')).toBe(
-      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1',
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&autoplay=1&mute=1&start=5',
     )
   })
 
   it('can omit autoplay when disabled', () => {
     expect(youtubeEmbedUrl('https://youtu.be/zIq0xI0ogxk', false)).toBe(
-      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1',
+      'https://www.youtube-nocookie.com/embed/zIq0xI0ogxk?rel=0&modestbranding=1&playsinline=1&start=5',
     )
   })
 
