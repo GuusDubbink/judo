@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="referrer" content="origin" />
+    <title>Video</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+      }
+      #player,
+      iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="player"></div>
+    <script>
+      // YouTube embed proxy. This page is served from the app's real https
+      // origin (the DigitalOcean deployment), which YouTube accepts — unlike the
+      // native app's own `localhost` webview (error 153). It uses the IFrame API
+      // so a player error can be reported back to the app, which then falls back
+      // to opening the video in the in-app browser. Only a sanitised id is used.
+      ;(function () {
+        var id = (new URLSearchParams(location.search).get('v') || '').replace(/[^A-Za-z0-9_-]/g, '')
+        function notifyError() {
+          try {
+            if (window.parent) {
+              window.parent.postMessage({ source: 'judo-yt', type: 'error', videoId: id }, '*')
+            }
+          } catch (e) {}
+        }
+        if (!id) return
+        var tag = document.createElement('script')
+        tag.src = 'https://www.youtube.com/iframe_api'
+        tag.onerror = notifyError
+        document.head.appendChild(tag)
+        window.onYouTubeIframeAPIReady = function () {
+          try {
+            new YT.Player('player', {
+              videoId: id,
+              host: 'https://www.youtube-nocookie.com',
+              playerVars: { rel: 0, modestbranding: 1, playsinline: 1, autoplay: 1, mute: 1 },
+              events: { onError: notifyError },
+            })
+          } catch (e) {
+            notifyError()
+          }
+        }
+        // If the IFrame API never initialises, treat it as a failure too.
+        setTimeout(function () {
+          if (!(window.YT && window.YT.Player)) notifyError()
+        }, 8000)
+      })()
+    </script>
+  </body>
+</html>

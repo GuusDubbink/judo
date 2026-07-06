@@ -1,7 +1,13 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import type { TechniqueInfo } from '../lib/technique-info'
 import { youtubeEmbedUrl, youtubeVideoId } from '../lib/technique-info'
-import { isNativePlatform, playYoutubeVideo } from '../lib/native'
+import { isNativePlatform, openExternalUrl } from '../lib/native'
+
+// Our production web origin (DigitalOcean). The native app loads the YouTube
+// embed through /youtube.html here, because YouTube rejects the app's own
+// `localhost` webview origin (error 153) but accepts this real https domain —
+// the same origin on which the web app's inline embed already works.
+const VIDEO_PROXY_ORIGIN = 'https://judo-app-i4wta.ondigitalocean.app'
 
 interface TechniqueInfoSheetProps {
   open: boolean
@@ -18,21 +24,40 @@ function TechniqueContent({
   showName: boolean
   showVideo: boolean
 }) {
-  // The iOS/Android WKWebView can't embed YouTube inline (error 153 — it strips
-  // the referer YouTube requires), so on native a tap opens the video in the
-  // native fullscreen player (stays in-app). The web build embeds inline.
+  // Native: embed via the /youtube.html proxy on our real https domain (a valid
+  // origin YouTube accepts). If that proxy still reports a player error it posts
+  // a message back and we fall back to opening the video in the in-app browser.
+  // Web: embed YouTube directly (unchanged). This component is keyed by
+  // technique id in the parent, so `videoFailed` resets per technique.
   const videoId = technique.youtube ? youtubeVideoId(technique.youtube) : null
   const embedUrl = technique.youtube ? youtubeEmbedUrl(technique.youtube) : null
   const native = isNativePlatform()
+  const [videoFailed, setVideoFailed] = useState(false)
+
+  useEffect(() => {
+    if (!native) return
+    const onMessage = (event: MessageEvent) => {
+      const data = event.data as { source?: string; type?: string } | null
+      if (data && data.source === 'judo-yt' && data.type === 'error') setVideoFailed(true)
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [native])
+
+  const iframeSrc = native
+    ? videoId
+      ? `${VIDEO_PROXY_ORIGIN}/youtube.html?v=${videoId}`
+      : null
+    : embedUrl
 
   return (
     <div className="flex flex-col gap-4">
       {showName ? <h3 className="text-lg font-bold text-ink">{technique.name}</h3> : null}
 
-      {showVideo && videoId && native ? (
+      {showVideo && videoId && native && videoFailed ? (
         <button
           type="button"
-          onClick={() => void playYoutubeVideo(videoId)}
+          onClick={() => void openExternalUrl(`https://www.youtube.com/watch?v=${videoId}`)}
           aria-label={`Speel video af: ${technique.name}`}
           className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-border bg-black"
         >
@@ -49,10 +74,10 @@ function TechniqueContent({
             </span>
           </span>
         </button>
-      ) : showVideo && embedUrl ? (
+      ) : showVideo && iframeSrc ? (
         <div className="aspect-video w-full overflow-hidden rounded-xl border border-border bg-black">
           <iframe
-            src={embedUrl}
+            src={iframeSrc}
             title={`Video: ${technique.name}`}
             className="h-full w-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
