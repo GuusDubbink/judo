@@ -30,6 +30,11 @@ const config: CapacitorConfig = {
       backgroundColor: '#00aeef', // club blue
       showSpinner: false,
     },
+    YoutubePlayer: {
+      // The native player sends this Referer so YouTube accepts playback inside
+      // the WKWebView (fixes error 153). Must be a real youtube origin.
+      refererHeader: 'https://www.youtube.com',
+    },
   },
 }
 
