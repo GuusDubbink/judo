@@ -44,9 +44,11 @@ function TechniqueContent({
     return () => window.removeEventListener('message', onMessage)
   }, [native])
 
+  // Clean URL (no `.html`) on purpose: `serve` 301-redirects `/youtube.html` to
+  // `/youtube` and drops the query string, which would strip the video id.
   const iframeSrc = native
     ? videoId
-      ? `${VIDEO_PROXY_ORIGIN}/youtube.html?v=${videoId}`
+      ? `${VIDEO_PROXY_ORIGIN}/youtube?v=${videoId}`
       : null
     : embedUrl
 

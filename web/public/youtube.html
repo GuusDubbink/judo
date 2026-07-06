@@ -40,7 +40,11 @@
             }
           } catch (e) {}
         }
-        if (!id) return
+        if (!id) {
+          // No video id (e.g. query lost in a redirect) — let the app fall back.
+          notifyError()
+          return
+        }
         var tag = document.createElement('script')
         tag.src = 'https://www.youtube.com/iframe_api'
         tag.onerror = notifyError
