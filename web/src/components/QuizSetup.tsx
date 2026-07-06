@@ -2,12 +2,14 @@ import { useId, useMemo, useState, type ReactNode } from 'react'
 import type { BeltCode, QuizDomainFilter, QuizMode, SetupFilters } from '../types'
 import { BELT_ORDER } from '../types'
 import { getBelts, getSetupStats } from '../lib/quiz'
+import type { ConfigurableQuestionType } from '../lib/settings'
 import { studyDeckSize } from '../lib/study'
 
 interface QuizSetupProps {
   mode: QuizMode
   filters: SetupFilters
   questionCount: number
+  excludedQuestionTypes: ConfigurableQuestionType[]
   onModeChange: (mode: QuizMode) => void
   onFiltersChange: (filters: SetupFilters) => void
   onOpenSettings: () => void
@@ -18,6 +20,7 @@ export function QuizSetup({
   mode,
   filters,
   questionCount,
+  excludedQuestionTypes,
   onModeChange,
   onFiltersChange,
   onOpenSettings,
@@ -26,8 +29,8 @@ export function QuizSetup({
   const belts = getBelts()
   const { belt, domain } = filters
   const quizFilters = useMemo(
-    () => ({ ...filters, count: questionCount }),
-    [filters, questionCount],
+    () => ({ ...filters, count: questionCount, excludedQuestionTypes }),
+    [filters, questionCount, excludedQuestionTypes],
   )
 
   const { techniques, glossaryTerms, questions, quizLength } = useMemo(
@@ -170,7 +173,7 @@ function setupSubtitle(mode: QuizMode, domain: QuizDomainFilter): string {
     if (domain === 'glossary') return 'Blader door de woorden en hun betekenis.'
     return 'Naam, rijtje, betekenis en video — op je eigen tempo.'
   }
-  return 'Technieken, counters, combinaties en woorden.'
+  return 'Technieken, overnames, combinaties en woorden.'
 }
 
 function BeltFilterInfo({ belts }: { belts: Record<BeltCode, string> }) {

@@ -185,4 +185,20 @@ describe('quiz scoring truth', () => {
       expect(item, `question ${question.id} failed validation`).toBeUndefined()
     }
   })
+
+  it('excludes configured question types from the pool', () => {
+    const allFilters: QuizFilters = { belt: 'all', domain: 'all', count: 9999 }
+    const filteredFilters: QuizFilters = {
+      ...allFilters,
+      excludedQuestionTypes: ['number', 'glossary'],
+    }
+
+    const allPool = buildQuestionPool(allFilters)
+    const filteredPool = buildQuestionPool(filteredFilters)
+
+    expect(filteredPool.every((question) => question.type !== 'number')).toBe(true)
+    expect(filteredPool.every((question) => question.type !== 'glossary')).toBe(true)
+    expect(filteredPool.length).toBeLessThan(allPool.length)
+    expect(allPool.some((question) => question.type === 'number')).toBe(true)
+  })
 })

@@ -2,7 +2,8 @@ import { useCallback, useMemo, useState } from 'react'
 import { db } from '../data/db'
 import { createQuiz } from '../lib/quiz'
 import { getValidOptionIndices, isAnswerCorrect } from '../lib/quiz-truth'
-import { loadSettings, saveSettings } from '../lib/settings'
+import { SETTINGS_QUESTION_TYPE_ORDER } from '../lib/constants'
+import { loadSettings, saveSettings, type AppSettings, type ConfigurableQuestionType } from '../lib/settings'
 import { buildStudyDeck, buildStudyIndex, buildStudySections, studySectionAt, type StudyCard } from '../lib/study'
 import type { QuizFilters, QuizMissedReview, QuizMode, QuizQuestion, SetupFilters } from '../types'
 
@@ -10,15 +11,19 @@ type Screen = 'setup' | 'quiz' | 'results' | 'study' | 'settings'
 
 const DEFAULT_SETUP_FILTERS: SetupFilters = { belt: 'all', domain: 'all' }
 
-function toQuizFilters(setup: SetupFilters, count: number): QuizFilters {
-  return { ...setup, count }
+function toQuizFilters(setup: SetupFilters, settings: AppSettings): QuizFilters {
+  return {
+    ...setup,
+    count: settings.questionCount,
+    excludedQuestionTypes: settings.excludedQuestionTypes,
+  }
 }
 
 export function useQuiz() {
   const [screen, setScreen] = useState<Screen>('setup')
   const [setupMode, setSetupMode] = useState<QuizMode>('quiz')
   const [setupFilters, setSetupFilters] = useState<SetupFilters>(DEFAULT_SETUP_FILTERS)
-  const [questionCount, setQuestionCountState] = useState(() => loadSettings().questionCount)
+  const [settings, setSettingsState] = useState<AppSettings>(() => loadSettings())
   const [filters, setFilters] = useState<QuizFilters | null>(null)
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
   const [index, setIndex] = useState(0)
@@ -71,14 +76,39 @@ export function useQuiz() {
     [studySections, studyIndex],
   )
 
-  const setQuestionCount = useCallback((count: number) => {
-    setQuestionCountState(count)
-    saveSettings({ questionCount: count })
+  const persistSettings = useCallback((next: AppSettings) => {
+    setSettingsState(next)
+    saveSettings(next)
   }, [])
+
+  const setQuestionCount = useCallback(
+    (count: number) => {
+      persistSettings({ ...settings, questionCount: count })
+    },
+    [persistSettings, settings],
+  )
+
+  const setQuestionTypeIncluded = useCallback(
+    (type: ConfigurableQuestionType, included: boolean) => {
+      const excluded = new Set(settings.excludedQuestionTypes)
+      if (included) {
+        excluded.delete(type)
+      } else if (excluded.size + 1 >= SETTINGS_QUESTION_TYPE_ORDER.length) {
+        return
+      } else {
+        excluded.add(type)
+      }
+      persistSettings({
+        ...settings,
+        excludedQuestionTypes: [...excluded],
+      })
+    },
+    [persistSettings, settings],
+  )
 
   const startQuiz = useCallback(
     (setup: SetupFilters) => {
-      const nextFilters = toQuizFilters(setup, questionCount)
+      const nextFilters = toQuizFilters(setup, settings)
       const nextQuestions = createQuiz(nextFilters)
       if (nextQuestions.length === 0) return
 
@@ -90,21 +120,24 @@ export function useQuiz() {
       setAnswers({})
       setScreen('quiz')
     },
-    [questionCount],
+    [settings],
   )
 
-  const startStudy = useCallback((setup: SetupFilters) => {
-    const nextFilters = toQuizFilters(setup, questionCount)
-    const deck = buildStudyDeck(nextFilters)
-    if (deck.length === 0) return
+  const startStudy = useCallback(
+    (setup: SetupFilters) => {
+      const nextFilters = toQuizFilters(setup, settings)
+      const deck = buildStudyDeck(nextFilters)
+      if (deck.length === 0) return
 
-    setSetupFilters(setup)
-    setSetupMode('study')
-    setFilters(nextFilters)
-    setStudyDeck(deck)
-    setStudyIndex(0)
-    setScreen('study')
-  }, [questionCount])
+      setSetupFilters(setup)
+      setSetupMode('study')
+      setFilters(nextFilters)
+      setStudyDeck(deck)
+      setStudyIndex(0)
+      setScreen('study')
+    },
+    [settings],
+  )
 
   const goHome = useCallback(() => {
     setScreen('setup')
@@ -170,10 +203,12 @@ export function useQuiz() {
     screen,
     setupMode,
     setupFilters,
-    questionCount,
+    questionCount: settings.questionCount,
+    excludedQuestionTypes: settings.excludedQuestionTypes,
     setSetupMode,
     setSetupFilters,
     setQuestionCount,
+    setQuestionTypeIncluded,
     openSettings,
     closeSettings,
     currentQuestion,

@@ -123,7 +123,7 @@ function buildCounterQuestion(counter: Counter, pool: Technique[]): QuizQuestion
   return {
     id: `counter-${counter.attack_id}-${counter.counter_id}`,
     type: 'counter',
-    prompt: 'Welke counter hoort bij deze techniek?',
+    prompt: 'Welke overname hoort bij deze techniek?',
     hint: attack.name,
     options: built.options,
     correctIndex: built.options.indexOf(counterTechnique.name),
@@ -184,9 +184,10 @@ export function buildQuestionPool(filters: QuizFilters): QuizQuestion[] {
   const techniqueIds = new Set(pool.map((technique) => technique.id))
   const questions: QuizQuestion[] = []
   const seen = new Set<string>()
+  const excluded = new Set(filters.excludedQuestionTypes ?? [])
 
   const add = (question: QuizQuestion | null) => {
-    if (!question || seen.has(question.id)) return
+    if (!question || seen.has(question.id) || excluded.has(question.type)) return
     seen.add(question.id)
     questions.push(question)
   }
