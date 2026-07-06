@@ -9,7 +9,6 @@ import { App as CapacitorApp } from '@capacitor/app'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { StatusBar, Style } from '@capacitor/status-bar'
 import { Browser } from '@capacitor/browser'
-import { YoutubePlayer } from '@capgo/capacitor-youtube-player'
 
 const CLUB_BLUE = '#00aeef'
 
@@ -48,40 +47,6 @@ export async function openExternalUrl(url: string): Promise<void> {
     await Browser.open({ url })
   } else {
     window.open(url, '_blank', 'noopener')
-  }
-}
-
-const YT_PLAYER_ID = 'judo-technique-video'
-
-/**
- * Play a YouTube video in the native fullscreen player (@capgo/capacitor-youtube-player),
- * which stays inside the app (iOS presents it fullscreen). The plugin's
- * `refererHeader` config sends a valid referer so YouTube doesn't reject it
- * (the error 153 the inline WKWebView embed hits). If the native player fails to
- * load for any reason, we fall back to the in-app browser — never worse than the
- * previous behaviour. On web this just opens a tab (web uses the inline iframe).
- */
-export async function playYoutubeVideo(videoId: string): Promise<void> {
-  if (!Capacitor.isNativePlatform()) {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener')
-    return
-  }
-  try {
-    // Reset any previous player instance so re-opening a different video works.
-    try {
-      await YoutubePlayer.destroy({ playerId: YT_PLAYER_ID })
-    } catch {
-      // No existing player — expected on first open.
-    }
-    await YoutubePlayer.initialize({
-      playerId: YT_PLAYER_ID,
-      videoId,
-      playerSize: { width: 640, height: 360 },
-      fullscreen: true,
-      playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 0 },
-    })
-  } catch {
-    await Browser.open({ url: `https://www.youtube.com/watch?v=${videoId}` })
   }
 }
 
