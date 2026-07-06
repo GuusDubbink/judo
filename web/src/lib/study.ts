@@ -44,11 +44,10 @@ export type StudyIndexNode =
   | { kind: 'section'; section: StudySection }
   | { kind: 'group'; group: StudySectionGroup }
 
-// Order techniques the way they are taught: per category, then per row (serie),
-// then by their number within the row. Judoka learn the rijtjes in this order.
 const categoryOrder = new Map(Object.keys(db.categories).map((id, index) => [id, index]))
 
-function seriesRank(series?: string | null): number {
+/** Rank series for deck ordering (1e serie → 1, …). Used in tests too. */
+export function seriesRank(series?: string | null): number {
   if (!series) return -1
   const match = series.match(/\d+/)
   return match ? Number(match[0]) : 999
@@ -120,7 +119,65 @@ function serieRunEnd(
   return end
 }
 
-function isInSection(section: StudySection, cardIndex: number): boolean {
+function termRunEnd(deck: StudyCard[], start: number): number {
+  const letter = termSectionLetter((deck[start] as StudyTermCard).term)
+  let end = start + 1
+  while (end < deck.length) {
+    const next = deck[end]
+    if (next.kind !== 'term' || termSectionLetter(next.term) !== letter) break
+    end += 1
+  }
+  return end
+}
+
+function sectionKeyForCard(card: StudyCard): { id: string; label: string } {
+  if (card.kind === 'term') {
+    const letter = termSectionLetter(card.term)
+    return { id: `letter-${letter}`, label: letter }
+  }
+  if (card.series) {
+    const category = db.categories[card.categoryId]
+    return {
+      id: `${card.categoryId}:${card.series}`,
+      label: category ? `${category.nl} · ${card.series}` : `${card.category} · ${card.series}`,
+    }
+  }
+  return { id: card.categoryId, label: card.category }
+}
+
+function appendSection(sections: StudySection[], key: { id: string; label: string }, index: number) {
+  const last = sections[sections.length - 1]
+  if (last?.id === key.id) {
+    last.count += 1
+  } else {
+    sections.push({ id: key.id, label: key.label, startIndex: index, count: 1 })
+  }
+}
+
+function buildSerieSections(
+  deck: StudyCard[],
+  start: number,
+  categoryEnd: number,
+  categoryId: string,
+): StudySection[] {
+  const children: StudySection[] = []
+  let serieStart = start
+  while (serieStart < categoryEnd) {
+    const tech = deck[serieStart] as StudyTechniqueCard
+    const series = tech.series as string
+    const serieEnd = serieRunEnd(deck, serieStart, categoryId, series)
+    children.push({
+      id: `${categoryId}:${series}`,
+      label: series,
+      startIndex: serieStart,
+      count: serieEnd - serieStart,
+    })
+    serieStart = serieEnd
+  }
+  return children
+}
+
+export function isInSection(section: StudySection, cardIndex: number): boolean {
   return cardIndex >= section.startIndex && cardIndex < section.startIndex + section.count
 }
 
@@ -129,28 +186,7 @@ export function buildStudySections(deck: StudyCard[]): StudySection[] {
   const sections: StudySection[] = []
 
   for (let index = 0; index < deck.length; index += 1) {
-    const card = deck[index]
-    let id: string
-    let label: string
-
-    if (card.kind === 'term') {
-      id = `letter-${termSectionLetter(card.term)}`
-      label = termSectionLetter(card.term)
-    } else if (card.series) {
-      const category = db.categories[card.categoryId]
-      id = `${card.categoryId}:${card.series}`
-      label = category ? `${category.nl} · ${card.series}` : `${card.category} · ${card.series}`
-    } else {
-      id = card.categoryId
-      label = card.category
-    }
-
-    const last = sections[sections.length - 1]
-    if (last?.id === id) {
-      last.count += 1
-    } else {
-      sections.push({ id, label, startIndex: index, count: 1 })
-    }
+    appendSection(sections, sectionKeyForCard(deck[index]), index)
   }
 
   return sections
@@ -168,17 +204,11 @@ export function buildStudyIndex(deck: StudyCard[]): StudyIndexNode[] {
     const card = deck[index]
 
     if (card.kind === 'term') {
-      const letter = termSectionLetter(card.term)
-      const id = `letter-${letter}`
-      let end = index + 1
-      while (end < deck.length) {
-        const next = deck[end]
-        if (next.kind !== 'term' || termSectionLetter(next.term) !== letter) break
-        end += 1
-      }
+      const end = termRunEnd(deck, index)
+      const { id, label } = sectionKeyForCard(card)
       nodes.push({
         kind: 'section',
-        section: { id, label: letter, startIndex: index, count: end - index },
+        section: { id, label, startIndex: index, count: end - index },
       })
       index = end
       continue
@@ -191,20 +221,6 @@ export function buildStudyIndex(deck: StudyCard[]): StudyIndexNode[] {
       .some((item) => item.kind === 'technique' && item.series)
 
     if (hasSeries) {
-      const children: StudySection[] = []
-      let serieStart = index
-      while (serieStart < categoryEnd) {
-        const tech = deck[serieStart] as StudyTechniqueCard
-        const series = tech.series as string
-        const serieEnd = serieRunEnd(deck, serieStart, categoryId, series)
-        children.push({
-          id: `${categoryId}:${series}`,
-          label: series,
-          startIndex: serieStart,
-          count: serieEnd - serieStart,
-        })
-        serieStart = serieEnd
-      }
       nodes.push({
         kind: 'group',
         group: {
@@ -212,7 +228,7 @@ export function buildStudyIndex(deck: StudyCard[]): StudyIndexNode[] {
           label: card.category,
           startIndex: index,
           count: categoryEnd - index,
-          children,
+          children: buildSerieSections(deck, index, categoryEnd, categoryId),
         },
       })
     } else {
@@ -242,8 +258,6 @@ export function studySectionAt(
   }
   return null
 }
-
-export { isInSection }
 
 export function studyDeckSize(filters: QuizFilters): number {
   return filters.domain === 'glossary'

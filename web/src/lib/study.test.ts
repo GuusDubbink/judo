@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { QuizFilters } from '../types'
-import { buildStudyDeck, buildStudyIndex, buildStudySections, studyDeckSize, type StudyTechniqueCard } from './study'
+import { buildStudyDeck, buildStudyIndex, buildStudySections, seriesRank, studyDeckSize, type StudyTechniqueCard } from './study'
 import { breakdownName, hasDecodableWord } from './word-breakdown'
 
 const techniqueCards = (filters: QuizFilters): StudyTechniqueCard[] =>
@@ -25,12 +25,12 @@ describe('study deck', () => {
     const kansetsu = cards.filter((card) => card.category.startsWith('armklemmen'))
     expect(kansetsu.length).toBeGreaterThan(0)
 
-    const seriesRank = (s?: string | null) => (s ? Number(s.match(/\d+/)?.[0] ?? 999) : -1)
+    const seriesRankForTest = seriesRank
     for (let i = 1; i < kansetsu.length; i += 1) {
       const prev = kansetsu[i - 1]
       const curr = kansetsu[i]
       const order =
-        seriesRank(prev.series) - seriesRank(curr.series) ||
+        seriesRankForTest(prev.series) - seriesRankForTest(curr.series) ||
         (prev.number ?? 999) - (curr.number ?? 999)
       expect(order).toBeLessThanOrEqual(0)
     }

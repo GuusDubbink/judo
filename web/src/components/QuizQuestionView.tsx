@@ -8,6 +8,8 @@ import {
   type TechniqueInfo,
 } from '../lib/technique-info'
 import { TechniqueInfoSheet } from './TechniqueInfoSheet'
+import { PagerButtons } from './PagerButtons'
+import { ScreenHeader } from './ScreenHeader'
 
 interface QuizQuestionViewProps {
   question: QuizQuestion
@@ -74,18 +76,14 @@ export function QuizQuestionView({
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:gap-6 sm:py-8">
-      <div className="flex items-center justify-between gap-3">
-        <button
-          type="button"
-          onClick={onHome}
-          className="min-h-11 rounded-lg px-2 text-sm font-medium text-club-blue transition hover:bg-club-blue-light sm:px-3"
-        >
-          ← Start
-        </button>
-        <span className="text-sm text-muted capitalize">
-          {QUESTION_TYPE_LABELS[question.type]}
-        </span>
-      </div>
+      <ScreenHeader
+        onHome={onHome}
+        trailing={
+          <span className="text-sm text-muted capitalize">
+            {QUESTION_TYPE_LABELS[question.type]}
+          </span>
+        }
+      />
 
       <div className="space-y-2">
         <div className="text-sm text-muted">
@@ -202,24 +200,13 @@ export function QuizQuestionView({
         </p>
       ) : null}
 
-      <div className="grid grid-cols-2 gap-3 pt-1 sm:pt-2">
-        <button
-          type="button"
-          onClick={onPrevious}
-          disabled={!canGoBack}
-          className="min-h-12 rounded-xl border border-border bg-surface px-4 py-3 font-semibold text-ink transition hover:border-club-blue hover:bg-club-blue-soft disabled:cursor-not-allowed disabled:border-border disabled:text-muted disabled:hover:bg-surface"
-        >
-          Vorige
-        </button>
-        <button
-          type="button"
-          onClick={onNext}
-          disabled={!canGoForward}
-          className="min-h-12 rounded-xl bg-club-blue px-4 py-3 font-semibold text-white transition hover:bg-club-blue-dark disabled:cursor-not-allowed disabled:bg-club-blue-light disabled:text-muted"
-        >
-          {isLastQuestion ? 'Resultaat' : 'Volgende'}
-        </button>
-      </div>
+      <PagerButtons
+        canGoBack={canGoBack}
+        canGoForward={canGoForward}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        nextLabel={isLastQuestion ? 'Resultaat' : 'Volgende'}
+      />
     </div>
   )
 }

@@ -8,78 +8,107 @@ import { exitNativeApp, useAndroidBackButton } from './lib/native'
 import type { QuizFilters, QuizMode } from './types'
 
 export default function App() {
-  const quiz = useQuiz()
+  const {
+    screen,
+    studyCard,
+    studyNumber,
+    studyTotal,
+    studyCatalog,
+    studySection,
+    canStudyPrevious,
+    canStudyNext,
+    studyPrevious,
+    studyNext,
+    studyGoTo,
+    currentQuestion,
+    questionNumber,
+    total,
+    selectedIndex,
+    showFeedback,
+    canGoBack,
+    canGoForward,
+    isLastQuestion,
+    score,
+    startQuiz,
+    startStudy,
+    goHome,
+    handleSelect,
+    goToPrevious,
+    goToNext,
+    retry,
+    validIndices,
+  } = useQuiz()
 
   const handleStart = useCallback(
     (filters: QuizFilters, mode: QuizMode) => {
-      if (mode === 'study') quiz.startStudy(filters)
-      else quiz.startQuiz(filters)
+      if (mode === 'study') startStudy(filters)
+      else startQuiz(filters)
     },
-    [quiz],
+    [startStudy, startQuiz],
   )
 
-  // Map the Android hardware back button onto the quiz's own navigation.
   const handleBack = useCallback(() => {
-    if (quiz.screen === 'quiz') {
-      if (quiz.canGoBack) quiz.goToPrevious()
-      else quiz.goHome()
-    } else if (quiz.screen === 'study') {
-      if (quiz.canStudyPrevious) quiz.studyPrevious()
-      else quiz.goHome()
-    } else if (quiz.screen === 'results') {
-      quiz.goHome()
+    if (screen === 'quiz') {
+      if (canGoBack) goToPrevious()
+      else goHome()
+    } else if (screen === 'study') {
+      if (canStudyPrevious) studyPrevious()
+      else goHome()
+    } else if (screen === 'results') {
+      goHome()
     } else {
-      // Already on the setup/home screen — let back close the app.
       void exitNativeApp()
     }
-  }, [quiz])
+  }, [
+    screen,
+    canGoBack,
+    goToPrevious,
+    goHome,
+    canStudyPrevious,
+    studyPrevious,
+  ])
   useAndroidBackButton(handleBack)
 
   return (
     <main className="min-h-screen pt-[env(safe-area-inset-top)] bg-[radial-gradient(circle_at_top,_rgba(0,174,239,0.14),_transparent_38%),linear-gradient(180deg,_#f4fbff_0%,_#ffffff_55%,_#eef8fd_100%)]">
-      {quiz.screen === 'setup' ? <QuizSetup onStart={handleStart} /> : null}
+      {screen === 'setup' ? <QuizSetup onStart={handleStart} /> : null}
 
-      {quiz.screen === 'study' && quiz.studyCard ? (
+      {screen === 'study' && studyCard ? (
         <StudyView
-          card={quiz.studyCard}
-          cardNumber={quiz.studyNumber}
-          total={quiz.studyTotal}
-          index={quiz.studyCatalog}
-          section={quiz.studySection}
-          canGoBack={quiz.canStudyPrevious}
-          canGoForward={quiz.canStudyNext}
-          onPrevious={quiz.studyPrevious}
-          onNext={quiz.studyNext}
-          onGoTo={quiz.studyGoTo}
-          onHome={quiz.goHome}
+          card={studyCard}
+          cardNumber={studyNumber}
+          total={studyTotal}
+          index={studyCatalog}
+          section={studySection}
+          canGoBack={canStudyPrevious}
+          canGoForward={canStudyNext}
+          onPrevious={studyPrevious}
+          onNext={studyNext}
+          onGoTo={studyGoTo}
+          onHome={goHome}
         />
       ) : null}
 
-      {quiz.screen === 'quiz' && quiz.currentQuestion ? (
+      {screen === 'quiz' && currentQuestion ? (
         <QuizQuestionView
-          question={quiz.currentQuestion}
-          questionNumber={quiz.questionNumber}
-          total={quiz.total}
-          selectedIndex={quiz.selectedIndex}
-          showFeedback={quiz.showFeedback}
-          canGoBack={quiz.canGoBack}
-          canGoForward={quiz.canGoForward}
-          isLastQuestion={quiz.isLastQuestion}
-          onSelect={quiz.handleSelect}
-          onPrevious={quiz.goToPrevious}
-          onNext={quiz.goToNext}
-          onHome={quiz.goHome}
-          validIndices={quiz.validIndices}
+          question={currentQuestion}
+          questionNumber={questionNumber}
+          total={total}
+          selectedIndex={selectedIndex}
+          showFeedback={showFeedback}
+          canGoBack={canGoBack}
+          canGoForward={canGoForward}
+          isLastQuestion={isLastQuestion}
+          onSelect={handleSelect}
+          onPrevious={goToPrevious}
+          onNext={goToNext}
+          onHome={goHome}
+          validIndices={validIndices}
         />
       ) : null}
 
-      {quiz.screen === 'results' ? (
-        <QuizResults
-          score={quiz.score}
-          total={quiz.total}
-          onRetry={quiz.retry}
-          onRestart={quiz.goHome}
-        />
+      {screen === 'results' ? (
+        <QuizResults score={score} total={total} onRetry={retry} onRestart={goHome} />
       ) : null}
     </main>
   )
