@@ -36,11 +36,11 @@ describe('resolveTechniqueInfo', () => {
     expect(info[0].youtube).toBeTruthy()
   })
 
-  it('returns description-only when youtube is missing', () => {
+  it('includes youtube for sasae-tsuri-komi-ashi after Kodokan mapping restore', () => {
     const info = resolveTechniqueInfo(['sasae-tsuri-komi-ashi'])
     expect(info).toHaveLength(1)
     expect(info[0].description).toBeTruthy()
-    expect(info[0].youtube).toBeUndefined()
+    expect(info[0].youtube).toBeTruthy()
   })
 
   it('skips techniques without enrichment data', () => {
