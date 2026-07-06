@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { QuizFilters } from '../types'
-import { buildStudyDeck, studyDeckSize, type StudyTechniqueCard } from './study'
+import { buildStudyDeck, buildStudyIndex, buildStudySections, studyDeckSize, type StudyTechniqueCard } from './study'
 import { breakdownName, hasDecodableWord } from './word-breakdown'
 
 const techniqueCards = (filters: QuizFilters): StudyTechniqueCard[] =>
@@ -48,6 +48,52 @@ describe('study deck', () => {
   it('studyDeckSize matches the built deck length for technique filters', () => {
     const filters: QuizFilters = { belt: 'gr', domain: 'nage_waza', count: 0 }
     expect(buildStudyDeck(filters).length).toBe(studyDeckSize(filters))
+  })
+
+  it('buildStudySections groups techniques by category and serie rows', () => {
+    const deck = buildStudyDeck({ belt: 'all', domain: 'ne_waza', count: 0 })
+    const sections = buildStudySections(deck)
+
+    expect(sections.length).toBeGreaterThan(1)
+    expect(sections.reduce((sum, section) => sum + section.count, 0)).toBe(deck.length)
+
+    const kansetsuSeries = sections.filter((section) => section.label.startsWith('armklemmen ·'))
+    expect(kansetsuSeries.length).toBeGreaterThan(0)
+  })
+
+  it('buildStudyIndex nests series under armklemmen and verwurgingen', () => {
+    const deck = buildStudyDeck({ belt: 'all', domain: 'ne_waza', count: 0 })
+    const index = buildStudyIndex(deck)
+
+    const kansetsu = index.find((node) => node.kind === 'group' && node.group.id === 'kansetsu_waza')
+    const jime = index.find((node) => node.kind === 'group' && node.group.id === 'jime_waza')
+
+    expect(kansetsu?.kind).toBe('group')
+    expect(jime?.kind).toBe('group')
+    if (kansetsu?.kind === 'group') {
+      expect(kansetsu.group.children.length).toBeGreaterThan(1)
+      expect(kansetsu.group.count).toBe(
+        kansetsu.group.children.reduce((sum, child) => sum + child.count, 0),
+      )
+    }
+    if (jime?.kind === 'group') {
+      expect(jime.group.children.length).toBeGreaterThan(1)
+    }
+
+    const leafCount = index.reduce(
+      (sum, node) => sum + (node.kind === 'group' ? node.group.children.length + 1 : 1),
+      0,
+    )
+    expect(leafCount).toBeGreaterThan(index.length)
+  })
+
+  it('buildStudySections groups glossary cards by first letter', () => {
+    const deck = buildStudyDeck({ belt: 'all', domain: 'glossary', count: 0 })
+    const sections = buildStudySections(deck)
+
+    expect(sections.length).toBeGreaterThan(1)
+    expect(sections.every((section) => section.label.length >= 1)).toBe(true)
+    expect(sections.reduce((sum, section) => sum + section.count, 0)).toBe(deck.length)
   })
 })
 

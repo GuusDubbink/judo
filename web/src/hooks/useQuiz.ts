@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { db } from '../data/db'
 import { createQuiz } from '../lib/quiz'
 import { getValidOptionIndices, isAnswerCorrect } from '../lib/quiz-truth'
-import { buildStudyDeck, type StudyCard } from '../lib/study'
+import { buildStudyDeck, buildStudyIndex, buildStudySections, studySectionAt, type StudyCard } from '../lib/study'
 import type { QuizFilters, QuizQuestion } from '../types'
 
 type Screen = 'setup' | 'quiz' | 'results' | 'study'
@@ -33,6 +33,13 @@ export function useQuiz() {
         return isAnswerCorrect(question, answer, db) ? total + 1 : total
       }, 0),
     [answers, questions],
+  )
+
+  const studySections = useMemo(() => buildStudySections(studyDeck), [studyDeck])
+  const studyCatalog = useMemo(() => buildStudyIndex(studyDeck), [studyDeck])
+  const studySection = useMemo(
+    () => studySectionAt(studySections, studyIndex),
+    [studySections, studyIndex],
   )
 
   const startQuiz = useCallback((nextFilters: QuizFilters) => {
@@ -73,6 +80,13 @@ export function useQuiz() {
   const studyPrevious = useCallback(() => {
     setStudyIndex((current) => Math.max(0, current - 1))
   }, [])
+
+  const studyGoTo = useCallback(
+    (index: number) => {
+      setStudyIndex(Math.max(0, Math.min(studyDeck.length - 1, index)))
+    },
+    [studyDeck.length],
+  )
 
   const handleSelect = useCallback(
     (optionIndex: number) => {
@@ -121,9 +135,12 @@ export function useQuiz() {
     studyCard: studyDeck[studyIndex] ?? null,
     studyNumber: studyIndex + 1,
     studyTotal: studyDeck.length,
+    studyCatalog,
+    studySection,
     canStudyPrevious: studyIndex > 0,
     canStudyNext: studyIndex + 1 < studyDeck.length,
     studyNext,
     studyPrevious,
+    studyGoTo,
   }
 }

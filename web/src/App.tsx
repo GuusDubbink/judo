@@ -44,10 +44,13 @@ export default function App() {
           card={quiz.studyCard}
           cardNumber={quiz.studyNumber}
           total={quiz.studyTotal}
+          index={quiz.studyCatalog}
+          section={quiz.studySection}
           canGoBack={quiz.canStudyPrevious}
           canGoForward={quiz.canStudyNext}
           onPrevious={quiz.studyPrevious}
           onNext={quiz.studyNext}
+          onGoTo={quiz.studyGoTo}
           onHome={quiz.goHome}
         />
       ) : null}
