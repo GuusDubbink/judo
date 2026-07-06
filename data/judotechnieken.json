@@ -13,8 +13,8 @@
       "sut": "sutemi/offerworp"
     },
     "kodokan_source": "https://kdkjd.org/names-of-judo-techniques/",
-    "kodokan_matched": 80,
-    "kodokan_unmatched": 46
+    "kodokan_matched": 70,
+    "kodokan_unmatched": 56
   },
   "belts": {
     "ge": "geel",
@@ -204,7 +204,8 @@
       "number": 11,
       "series": null,
       "needs_review": false,
-      "description": "A technique to hold the opponent’s right ankle with the left foot and throw him down by breaking his balance while lifting him up forward."
+      "description": "A technique to hold the opponent’s right ankle with the left foot and throw him down by breaking his balance while lifting him up forward.",
+      "youtube": "https://youtu.be/699i--pvYmE"
     },
     {
       "id": "harai-tsuri-komi-ashi",
@@ -828,9 +829,7 @@
       "belt": "bl",
       "number": 10,
       "series": null,
-      "needs_review": true,
-      "description": "A technique to hold down the opponent by holding his right arm and neck with the right side of the neck and both arms from the right side of the opponent lying on his back.",
-      "youtube": "https://youtu.be/zQR3IOXxO_Q"
+      "needs_review": true
     },
     {
       "id": "ura-gatame",
@@ -862,9 +861,7 @@
       "belt": "zw",
       "number": 13,
       "series": null,
-      "needs_review": true,
-      "description": "A technique to hold down the opponent’s upper body under the chest and abdomen region by grabbing his belt or trousers through his legs with the right hand from the right side of the opponent lying on his back and gripping his left side-collar through the back of his neck with the left hand.",
-      "youtube": "https://youtu.be/TT7XJVSEQxA"
+      "needs_review": true
     },
     {
       "id": "kami-sankaku-gatame",
@@ -874,9 +871,7 @@
       "belt": "zw",
       "number": 14,
       "series": null,
-      "needs_review": false,
-      "description": "A technique to choke the opponent’s neck region by holding his neck and right armpit between both legs and hooking the right foot on the back of the left knee while forming a triangular form.",
-      "youtube": "https://youtu.be/lq1CUBRAm7s"
+      "needs_review": false
     },
     {
       "id": "kuzure-yoko-shiho-gatame",
@@ -943,8 +938,8 @@
       "number": 3,
       "series": "1e serie",
       "needs_review": false,
-      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
-      "youtube": "https://youtu.be/OWgSOlCuMXw"
+      "description": "A technique to stretch and lock the opponent’s elbow joint with both hands by holding his left wrist between the neck and the right shoulder from the right side of the opponent lying on his back.",
+      "youtube": "https://youtu.be/SBf0aTma1VI"
     },
     {
       "id": "hiza-gatame",
@@ -966,9 +961,7 @@
       "belt": "or",
       "number": 1,
       "series": "2e serie",
-      "needs_review": false,
-      "description": "A technique to stretch and lock the opponent’s elbow joint by grabbing his right wrist with both hands from the right side of the opponent lying on his back and holding his upper arm between both thighs.",
-      "youtube": "https://youtu.be/OWgSOlCuMXw"
+      "needs_review": false
     },
     {
       "id": "yoko-ude-hishigi",
@@ -990,9 +983,7 @@
       "belt": "or",
       "number": 3,
       "series": "2e serie",
-      "needs_review": false,
-      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
-      "youtube": "https://youtu.be/H2HtAJdiJcE"
+      "needs_review": false
     },
     {
       "id": "ude-hishigi-henkawaza",
@@ -1012,9 +1003,7 @@
       "belt": "gr",
       "number": 2,
       "series": "3e serie",
-      "needs_review": false,
-      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front gripping his side-collars with four fingers of both hands inside and tightening arms.",
-      "youtube": "https://youtu.be/t3tQriIPdlI"
+      "needs_review": false
     },
     {
       "id": "shime-garami",
@@ -1034,9 +1023,7 @@
       "belt": "gr",
       "number": 4,
       "series": "3e serie",
-      "needs_review": false,
-      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
-      "youtube": "https://youtu.be/H2HtAJdiJcE"
+      "needs_review": false
     },
     {
       "id": "hara-katame",
@@ -1180,9 +1167,7 @@
       "belt": "zw",
       "number": 5,
       "series": "6e serie",
-      "needs_review": false,
-      "description": "A technique to stretch and lock the opponent’s elbow joint with the left knee by holding his right arm under the left armpit from the front.",
-      "youtube": "https://youtu.be/H2HtAJdiJcE"
+      "needs_review": false
     },
     {
       "id": "kata-juji-jime",
@@ -1344,9 +1329,7 @@
       "belt": "bl",
       "number": 15,
       "series": "1e serie",
-      "needs_review": true,
-      "description": "A technique to choke the opponent’s neck region from the front by gripping his right front-lapel with the left hand and the left front-lapel with the right hand and thrusting the right hand toward the right side of his neck.",
-      "youtube": "https://youtu.be/dKKpnD3eLcY"
+      "needs_review": true
     },
     {
       "id": "ebi-jime",
@@ -1386,9 +1369,7 @@
       "belt": null,
       "number": 1,
       "series": "2e serie",
-      "needs_review": false,
-      "description": "A technique to choke the opponent’s neck region by crossing the wrists from the front, gripping his side-collars with both thumbs inside and pushing both hands.",
-      "youtube": "https://youtu.be/k2cHry9HByQ"
+      "needs_review": false
     },
     {
       "id": "katate-jime",

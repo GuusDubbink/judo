@@ -3,8 +3,8 @@
 Webapp-ready typed schema + loader with referential-integrity checks.
 
 Usage:
-    from models import load
-    db = load("judotechnieken.json")
+    from data.models import load
+    db = load()
     db.by_belt("ge")            # techniques at yellow belt
     db.by_category("ashi_waza") # techniques in a category
     db.get("o-soto-gari")       # single technique by id
@@ -146,13 +146,16 @@ class JudoDB(BaseModel):
         return problems
 
 
-def load(path: str | Path = "judotechnieken.json") -> JudoDB:
+def load(path: str | Path | None = None) -> JudoDB:
+    if path is None:
+        path = Path(__file__).with_name("judotechnieken.json")
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     return JudoDB.model_validate(data)
 
 
 if __name__ == "__main__":
     import sys
+
     p = sys.argv[1] if len(sys.argv) > 1 else Path(__file__).with_name("judotechnieken.json")
     db = load(p)
     print(f"OK: parsed {len(db.techniques)} techniques, "

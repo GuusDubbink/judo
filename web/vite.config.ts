@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      '@data': path.resolve(__dirname, '../judotechnieken.json'),
+      '@data': path.resolve(__dirname, '../data/judotechnieken.json'),
     },
   },
   server: {

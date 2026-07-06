@@ -27,29 +27,35 @@ logo is not rendered in the app).
 
 ```
 judo/
-├── judotechnieken.json      # SOURCE OF TRUTH for the webapp
-├── models.py                # Pydantic v2 validation + query helpers (Python)
-├── pyproject.toml           # uv project (minimal; pydantic not yet in deps)
+├── data/                    # SOURCE OF TRUTH for the webapp
+│   ├── judotechnieken.json
+│   ├── kodokan-techniques.json
+│   ├── kodokan_mappings.json  # explicit syllabus → Kodokan couplings (tested)
+│   ├── kodokan_merge.py         # merge descriptions + YouTube into judotechnieken
+│   ├── models.py                # Pydantic validation + query helpers
+│   └── test_kodokan_mappings.py
+├── pyproject.toml           # uv project (pytest + pydantic in dev group)
 ├── README.md                # Short human readme
 ├── AGENT.md                 # This file
 ├── archive/                 # One-time tooling; NOT used by the app
 │   ├── Judotechnieken.docx
-│   └── build_judo_json.py
+│   ├── build_judo_json.py
+│   └── merge_kodokan.py     # deprecated wrapper → data/kodokan_merge.py
 ├── .do/app.yaml             # DigitalOcean App Platform deploy spec
 └── web/                     # React frontend (see §4)
 ```
 
-**Untracked / not yet integrated:**
-- `kodokan-techniques.json` — scraped Kodokan reference data (names, descriptions,
-  YouTube links). **Not wired into the app.** Do not assume it exists in production.
+**Kodokan couplings:** explicit in `data/kodokan_mappings.json`, validated by
+`uv run pytest`. Run `uv run python data/kodokan_merge.py --write` after changing
+mappings. No fuzzy matching at merge time.
 
 ---
 
-## 3. Data: `judotechnieken.json`
+## 3. Data: `data/judotechnieken.json`
 
 ### 3.1 How the webapp loads it
 
-Vite alias `@data` → `../judotechnieken.json` (see `web/vite.config.ts`).
+Vite alias `@data` → `../data/judotechnieken.json` (see `web/vite.config.ts`).
 Imported once in `web/src/data/db.ts` as typed `JudoData`.
 
 **Never copy the JSON into `web/src/`** — keep a single file at repo root.
@@ -85,19 +91,25 @@ Implemented in `web/src/lib/quiz-truth.ts` → `beltsUpTo()`.
   Counter questions must **not** list another valid counter as a distractor.
 - **Some counters have `counter_id: null`** (e.g. Maki Komi) — skipped in quiz builder.
 - **`needs_review: true`** marks suspected typos from source transcription; still in data.
-- TypeScript types in `web/src/types.ts` mirror the JSON loosely; Python `models.py`
+- TypeScript types in `web/src/types.ts` mirror the JSON loosely; Python `data/models.py`
   is the stricter schema. **Keep them in sync** when changing JSON shape.
 
 ### 3.5 Python validation
 
 ```bash
-uv run python models.py          # parse + print stats
-uv run python models.py path.json
+uv run python data/models.py          # parse + print stats
+uv run python data/models.py path.json
+uv run pytest                         # Kodokan mapping tests
 ```
 
-`models.py` checks duplicate ids, loads all sections, exposes `validate_refs()` for
-broken counter/combination links. Add `pydantic` to `pyproject.toml` if running
-validation (`uv add pydantic`).
+`data/models.py` checks duplicate ids, loads all sections, exposes `validate_refs()` for
+broken counter/combination links.
+
+`data/kodokan_mappings.json` is the explicit syllabus → Kodokan coupling table.
+Every technique id must appear in either `mappings` or `unmapped`. Tests in
+`data/test_kodokan_mappings.py` guard against wrong couplings (e.g. Ude Hishigi →
+ude-gatame, not juji-gatame). After editing mappings:
+`uv run python data/kodokan_merge.py --write`.
 
 `archive/build_judo_json.py` was the one-time docx→json pipeline. **Do not run or
 move back to root** unless regenerating from source.
@@ -266,7 +278,8 @@ npm run dev           # http://localhost:5174 (5173 avoided; strictPort: false)
 
 # Python (optional)
 uv sync               # if deps added
-uv run python models.py
+uv run python data/models.py
+uv run pytest         # Kodokan mapping tests
 
 # Git remote
 origin → https://github.com/GuusDubbink/judo.git
@@ -309,7 +322,7 @@ Mobile: `min-h-12` tap targets, `safe-area-inset` padding, responsive text sizes
 
 ### 9.1 Do
 
-- Keep `judotechnieken.json` at repo root as single source of truth
+- Keep `data/judotechnieken.json` as single source of truth
 - Run `npm test && npm run typecheck && npm run build` after quiz logic changes
 - Match existing patterns: thin components, logic in `lib/`, state in hooks
 - Write Dutch UI copy for user-facing strings
@@ -345,8 +358,8 @@ Discussed with user but **not implemented:**
 |------|-------|
 | ~~Flashcard mode~~ | **Done** — Leren-modus (`StudyView`), browse deck, no self-rate |
 | Competition terms quiz | Data exists in JSON |
-| `kodokan-techniques.json` integration | Descriptions + YouTube links |
-| Generate TS types from `models.py` | Manual sync works for now |
+| ~~`kodokan-techniques.json` integration~~ | **Done** — explicit mappings in `data/kodokan_mappings.json` |
+| Generate TS types from `data/models.py` | Manual sync works for now |
 | `correctIndex` removal | Redundant with truth layer; kept for simplicity |
 | Memoize `buildQuestionPool()` | Fine at current dataset size |
 | Separate quiz modes UI | Counter-only, glossary-only, etc. |
@@ -379,8 +392,8 @@ aeddf00 Add React quiz webapp with club styling and DigitalOcean deploy config
 
 ### Change JSON data
 
-1. Edit `judotechnieken.json`
-2. Validate: `uv run python models.py` (with pydantic installed)
+1. Edit `data/judotechnieken.json` (and `data/kodokan_mappings.json` if Kodokan coupling changes)
+2. Validate: `uv run python data/models.py` and `uv run pytest`
 3. `cd web && npm test` — will catch broken/ambiguous questions
 4. Fix builders if tests fail
 
