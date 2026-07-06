@@ -64,4 +64,10 @@ describe('word breakdown', () => {
     expect(parts.map((part) => part.word)).toEqual(['Ude', 'Garami'])
     expect(parts.find((part) => part.word === 'Ude')?.meaning).toBeDefined()
   })
+
+  it('decodes parenthetical spelling variants from the glossary', () => {
+    const parts = breakdownName('Hon Kesa Katame')
+    const katame = parts.find((part) => part.word === 'Katame')
+    expect(katame?.meaning).toMatch(/houden/i)
+  })
 })

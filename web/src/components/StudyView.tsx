@@ -123,6 +123,7 @@ function TechniqueCardBody({ card }: { card: StudyTechniqueCard }) {
 
       {card.description || card.youtube ? (
         <TechniqueContent
+          key={card.id}
           technique={{
             id: card.id,
             name: card.name,

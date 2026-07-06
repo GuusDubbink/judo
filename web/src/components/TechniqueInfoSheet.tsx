@@ -74,14 +74,20 @@ export function TechniqueContent({
   const [started, setStarted] = useState(false)
 
   useEffect(() => {
-    if (!native) return
+    if (!native || !videoId) return
     const onMessage = (event: MessageEvent) => {
-      const data = event.data as { source?: string; type?: string } | null
-      if (data && data.source === 'judo-yt' && data.type === 'error') setVideoFailed(true)
+      const data = event.data as { source?: string; type?: string; videoId?: string } | null
+      if (
+        data?.source === 'judo-yt' &&
+        data.type === 'error' &&
+        data.videoId === videoId
+      ) {
+        setVideoFailed(true)
+      }
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
-  }, [native])
+  }, [native, videoId])
 
   // Clean URL (no `.html`) on purpose: `serve` 301-redirects `/youtube.html` to
   // `/youtube` and drops the query string, which would strip the video id.

@@ -3,15 +3,21 @@ import { db } from '../data/db'
 /** Lowercase and drop everything but a–z so "Gatame," / "O" match glossary keys. */
 const normalize = (value: string): string => value.toLowerCase().replace(/[^a-z]/g, '')
 
-// term (and its "(ook X)" variants) → Dutch meaning. Built once from the glossary.
+function addGlossaryAlias(map: Map<string, string>, alias: string, meaning: string): void {
+  const key = normalize(alias)
+  if (key && !map.has(key)) map.set(key, meaning)
+}
+
+// term + spelling variants ("(katame)", "ook harai", …) → Dutch meaning. Built once.
 const glossaryLookup: Map<string, string> = (() => {
   const map = new Map<string, string>()
   for (const entry of db.glossary) {
-    const main = normalize(entry.term.split('(')[0])
-    if (main && !map.has(main)) map.set(main, entry.nl)
+    addGlossaryAlias(map, entry.term.split('(')[0], entry.nl)
     for (const match of entry.term.matchAll(/ook\s+([a-zA-Z]+)/gi)) {
-      const variant = normalize(match[1])
-      if (variant && !map.has(variant)) map.set(variant, entry.nl)
+      addGlossaryAlias(map, match[1], entry.nl)
+    }
+    for (const match of entry.term.matchAll(/\(([a-zA-Z]+)\)/g)) {
+      addGlossaryAlias(map, match[1], entry.nl)
     }
   }
   return map
